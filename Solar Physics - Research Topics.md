@@ -1,4 +1,4 @@
-# Solar Physics — Research Topics & Directions
+# Solar Physics - Research Topics & Directions
 
 ## Aim and approach
 Choose a meaningful solar-physics question that **requires learning the Sun's physics**, not merely applying code or machine learning to solar data. A good project can begin by reproducing published results and grow into an independent investigation.
