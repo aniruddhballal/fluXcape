@@ -1,4 +1,4 @@
-# Solar Physics - Research Topics & Directions
+# Solar Physics — Research Topics & Directions
 
 ## Aim and approach
 Choose a meaningful solar-physics question that **requires learning the Sun's physics**, not merely applying code or machine learning to solar data. A good project can begin by reproducing published results and grow into an independent investigation.
@@ -60,3 +60,44 @@ Her published research interests include **solar magnetic fields, solar dynamo a
 - **Public resources:** [SDO data](https://sdo.gsfc.nasa.gov/data/dataaccess.php), [NASA heliophysics](https://science.nasa.gov/heliophysics/), Parker Solar Probe and Solar Orbiter archives, published flare catalogs, and [IISc faculty profile](https://physics.iisc.ac.in/people/prantika-bhowmik/).
 
 **Success need not mean a discovery:** independently reproducing a published result, explaining its assumptions, finding its failure cases, and visualizing the physics would already be worthwhile research training.
+
+## Refined direction after reviewing eruption-related research
+
+**Current preference:** Keep **#1 (why eruptions escape or remain confined)** as the core scientific question. Use **#7 (magnetic spatial scales)** as a method for asking a sharper, potentially decision-useful question; #6 remains a strong alternative but is not the immediate priority.
+
+**Working title:** *Scale-Dependent Magnetic Stability of Confined and Eruptive Solar Events*.
+
+**Sharper research question:** *Which spatial scales and topological features of pre-eruption magnetic fields are necessary to distinguish confined from eruptive events? How robust are the inferred stability diagnostics when small-scale magnetic information is removed?*
+
+### Why this might matter to Dr. Bhowmik's group
+
+Her work on **magnetofrictional simulations of stealth CMEs** connects magnetic evolution, free energy/helicity, and eruption onset; her more recent **mode/spatial-scale analysis** motivates asking how much magnetic detail models need. The practical value would be in **deciding which observations, resolutions, and model assumptions are sufficient**, rather than merely reporting a prediction score. This is a plausible research connection, **not evidence that she has requested this project or that its novelty is established**.
+
+### Decision-useful outputs to aim for
+
+- A measured range of **eruption-sensitive magnetic scales**, with uncertainties.
+- **Decay-index / critical-height sensitivity** to magnetogram filtering and resolution.
+- Cases where a simplified field reconstruction **changes the inferred stability interpretation**.
+- Comparisons showing **when lower-resolution models are adequate** and when more detailed modelling may be justified.
+- Reproducible plots, 3D magnetic-field visualizations, and clearly documented failures.
+
+### First concrete experiment
+
+Use a well-studied active region with both confined and eruptive flares (a candidate is **NOAA AR 12673, September 2017**):
+
+1. Read the event studies and retrieve pre-event **SDO/HMI magnetograms**.
+2. Construct a **potential-field extrapolation** as an accessible baseline.
+3. Filter/downsample the boundary magnetic maps across several scales.
+4. Recalculate overlying-field **decay indices and estimated critical heights** for each scale.
+5. Plot and compare the results across events; assess uncertainty and model sensitivity.
+6. Identify whether a more realistic **non-potential or magnetofrictional model** is needed for the next phase.
+
+**Important limitation:** Potential fields cannot represent the full current-carrying eruptive structure. The first experiment tests the **robustness of a stability diagnostic**, not whether an eruption can actually be simulated or reliably predicted. A difference between events does not itself prove causation.
+
+### Essential literature to check before claiming novelty
+
+- Bhowmik, Yeates & Rice (2022), *Exploring the Origin of Stealth Coronal Mass Ejections with Magnetofrictional Simulations*: https://link.springer.com/article/10.1007/s11207-022-01974-x
+- Bhowmik & Prior (2026), *Comparing Magnetic Field Distribution of Active Regions: Part 1 — Methods of Mode Analysis*: https://www.researchgate.net/publication/404480091_Comparing_Magnetic_Field_Distribution_of_Active_Regions_Part_1_Methods_of_Mode_Analysis
+- Hore & Bhowmik (2026), *Uncovering the Dominant Spatial Scales of the Sun's Magnetic Field in Solar Cycle 24*: https://arxiv.org/abs/2604.10144
+
+**Next decision:** Review these papers and related confined/eruptive-flare studies, determine what resolution-sensitivity tests have already been done, then choose one narrow, falsifiable hypothesis. The goal is an initial **technical report with reproducible code, figures, one robust or surprising result, and limitations**—something worth discussing with a researcher even if it is not a discovery.
