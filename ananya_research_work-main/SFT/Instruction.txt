@@ -1,0 +1,81 @@
+** Instruction related to all the files present in the SFT folder ** 
+
+
+1) files 'main.py' and 'sharptools.py' are taken from Anthony's github code "https://github.com/antyeates1983/sharps-bmrs/blob/master".
+   In 'sharptools.py', we only need 'get_bmrs' part. You may modify it as needed by adding or removing anything you think is appropriate.
+   You need to modify 'main.py' to change start-end dates, grid scale, magnetogram type etc (for further information go through README.md 
+   file in the above mentioned github). Finally if you run 'main.py' it will give 'bmrsharps_evol.txt', which we will need in our SFT.
+   
+   
+2) For SFT, we basically need to solve induction equation in terms of vector potential. Refer to Anthony's thesis (chapter 2 & 3). So, we 
+   will have to solve two partial differential equation for Ax and Ay. We will take HMI magnetogram as initial condition for a particular 
+   day and will update it with time following Euler's rule (you may also use any other method) with proper boundary conditions. Go through 
+   file 'SFT.py', I have specifically mentioned everything what I did (let me know if any help is needed).
+   
+   
+3) First completely understand SFT, then go for these following files: 'test_length_zero_line_diffusion.py' and 'advec_diffus_meridional.py'.
+   For both cases, We worked with induction equation (first one with only diffusion term, second one with both diffusion and advection) and 
+   polarity inversion line. Each and Every detail is mentioned in the respected file.
+   
+   (a) 'test_length_zero_line_diffusion.py' : Here, we only used diffusion part in SFT. We know that surface magnetic field distribution can be composed of 
+       weighted sum of spherical harmonics. If you go through my paper, it will be clear that if we include more and more harmonics, small-scale magnetic 
+       structures will be captured (increasing resolution). But we can not consider infinite no of harmonics, so we consider max_l = 120 here and 
+       constructed the surface field distribution from observation. In my paper, we also mentioned that l_effective = 7-19 will be enough to capture the 
+       important contributions (more than 60%). So here we considered another threshold map for max_l = 18. 
+    
+    
+       So, we used max_l = 120 map as initial condition to solve SFT with only diffusion part (without including new flux emergence). As, we update the time 
+       loop, because of diffusion term, small-scale structures will diffuse and with time the diffused distribution will contribute to large-scale structures. 
+       In other words, max_l = 120 map will almost converge towards max_l = 18 map.
+    
+       Here we have considered this time update in terms of 'length of polarity line inversion' i.e. the condition is the loop will break 
+       if (PIL_120(t) - PIL_18) <= threshold.
+    
+       We used two different methods for finding out this polarity inversion line length, (a) using python package (skimage), (b) basic python. Final results 
+       (i.e. time) are almost similar for both the cases.
+       
+   (b) 'test_length_zero_line_advection_diffusion.py' : Here, we used both diffusion and advection parts in SFT. We know that surface magnetic field distribution 
+       can be composed of weighted sum of spherical harmonics. If you go through my paper, it will be clear that if we include more and more harmonics, small-scale 
+       magnetic structures will be captured (increasing resolution). But we can not consider infinite no of harmonics, so we consider max_l = 120 here and 
+       constructed the surface field distribution from observation. In my paper, we also mentioned that l_effective = 7-19 will be enough to capture the 
+       important contributions (more than 60%). So here we considered another threshold map for max_l = 18. 
+    
+    
+       So, we used max_l = 120 map as initial condition to solve SFT with both the parts (without including new flux emergence) and max_l = 18 map as initial 
+       condition to solve SFT with only the advection part (without including new flux emergence). As, we update the time loop, we again try to find out when 
+       'length of polarity line inversion' for max_l = 120 map almost converges to that of max_l = 18 map i.e. the condition is the loop will break 
+       if (PIL_120(t) - PIL_18(t)) <= threshold.
+   
+       We used two different methods for finding out this polarity inversion line length, (a) using python package (skimage), (b) basic python. Final results 
+       (i.e. time) are almost similar for both the cases.
+       
+    
+4) Similar type of test for convergence is also done in terms of power spectrum or total power. We created two files named 'test_p_diffusion.py' and ''
+   
+   (a) 'test_p_diffusion.py' : Here, we only used diffusion part in SFT. We know that surface magnetic field distribution can be composed of weighted sum of 
+       spherical harmonics. If you go through my paper, it will be clear that if we include more and more harmonics, small-scale magnetic structures will be 
+       captured (increasing resolution). but we can not consider infinite no of harmonics, so we consider max_l = 120 here and constructed the surface field 
+       distribution from observation. In my paper, we also mentioned that l_effective = 7-19 will be enough to capture the important contributions (more than 
+       60%). So here we considered another threshold map for max_l = 18.
+    
+    
+       So, we used max_l = 120 map as initial condition to solve SFT with only the diffusion part (without including new flux emergence). As, we update the time 
+       loop, because of diffusion term, small-scale structures will diffuse and with time the diffused distribution will contribute to large-scale structures. 
+       Here, we considered it in terms of total power. So, total power for max_l = 120 map almost converges to that of max_l = 18 map i.e. the condition is the 
+       loop will break if (Power_120(t) - Power_18) <= threshold.
+       
+   (b) 'test_p_advection_diffusion.py' : Here, we used both diffusion and advection parts in SFT. We know that surface magnetic field distribution can be composed of 
+       weighted sum of spherical harmonics. If you go through my paper, it will be clear that if we include more and more harmonics, small-scale magnetic 
+       structures will be captured (increasing resolution). But we can not consider infinite no of harmonics, so we consider max_l = 120 here and 
+       constructed the surface field distribution from observation. In my paper, we also mentioned that l_effective = 7-19 will be enough to capture the 
+       important contributions (more than 60%). So here we considered another threshold map for max_l = 18. 
+    
+    
+       So, we used max_l = 120 map as initial condition to solve SFT with both the parts (without including new flux emergence) and max_l = 18 map as initial 
+       condition to solve SFT with only the advection part (without including new flux emergence). As, we update the time loop, we again try to find out when 
+       total power for max_l = 120 map almost converges to that of max_l = 18 map i.e. the condition is the loop will break 
+       if (Power_120(t) - Power_18(t)) <= threshold.       
+       
+       
+       
+       
