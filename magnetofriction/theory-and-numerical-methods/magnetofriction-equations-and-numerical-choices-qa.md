@@ -401,11 +401,11 @@ First establish the intended physical scope and whether the new MF work should e
 
 ### Does the earlier eruption question determine these choices already?
 
-No. Developing the MF model is the immediate project. Distinguishing confined and eruptive events, and investigating sensitivity to magnetic spatial scales, remain possible follow-on applications in [research-question.md](../research-question.md). They should not be used to silently fix an active-region domain before Prantika has confirmed the assignment.
+No. Developing the MF model is the immediate project. Distinguishing confined and eruptive events, and investigating sensitivity to magnetic spatial scales, remain possible follow-on applications in [research-question.md](../../research-question.md). They should not be used to silently fix an active-region domain before Prantika has confirmed the assignment.
 
 ## Further reading and related material
 
 - [Magnetofriction fundamentals Q&A](magnetofriction-fundamentals-qa.md) — the preceding conceptual guide, including observations, PFSS, NLFFF and SFT.
 - [Anthony Yeates: Magneto-frictional modelling](https://www.maths.dur.ac.uk/users/anthony.yeates/highlights/mf.html) — the starting model reference supplied by Prantika.
 - [Yeates (2022): On the limitations of magneto-frictional relaxation](https://arxiv.org/abs/2201.07485) — a study of relaxation and its limitations near magnetic nulls.
-- [Ananya's starter-pack description](../ananya_research_work-main/README.md) — existing PFSS and SFT material; its exact role in the new solver remains to be agreed.
+- [Ananya's starter-pack description](../../ananya_research_work-main/README.md) — existing PFSS and SFT material; its exact role in the new solver remains to be agreed.

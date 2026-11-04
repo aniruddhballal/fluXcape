@@ -229,7 +229,7 @@ In principle, an SFT model can advance an initial map by a short interval such a
 
 ### Where does Ananya's code fit?
 
-The supplied [starter pack](../ananya_research_work-main/README.md) contains PFSS and SFT research scripts. Its [SFT instructions](../ananya_research_work-main/SFT/Instruction.txt) describe the intended calculations and experiments involving spatial scales. These are useful background and possible starting material; the exact relationship between them and the MF solver Prantika wants is not yet confirmed.
+The supplied [starter pack](../../ananya_research_work-main/README.md) contains PFSS and SFT research scripts. Its [SFT instructions](../../ananya_research_work-main/SFT/Instruction.txt) describe the intended calculations and experiments involving spatial scales. These are useful background and possible starting material; the exact relationship between them and the MF solver Prantika wants is not yet confirmed.
 
 ## 9. What remains to be decided and checked?
 
@@ -239,11 +239,11 @@ Once the project's intended formulation is clear, a simple test could prescribe 
 
 ### Can the earlier eruption and spatial-scale questions use this model?
 
-Possibly. After the model is developed and verified, one could discuss comparing magnetic configurations associated with confined and eruptive events, and then investigating how filtering or reducing boundary-field detail changes relevant diagnostics. Whether the particular model and observations support those questions remains to be established. See [research-question.md](../research-question.md).
+Possibly. After the model is developed and verified, one could discuss comparing magnetic configurations associated with confined and eruptive events, and then investigating how filtering or reducing boundary-field detail changes relevant diagnostics. Whether the particular model and observations support those questions remains to be established. See [research-question.md](../../research-question.md).
 
 ### What should be clarified with Prantika?
 
-Ask about the model's intended geometry and scope, whether to extend existing code or start afresh, the preferred language and numerical method, how Ananya's SFT/PFSS work fits, the initial test case, and the intended eventual application. The Python files in this folder are placeholders; the input file currently contains plain-text notes, not runnable Python.
+Ask about the model's intended geometry and scope, whether to extend existing code or start afresh, the preferred language and numerical method, how Ananya's SFT/PFSS work fits, the initial test case, and the intended eventual application. The Python files in the [parent folder](../) are placeholders; the input file currently contains plain-text notes, not runnable Python.
 
 ## References
 
