@@ -40,6 +40,12 @@ def calculate_phi_prime(longitude, delta_t, rotation_rate):
     return longitude[None, :] + rotation_rate[:, None] * delta_t[None, :]
 
 
+def select_source_map(phi_prime):
+    """Choose a map index (previous=0, current=1, next=2) and wrap longitude."""
+    source = np.where(phi_prime < 0, 0, np.where(phi_prime >= 360, 2, 1))
+    return source, phi_prime % 360
+
+
 def plot_maps(maps, headers):
     """Plot the three maps with a shared color scale."""
     vmin = min(np.nanmin(data) for data in maps)
@@ -67,4 +73,5 @@ if __name__ == "__main__":
     delta_t = calculate_delta_t(longitude)
     rotation_rate = calculate_rotation_rate(latitude)
     phi_prime = calculate_phi_prime(longitude, delta_t, rotation_rate)
+    source_map, wrapped_longitude = select_source_map(phi_prime)
     plot_maps(maps, headers)
