@@ -3,10 +3,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 from pathlib import Path
 
+ROTATIONS = (2119, 2120, 2121)
+
 
 def load_maps(folder):
     """Load the three maps and their FITS headers."""
-    paths = [f"{folder}/hmi.Synoptic_Mr_small.{rotation}.fits" for rotation in (2096, 2097, 2098)]
+    paths = [f"{folder}/hmi.Synoptic_Mr_small.{rotation}.fits" for rotation in ROTATIONS]
     loaded = [fits.getdata(path, header=True) for path in paths]
     return [item[0] for item in loaded], [item[1] for item in loaded]
 
@@ -38,7 +40,7 @@ def plot_maps(maps, headers):
     vmin = min(np.nanmin(data) for data in maps)
     vmax = max(np.nanmax(data) for data in maps)
     fig, axes = plt.subplots(1, 3, figsize=(15, 4), constrained_layout=True)
-    for ax, data, header, rotation in zip(axes, maps, headers, (2096, 2097, 2098)):
+    for ax, data, header, rotation in zip(axes, maps, headers, ROTATIONS):
         image = ax.imshow(data, origin="lower", cmap="gray", vmin=vmin, vmax=vmax)
         ax.set_title(f"CR {rotation}")
         x_ticks = np.linspace(0, data.shape[1] - 1, 5)
