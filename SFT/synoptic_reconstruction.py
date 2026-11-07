@@ -1,10 +1,38 @@
 ﻿from astropy.io import fits
 import matplotlib.pyplot as plt
+from matplotlib.colors import ListedColormap, Normalize
 import numpy as np
 from pathlib import Path
 from scipy.interpolate import RectBivariateSpline
 
 ROTATIONS = (2119, 2120, 2121)
+DISPLAY_LIMIT = 100  # Gauss; values outside +/- this limit saturate in the plot.
+
+
+def sunalyse_colormap():
+    """Reproduce Sunalyse's photosphere color mapping."""
+    value = np.linspace(0, 1, 65536)
+    colors = np.empty((value.size, 3))
+    low = value < 0.4
+    t = value[low] / 0.4
+    colors[low] = np.column_stack((100 + 155 * t, 200 * t, np.zeros_like(t)))
+    low_mid = (value >= 0.4) & (value < 0.48)
+    t = (value[low_mid] - 0.4) / 0.08
+    colors[low_mid] = np.column_stack((255 - 55 * t, 200 - 50 * t, 150 * t))
+    colors[(value >= 0.48) & (value < 0.52)] = (150, 150, 150)
+    high_mid = (value >= 0.52) & (value < 0.6)
+    t = (value[high_mid] - 0.52) / 0.08
+    colors[high_mid] = np.column_stack((150 - 150 * t, 150 + 105 * t, 150 - 50 * t))
+    high = value >= 0.6
+    t = (value[high] - 0.6) / 0.4
+    colors[high] = np.column_stack((np.zeros_like(t), 255 - 255 * t, 100 + 155 * t))
+    cmap = ListedColormap(colors / 255, name="sunalyse_photosphere")
+    cmap.set_bad("#303038")  # Missing pixels are distinct from neutral field.
+    return cmap
+
+
+PHOTO_CMAP = sunalyse_colormap()
+PHOTO_NORM = Normalize(vmin=-DISPLAY_LIMIT, vmax=DISPLAY_LIMIT, clip=True)
 
 
 def load_maps(folder):
@@ -70,11 +98,9 @@ def interpolate_field(maps, headers, latitude, source_map, wrapped_longitude):
 
 def plot_maps(maps, headers):
     """Plot the three maps with a shared color scale."""
-    vmin = min(np.nanmin(data) for data in maps)
-    vmax = max(np.nanmax(data) for data in maps)
     fig, axes = plt.subplots(1, 3, figsize=(15, 4), constrained_layout=True)
     for ax, data, header, rotation in zip(axes, maps, headers, ROTATIONS):
-        image = ax.imshow(data, origin="lower", cmap="gray", vmin=vmin, vmax=vmax)
+        image = ax.imshow(data, origin="lower", cmap=PHOTO_CMAP, norm=PHOTO_NORM)
         ax.set_title(f"CR {rotation}")
         x_ticks = np.linspace(0, data.shape[1] - 1, 5)
         tick_longitudes = (header["CRVAL1"] + (x_ticks + 1 - header["CRPIX1"]) * header["CDELT1"]) % 360
@@ -84,22 +110,20 @@ def plot_maps(maps, headers):
         ax.set_yticks(y_ticks, [f"{value}°" for value in tick_latitudes])
         ax.set_xlabel("Carrington longitude")
         ax.set_ylabel("Latitude")
-    fig.colorbar(image, ax=axes, label="Magnetic field (Mx/cm²)")
+    fig.colorbar(image, ax=axes, label="Magnetic field (G)", extend="both", shrink=0.8)
     plt.show()
 
 
 def plot_reconstruction(current, reconstructed):
     """Compare the original and reconstructed maps on one color scale."""
-    vmin = min(np.nanmin(current), np.nanmin(reconstructed))
-    vmax = max(np.nanmax(current), np.nanmax(reconstructed))
     fig, axes = plt.subplots(1, 2, figsize=(12, 4), constrained_layout=True)
     for ax, data, title in zip(axes, (current, reconstructed),
                                (f"Original CR {ROTATIONS[1]}", "Reconstructed")):
-        image = ax.imshow(data, origin="lower", cmap="gray", vmin=vmin, vmax=vmax)
+        image = ax.imshow(data, origin="lower", cmap=PHOTO_CMAP, norm=PHOTO_NORM)
         ax.set_title(title)
         ax.set_xlabel("Longitude pixel")
         ax.set_ylabel("Latitude pixel")
-    fig.colorbar(image, ax=axes, label="Magnetic field (Mx/cm²)")
+    fig.colorbar(image, ax=axes, label="Magnetic field (G)", extend="both", shrink=0.8)
     plt.show()
 
 
