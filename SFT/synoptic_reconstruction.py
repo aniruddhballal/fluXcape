@@ -1,6 +1,7 @@
 ﻿from astropy.io import fits
 import matplotlib.pyplot as plt
 import numpy as np
+from pathlib import Path
 
 
 def load_maps(folder):
@@ -53,7 +54,7 @@ def plot_maps(maps, headers):
 
 
 if __name__ == "__main__":
-    folder = r"D:\engg\2024summr\Project-NagaSurya\fits_files"
+    folder = Path(__file__).resolve().parent / "fits_files"
     maps, headers = load_maps(folder)
     longitude, latitude = calculate_coordinates(maps[1], headers[1])
     delta_t = calculate_delta_t(longitude)
