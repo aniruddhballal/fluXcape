@@ -1,3 +1,4 @@
 ﻿astropy>=7.2,<8
 matplotlib
 scipy
+sunpy>=8,<9

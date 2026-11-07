@@ -1,5 +1,6 @@
 ﻿"""Prepare the existing reconstruction for the local React viewer."""
 import base64
+import hashlib
 import json
 from pathlib import Path
 import numpy as np
@@ -35,12 +36,26 @@ def package_result(result):
 ananya = reconstruct(calculate_ananya_rotation_rate(latitude))
 fixed = reconstruct(calculate_rotation_rate(latitude))
 header = headers[1]
+validation_file = root / 'validation_data' / 'cr2120_observational_metrics.json'
+validation = None
+if validation_file.exists():
+    candidate = json.loads(validation_file.read_text(encoding='utf-8'))
+    paths = [root / 'synoptic_reconstruction.py', root / 'prepare_viewer_data.py', root / 'validate_observations.py']
+    paths += [root / 'fits_files' / '720x360' / f'hmi.Synoptic_Mr_small.{n}.fits' for n in ROTATIONS]
+    fingerprints = {str(p.relative_to(root)).replace('\\', '/'): hashlib.sha256(
+        p.read_text(encoding='utf-8-sig').replace('\r\n', '\n').encode('utf-8')
+        if p.suffix == '.py' else p.read_bytes()).hexdigest() for p in paths}
+    if candidate.get('cr') == ROTATIONS[1] and candidate.get('input_sha256') == fingerprints:
+        validation = candidate
+    else:
+        print('Observational validation is stale; rerun SFT/validate_observations.py.')
 payload = {
     'rotation': ROTATIONS[1], 'rotations': list(ROTATIONS),
     'width': maps[1].shape[1], 'height': maps[1].shape[0],
     'original': encode(maps[1]),
     'reconstructions': {'ananya': package_result(ananya), 'fixed': package_result(fixed)},
     'coordinates': {key: header[key] for key in ('CRPIX1', 'CRVAL1', 'CDELT1', 'CRPIX2', 'CRVAL2', 'CDELT2')},
+    'observational_validation': validation,
 }
 output = root / 'viewer' / 'public' / 'maps.json'
 output.parent.mkdir(parents=True, exist_ok=True)
