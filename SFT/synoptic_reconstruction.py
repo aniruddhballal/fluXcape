@@ -35,6 +35,11 @@ def calculate_rotation_rate(latitude):
     return 0.18 - 2.3 * sin_latitude**2 - 1.62 * sin_latitude**4
 
 
+def calculate_phi_prime(longitude, delta_t, rotation_rate):
+    """Calculate corrected longitudes in degrees for each map pixel."""
+    return longitude[None, :] + rotation_rate[:, None] * delta_t[None, :]
+
+
 def plot_maps(maps, headers):
     """Plot the three maps with a shared color scale."""
     vmin = min(np.nanmin(data) for data in maps)
@@ -61,4 +66,5 @@ if __name__ == "__main__":
     longitude, latitude = calculate_coordinates(maps[1], headers[1])
     delta_t = calculate_delta_t(longitude)
     rotation_rate = calculate_rotation_rate(latitude)
+    phi_prime = calculate_phi_prime(longitude, delta_t, rotation_rate)
     plot_maps(maps, headers)
