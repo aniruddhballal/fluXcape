@@ -60,9 +60,15 @@ def calculate_delta_t(longitude):
 
 
 def calculate_rotation_rate(latitude):
-    """Calculate the original model's rotation law in degrees per day."""
+    """Calculate the latitude-corrected rotation law in degrees per day."""
     sin_latitude = np.sin(np.radians(latitude))
     return 0.18 - 2.3 * sin_latitude**2 - 1.62 * sin_latitude**4
+
+
+def calculate_ananya_rotation_rate(latitude):
+    """Reproduce the original initialization's latitude-as-colatitude input."""
+    cos_latitude = np.cos(np.radians(latitude))
+    return 0.18 - 2.3 * cos_latitude**2 - 1.62 * cos_latitude**4
 
 
 def calculate_phi_prime(longitude, delta_t, rotation_rate):

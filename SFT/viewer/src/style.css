@@ -114,3 +114,4 @@ main { width: min(100% - 10%, 1560px); margin: 0 auto; padding: 36px 0 56px; }
   .globe { left: 66px; }
   .map-stats .stat { padding: 13px 0; }
 }
+.version-label select{appearance:auto;min-width:155px;padding:10px 12px;border:1px solid #e9a872;border-radius:4px;background:#e9a872;color:#20160e;font:600 13px 'DM Sans',system-ui,sans-serif;cursor:pointer}.version-label select:focus-visible{outline:2px solid #ffbb7d;outline-offset:4px}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}

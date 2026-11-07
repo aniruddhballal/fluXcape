@@ -1,7 +1,7 @@
 # Synoptic Studio
 
-The Python reconstruction calculates the original map, reconstructed map and
-comparison metrics. `prepare_viewer_data.py` exports those results to the
+The Python reconstruction calculates the original map, both reconstructed maps
+and their comparison metrics. `prepare_viewer_data.py` exports those results to the
 ignored `public/maps.json` file. The React viewer reads that file and handles
 display only; it does not run the reconstruction.
 
@@ -28,6 +28,6 @@ viewer.
 
 The 2D and 3D views display the same FITS values. For the globe, the renderer
 maps the FITS sine-latitude rows onto the sphere; missing pixels remain dark.
-The reconstruction button switches between the precomputed maps, while the
+The version dropdown switches between the precomputed maps, while the
 color saturation slider only affects display. Comparison metrics are differences
 from the original map, not errors against ground truth.
