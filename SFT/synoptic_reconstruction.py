@@ -2,6 +2,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from pathlib import Path
+from scipy.interpolate import RectBivariateSpline
 
 ROTATIONS = (2119, 2120, 2121)
 
@@ -46,6 +47,27 @@ def select_source_map(phi_prime):
     return source, phi_prime % 360
 
 
+def interpolate_field(maps, headers, latitude, source_map, wrapped_longitude):
+    """Sample each source with a cubic spline; leave incomplete rows missing."""
+    field = np.full(source_map.shape, np.nan)
+    for index, (data, header) in enumerate(zip(maps, headers)):
+        source_longitude, source_latitude = calculate_coordinates(data, header)
+        valid_rows = np.isfinite(data).all(axis=1) & np.isfinite(source_latitude)
+        # FITS longitude decreases across columns; the spline requires increasing axes.
+        order = np.argsort(source_longitude)
+        source_longitude = source_longitude[order]
+        spline = RectBivariateSpline(source_latitude[valid_rows], source_longitude,
+                                    data[valid_rows][:, order])
+        lat_grid = np.broadcast_to(latitude[:, None], source_map.shape)
+        use = ((source_map == index)
+               & (lat_grid >= source_latitude[valid_rows].min())
+               & (lat_grid <= source_latitude[valid_rows].max())
+               & (wrapped_longitude >= source_longitude.min())
+               & (wrapped_longitude <= source_longitude.max()))
+        field[use] = spline.ev(lat_grid[use], wrapped_longitude[use])
+    return field
+
+
 def plot_maps(maps, headers):
     """Plot the three maps with a shared color scale."""
     vmin = min(np.nanmin(data) for data in maps)
@@ -74,4 +96,5 @@ if __name__ == "__main__":
     rotation_rate = calculate_rotation_rate(latitude)
     phi_prime = calculate_phi_prime(longitude, delta_t, rotation_rate)
     source_map, wrapped_longitude = select_source_map(phi_prime)
+    interpolated_field = interpolate_field(maps, headers, latitude, source_map, wrapped_longitude)
     plot_maps(maps, headers)
