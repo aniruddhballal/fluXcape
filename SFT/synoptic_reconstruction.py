@@ -1,5 +1,6 @@
 ﻿from astropy.io import fits
 import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
 from matplotlib.colors import ListedColormap, Normalize
 import numpy as np
 from pathlib import Path
@@ -148,6 +149,21 @@ def plot_reconstruction(current, reconstructed):
                  f"Compared pixels:  {valid.sum():,} / {valid.size:,}\n\n"
                  "Difference = reconstructed − original",
                  transform=axes[3].transAxes, va="top", fontsize=12)
+
+    def animate(frame):
+        # Hold for two seconds, transition for two, then hold the result.
+        progress = np.clip((frame - 40) / 40, 0, 1)
+        if progress == 0:
+            display = current
+        elif progress == 1:
+            display = reconstructed
+        else:
+            display = np.where(valid, current + progress * difference, np.nan)
+        image.set_data(display)
+        axes[1].set_title(f"Original → reconstructed ({progress:.0%})")
+        return (image,)
+
+    animation = FuncAnimation(fig, animate, frames=120, interval=50, repeat=True)
     plt.show()
 
 
