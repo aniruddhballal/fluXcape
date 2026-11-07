@@ -160,5 +160,4 @@ if __name__ == "__main__":
     phi_prime = calculate_phi_prime(longitude, delta_t, rotation_rate)
     source_map, wrapped_longitude = select_source_map(phi_prime)
     interpolated_field = interpolate_field(maps, headers, latitude, source_map, wrapped_longitude)
-    plot_maps(maps, headers)
     plot_reconstruction(maps[1], interpolated_field)
