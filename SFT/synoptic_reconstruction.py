@@ -124,46 +124,32 @@ def plot_reconstruction(current, reconstructed):
     mae = np.mean(np.abs(values))
     rmse = np.sqrt(np.mean(values**2))
 
-    fig, grid = plt.subplots(2, 2, figsize=(13, 8), constrained_layout=True)
-    axes = grid.ravel()
-    for ax, data, title in zip(axes[:2], (current, reconstructed),
-                               (f"Original CR {ROTATIONS[1]}", "Reconstructed")):
-        image = ax.imshow(data, origin="lower", cmap=PHOTO_CMAP, norm=PHOTO_NORM)
-        ax.set_title(title)
-        ax.set_xlabel("Longitude pixel")
-        ax.set_ylabel("Latitude pixel")
-        fig.colorbar(image, ax=ax, label="Magnetic field (G)", extend="both", shrink=0.8)
-
-    limit = max(np.percentile(np.abs(values), 99), 1e-12)
-    diff_image = axes[2].imshow(difference, origin="lower", cmap="RdBu_r",
-                                vmin=-limit, vmax=limit)
-    axes[2].set_title("Difference: reconstructed − original")
-    axes[2].set_xlabel("Longitude pixel")
-    axes[2].set_ylabel("Latitude pixel")
-    fig.colorbar(diff_image, ax=axes[2], label="Difference (G)", extend="both", shrink=0.7)
-    axes[3].axis("off")
-    axes[3].text(0.08, 0.85,
-                 f"Mean difference (bias):  {bias:.3f} G\n\n"
-                 f"Mean absolute difference:  {mae:.3f} G\n\n"
-                 f"Root mean square difference:  {rmse:.3f} G\n\n"
-                 f"Compared pixels:  {valid.sum():,} / {valid.size:,}\n\n"
-                 "Difference = reconstructed − original",
-                 transform=axes[3].transAxes, va="top", fontsize=12)
+    fig = plt.figure(figsize=(14, 8), constrained_layout=True)
+    grid = fig.add_gridspec(2, 1, height_ratios=(5, 1))
+    ax = fig.add_subplot(grid[0])
+    stats = fig.add_subplot(grid[1])
+    image = ax.imshow(current, origin="lower", cmap=PHOTO_CMAP, norm=PHOTO_NORM,
+                      aspect="auto")
+    title = ax.set_title(f"Original CR {ROTATIONS[1]}", fontsize=15)
+    ax.set_xlabel("Longitude pixel")
+    ax.set_ylabel("Latitude pixel")
+    fig.colorbar(image, ax=ax, label="Magnetic field (G)", extend="both", shrink=0.9)
+    stats.axis("off")
+    stats.text(0.5, 0.7,
+               f"Mean difference (bias): {bias:.3f} G     |     "
+               f"Mean absolute difference: {mae:.3f} G     |     "
+               f"Root mean square difference: {rmse:.3f} G\n\n"
+               f"Compared pixels: {valid.sum():,} / {valid.size:,}     |     "
+               "Difference = reconstructed − original",
+               transform=stats.transAxes, ha="center", va="center", fontsize=11)
 
     def animate(frame):
-        # Hold for two seconds, transition for two, then hold the result.
-        progress = np.clip((frame - 40) / 40, 0, 1)
-        if progress == 0:
-            display = current
-        elif progress == 1:
-            display = reconstructed
-        else:
-            display = np.where(valid, current + progress * difference, np.nan)
-        image.set_data(display)
-        axes[1].set_title(f"Original → reconstructed ({progress:.0%})")
-        return (image,)
+        image.set_data((current, reconstructed)[frame])
+        title.set_text((f"Original CR {ROTATIONS[1]}", "Reconstructed")[frame])
+        return image, title
 
-    animation = FuncAnimation(fig, animate, frames=120, interval=50, repeat=True)
+    animation = FuncAnimation(fig, animate, frames=(0, 0, 0, 1), interval=1000,
+                              repeat=True, blit=False)
     plt.show()
 
 
