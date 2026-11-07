@@ -115,7 +115,7 @@ def plot_maps(maps, headers):
     plt.show()
 
 
-def plot_reconstruction(current, reconstructed):
+def plot_reconstruction(current, reconstructed, header):
     """Compare maps and show differences over pixels valid in both."""
     valid = np.isfinite(current) & np.isfinite(reconstructed)
     difference = np.where(valid, reconstructed - current, np.nan)
@@ -125,14 +125,22 @@ def plot_reconstruction(current, reconstructed):
     rmse = np.sqrt(np.mean(values**2))
 
     fig = plt.figure(figsize=(14, 8), constrained_layout=True)
-    grid = fig.add_gridspec(2, 1, height_ratios=(5, 1))
+    grid = fig.add_gridspec(2, 1, height_ratios=(5, 1), hspace=0.35)
     ax = fig.add_subplot(grid[0])
     stats = fig.add_subplot(grid[1])
     image = ax.imshow(current, origin="lower", cmap=PHOTO_CMAP, norm=PHOTO_NORM,
                       aspect="auto")
     title = ax.set_title(f"Original CR {ROTATIONS[1]}", fontsize=15)
-    ax.set_xlabel("Longitude pixel")
-    ax.set_ylabel("Latitude pixel")
+    phi_ticks = np.array([45, 90, 180, 270, 315])
+    longitude_offset = (phi_ticks - header["CRVAL1"] + 180) % 360 - 180
+    x_ticks = longitude_offset / header["CDELT1"] + header["CRPIX1"] - 1
+    ax.set_xticks(x_ticks, [f"{value}°" for value in phi_ticks])
+    theta_ticks = np.array([30, 60, 90, 120, 150])
+    sin_latitude = np.cos(np.radians(theta_ticks))
+    y_ticks = (sin_latitude - header["CRVAL2"]) / header["CDELT2"] + header["CRPIX2"] - 1
+    ax.set_yticks(y_ticks, [f"{value}°" for value in theta_ticks])
+    ax.set_xlabel("Carrington longitude φ")
+    ax.set_ylabel("Colatitude θ")
     fig.colorbar(image, ax=ax, label="Magnetic field (G)", extend="both", shrink=0.9)
     stats.axis("off")
     stats.text(0.5, 0.7,
@@ -162,4 +170,4 @@ if __name__ == "__main__":
     phi_prime = calculate_phi_prime(longitude, delta_t, rotation_rate)
     source_map, wrapped_longitude = select_source_map(phi_prime)
     interpolated_field = interpolate_field(maps, headers, latitude, source_map, wrapped_longitude)
-    plot_reconstruction(maps[1], interpolated_field)
+    plot_reconstruction(maps[1], interpolated_field, headers[1])
