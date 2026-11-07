@@ -115,15 +115,32 @@ def plot_maps(maps, headers):
 
 
 def plot_reconstruction(current, reconstructed):
-    """Compare the original and reconstructed maps on one color scale."""
-    fig, axes = plt.subplots(1, 2, figsize=(12, 4), constrained_layout=True)
-    for ax, data, title in zip(axes, (current, reconstructed),
+    """Compare maps and show differences over pixels valid in both."""
+    valid = np.isfinite(current) & np.isfinite(reconstructed)
+    difference = np.where(valid, reconstructed - current, np.nan)
+    values = difference[valid]
+    bias = np.mean(values)
+    mae = np.mean(np.abs(values))
+    rmse = np.sqrt(np.mean(values**2))
+
+    fig, axes = plt.subplots(1, 3, figsize=(17, 5), constrained_layout=True)
+    for ax, data, title in zip(axes[:2], (current, reconstructed),
                                (f"Original CR {ROTATIONS[1]}", "Reconstructed")):
         image = ax.imshow(data, origin="lower", cmap=PHOTO_CMAP, norm=PHOTO_NORM)
         ax.set_title(title)
         ax.set_xlabel("Longitude pixel")
         ax.set_ylabel("Latitude pixel")
-    fig.colorbar(image, ax=axes, label="Magnetic field (G)", extend="both", shrink=0.8)
+    fig.colorbar(image, ax=axes[:2], label="Magnetic field (G)", extend="both", shrink=0.7)
+
+    limit = max(np.percentile(np.abs(values), 99), 1e-12)
+    diff_image = axes[2].imshow(difference, origin="lower", cmap="RdBu_r",
+                                vmin=-limit, vmax=limit)
+    axes[2].set_title("Difference: reconstructed − original")
+    axes[2].set_xlabel("Longitude pixel")
+    axes[2].set_ylabel("Latitude pixel")
+    fig.colorbar(diff_image, ax=axes[2], label="Difference (G)", extend="both", shrink=0.7)
+    fig.suptitle(f"Bias: {bias:.3f} G   |   MAE: {mae:.3f} G   |   RMSE: {rmse:.3f} G"
+                 f"   |   Compared pixels: {valid.sum():,} / {valid.size:,}")
     plt.show()
 
 
