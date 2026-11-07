@@ -123,14 +123,15 @@ def plot_reconstruction(current, reconstructed):
     mae = np.mean(np.abs(values))
     rmse = np.sqrt(np.mean(values**2))
 
-    fig, axes = plt.subplots(1, 3, figsize=(17, 5), constrained_layout=True)
+    fig, grid = plt.subplots(2, 2, figsize=(13, 8), constrained_layout=True)
+    axes = grid.ravel()
     for ax, data, title in zip(axes[:2], (current, reconstructed),
                                (f"Original CR {ROTATIONS[1]}", "Reconstructed")):
         image = ax.imshow(data, origin="lower", cmap=PHOTO_CMAP, norm=PHOTO_NORM)
         ax.set_title(title)
         ax.set_xlabel("Longitude pixel")
         ax.set_ylabel("Latitude pixel")
-    fig.colorbar(image, ax=axes[:2], label="Magnetic field (G)", extend="both", shrink=0.7)
+        fig.colorbar(image, ax=ax, label="Magnetic field (G)", extend="both", shrink=0.8)
 
     limit = max(np.percentile(np.abs(values), 99), 1e-12)
     diff_image = axes[2].imshow(difference, origin="lower", cmap="RdBu_r",
@@ -139,8 +140,14 @@ def plot_reconstruction(current, reconstructed):
     axes[2].set_xlabel("Longitude pixel")
     axes[2].set_ylabel("Latitude pixel")
     fig.colorbar(diff_image, ax=axes[2], label="Difference (G)", extend="both", shrink=0.7)
-    fig.suptitle(f"Bias: {bias:.3f} G   |   MAE: {mae:.3f} G   |   RMSE: {rmse:.3f} G"
-                 f"   |   Compared pixels: {valid.sum():,} / {valid.size:,}")
+    axes[3].axis("off")
+    axes[3].text(0.08, 0.85,
+                 f"Mean difference (bias):  {bias:.3f} G\n\n"
+                 f"Mean absolute difference:  {mae:.3f} G\n\n"
+                 f"Root mean square difference:  {rmse:.3f} G\n\n"
+                 f"Compared pixels:  {valid.sum():,} / {valid.size:,}\n\n"
+                 "Difference = reconstructed − original",
+                 transform=axes[3].transAxes, va="top", fontsize=12)
     plt.show()
 
 
