@@ -88,6 +88,21 @@ def plot_maps(maps, headers):
     plt.show()
 
 
+def plot_reconstruction(current, reconstructed):
+    """Compare the original and reconstructed maps on one color scale."""
+    vmin = min(np.nanmin(current), np.nanmin(reconstructed))
+    vmax = max(np.nanmax(current), np.nanmax(reconstructed))
+    fig, axes = plt.subplots(1, 2, figsize=(12, 4), constrained_layout=True)
+    for ax, data, title in zip(axes, (current, reconstructed),
+                               (f"Original CR {ROTATIONS[1]}", "Reconstructed")):
+        image = ax.imshow(data, origin="lower", cmap="gray", vmin=vmin, vmax=vmax)
+        ax.set_title(title)
+        ax.set_xlabel("Longitude pixel")
+        ax.set_ylabel("Latitude pixel")
+    fig.colorbar(image, ax=axes, label="Magnetic field (Mx/cm²)")
+    plt.show()
+
+
 if __name__ == "__main__":
     folder = Path(__file__).resolve().parent / "fits_files" / "720x360"
     maps, headers = load_maps(folder)
@@ -98,3 +113,4 @@ if __name__ == "__main__":
     source_map, wrapped_longitude = select_source_map(phi_prime)
     interpolated_field = interpolate_field(maps, headers, latitude, source_map, wrapped_longitude)
     plot_maps(maps, headers)
+    plot_reconstruction(maps[1], interpolated_field)
