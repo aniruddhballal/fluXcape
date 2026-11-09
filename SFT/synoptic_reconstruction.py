@@ -36,18 +36,22 @@ PHOTO_CMAP = sunalyse_colormap()
 PHOTO_NORM = Normalize(vmin=-DISPLAY_LIMIT, vmax=DISPLAY_LIMIT, clip=True)
 
 
-def load_maps(folder):
+def load_maps(folder, rotations=ROTATIONS):
     """Load the three maps and their FITS headers."""
-    paths = [f"{folder}/hmi.Synoptic_Mr_small.{rotation}.fits" for rotation in ROTATIONS]
+    paths = [f"{folder}/hmi.Synoptic_Mr_small.{rotation}.fits" for rotation in rotations]
     loaded = [fits.getdata(path, header=True) for path in paths]
     return [item[0] for item in loaded], [item[1] for item in loaded]
 
 
 def calculate_coordinates(data, header):
-    """Calculate longitude and latitude in degrees for the map's pixels."""
+    """Calculate physical HMI synoptic longitude and latitude in degrees.
+
+    SunPy's HMI convention uses a positive longitude step for the data array
+    even when the archived HMI header has a negative CDELT1.
+    """
     x = np.arange(data.shape[1])
     y = np.arange(data.shape[0])
-    longitude = (header["CRVAL1"] + (x + 1 - header["CRPIX1"]) * header["CDELT1"]) % 360
+    longitude = (header["CRVAL1"] + (x + 1 - header["CRPIX1"]) * abs(header["CDELT1"])) % 360
     sin_latitude = header["CRVAL2"] + (y + 1 - header["CRPIX2"]) * header["CDELT2"]
     sin_latitude = np.where(np.abs(sin_latitude) <= 1, sin_latitude, np.nan)
     latitude = np.degrees(np.arcsin(sin_latitude))
@@ -88,7 +92,7 @@ def interpolate_field(maps, headers, latitude, source_map, wrapped_longitude):
     for index, (data, header) in enumerate(zip(maps, headers)):
         source_longitude, source_latitude = calculate_coordinates(data, header)
         valid_rows = np.isfinite(data).all(axis=1) & np.isfinite(source_latitude)
-        # FITS longitude decreases across columns; the spline requires increasing axes.
+        # Sort after longitude wrapping; the spline requires increasing axes.
         order = np.argsort(source_longitude)
         source_longitude = source_longitude[order]
         spline = RectBivariateSpline(source_latitude[valid_rows], source_longitude,
@@ -110,7 +114,7 @@ def plot_maps(maps, headers):
         image = ax.imshow(data, origin="lower", cmap=PHOTO_CMAP, norm=PHOTO_NORM)
         ax.set_title(f"CR {rotation}")
         x_ticks = np.linspace(0, data.shape[1] - 1, 5)
-        tick_longitudes = (header["CRVAL1"] + (x_ticks + 1 - header["CRPIX1"]) * header["CDELT1"]) % 360
+        tick_longitudes = (header["CRVAL1"] + (x_ticks + 1 - header["CRPIX1"]) * abs(header["CDELT1"])) % 360
         ax.set_xticks(x_ticks, [f"{value:.0f}°" for value in tick_longitudes])
         tick_latitudes = np.array([-60, -30, 0, 30, 60])
         y_ticks = (np.sin(np.radians(tick_latitudes)) - header["CRVAL2"]) / header["CDELT2"] + header["CRPIX2"] - 1
@@ -139,7 +143,7 @@ def plot_reconstruction(current, reconstructed, header):
     title = ax.set_title(f"Original CR {ROTATIONS[1]}", fontsize=15)
     phi_ticks = np.array([45, 90, 180, 270, 315])
     longitude_offset = (phi_ticks - header["CRVAL1"] + 180) % 360 - 180
-    x_ticks = longitude_offset / header["CDELT1"] + header["CRPIX1"] - 1
+    x_ticks = longitude_offset / abs(header["CDELT1"]) + header["CRPIX1"] - 1
     ax.set_xticks(x_ticks, [f"{value}°" for value in phi_ticks])
     theta_ticks = np.array([30, 60, 90, 120, 150])
     sin_latitude = np.cos(np.radians(theta_ticks))

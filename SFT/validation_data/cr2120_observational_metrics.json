@@ -1,9 +1,14 @@
 {
   "cr": 2120,
+  "input_rotations": [
+    2119,
+    2120,
+    2121
+  ],
   "input_sha256": {
-    "synoptic_reconstruction.py": "94718876212da3b4b529a5377f44306ce00bb18deaa84a1bf01daffc95a971d6",
-    "prepare_viewer_data.py": "d54790a16e100641b07232e762c8d2d0c446fd78dd1c4a455ecb39cb563b650c",
-    "validate_observations.py": "5ebf6fd8b9056cce469f0380a5ba67779c8ce70acdabe89219692ef24f78abe0",
+    "synoptic_reconstruction.py": "79c43e629c7e0f9ec93a3e4c974f74087c99c4759beb4a8ba4c9f0baf2e2cc6e",
+    "prepare_viewer_data.py": "9394891f5af03c377b0c854cbbf1961625148bb9a0d558d78a1f8534fce10405",
+    "validate_observations.py": "33b69ea18dd2770ca291c80931da856889d8bb85975fb64b83569e38f9fa0deb",
     "fits_files/720x360/hmi.Synoptic_Mr_small.2119.fits": "4e46b43b9836de83242e23c26a6c0e61172f6f3a76cd7f2251c91de91881e9f9",
     "fits_files/720x360/hmi.Synoptic_Mr_small.2120.fits": "cd94afec13cfda0515235fda2efb384c26892a359e5428380796847c0ef18bbb",
     "fits_files/720x360/hmi.Synoptic_Mr_small.2121.fits": "e1d73cd8766f0ff3bf8eddb567c6e1fa39cdd26442be118353cd274d8ab01c24"
@@ -13,8 +18,8 @@
     "crossing_tai": "2012-02-19T22:55:28.688",
     "crossing_utc": "2012-02-19T22:54:54.688",
     "header_T_ROT_tai": "2012-02-19T22:51:59.000",
-    "sunpy_earth_carrington_rotation_2120_5_tai": "2012-02-19T22:47:46.384",
-    "sunpy_earth_carrington_rotation_2120_5_utc": "2012-02-19T22:47:12.384",
+    "sunpy_earth_midrotation_tai": "2012-02-19T22:47:46.384",
+    "sunpy_earth_midrotation_utc": "2012-02-19T22:47:12.384",
     "bracketing_records": [
       {
         "T_REC": "2012.02.19_22:55:30_TAI",
@@ -49,6 +54,13 @@
     "mask": "finite observation, original and both reconstructions; mu >= 0.8; finite smoothed observation neighborhood"
   },
   "scores": {
+    "original": {
+      "count": 25693,
+      "bias_gauss": 0.07300365545127543,
+      "mae_gauss": 9.018476889881612,
+      "rmse_gauss": 23.821126003867285,
+      "pearson_r": 0.8253540465211998
+    },
     "ananya": {
       "count": 25693,
       "bias_gauss": -0.3368298400131778,
@@ -58,14 +70,21 @@
     },
     "fixed": {
       "count": 25693,
-      "bias_gauss": 0.032412898172098636,
-      "mae_gauss": 9.017377900559433,
+      "bias_gauss": 0.0324128981720986,
+      "mae_gauss": 9.017377900559431,
       "rmse_gauss": 23.68463409431693,
       "pearson_r": 0.826450127963197
     }
   },
   "sensitivity_mu": {
     "0.8": {
+      "original": {
+        "count": 25693,
+        "bias_gauss": 0.07300365545127543,
+        "mae_gauss": 9.018476889881612,
+        "rmse_gauss": 23.821126003867285,
+        "pearson_r": 0.8253540465211998
+      },
       "ananya": {
         "count": 25693,
         "bias_gauss": -0.3368298400131778,
@@ -75,13 +94,20 @@
       },
       "fixed": {
         "count": 25693,
-        "bias_gauss": 0.032412898172098636,
-        "mae_gauss": 9.017377900559433,
+        "bias_gauss": 0.0324128981720986,
+        "mae_gauss": 9.017377900559431,
         "rmse_gauss": 23.68463409431693,
         "pearson_r": 0.826450127963197
       }
     },
     "0.9": {
+      "original": {
+        "count": 12851,
+        "bias_gauss": 0.4027038554912814,
+        "mae_gauss": 8.42936878461228,
+        "rmse_gauss": 25.0235798066951,
+        "pearson_r": 0.8928309567380952
+      },
       "ananya": {
         "count": 12851,
         "bias_gauss": 1.229995358650899,
@@ -91,23 +117,30 @@
       },
       "fixed": {
         "count": 12851,
-        "bias_gauss": 0.4071224477586049,
+        "bias_gauss": 0.4071224477586048,
         "mae_gauss": 8.470924793455927,
         "rmse_gauss": 25.285016556043804,
-        "pearson_r": 0.8902422501861319
+        "pearson_r": 0.8902422501861321
       }
     },
     "0.95": {
+      "original": {
+        "count": 6416,
+        "bias_gauss": 0.032064183963773564,
+        "mae_gauss": 5.559091000009462,
+        "rmse_gauss": 12.20542842011989,
+        "pearson_r": 0.4440656976816497
+      },
       "ananya": {
         "count": 6416,
-        "bias_gauss": -0.40422816141075946,
+        "bias_gauss": -0.4042281614107595,
         "mae_gauss": 6.770585642930849,
         "rmse_gauss": 15.065562043827798,
-        "pearson_r": 0.10182063693051202
+        "pearson_r": 0.10182063693051199
       },
       "fixed": {
         "count": 6416,
-        "bias_gauss": 0.03630716062162711,
+        "bias_gauss": 0.03630716062162706,
         "mae_gauss": 5.583789271835392,
         "rmse_gauss": 12.26169843394479,
         "pearson_r": 0.4342650425445981
@@ -121,6 +154,22 @@
       "mae_gauss": 9.018476889881612,
       "rmse_gauss": 23.821126003867285,
       "pearson_r": 0.8253540465211998
+    },
+    "registration_control": {
+      "positive_orientation": {
+        "count": 25693,
+        "bias_gauss": 0.07300365545127543,
+        "mae_gauss": 9.018476889881612,
+        "rmse_gauss": 23.821126003867285,
+        "pearson_r": 0.8253540465211998
+      },
+      "negative_header_orientation": {
+        "count": 25693,
+        "bias_gauss": 0.060736224025826215,
+        "mae_gauss": 13.395545648523413,
+        "rmse_gauss": 54.62316855247139,
+        "pearson_r": 0.03515812782779947
+      }
     },
     "header_CDELT1": -0.5
   }

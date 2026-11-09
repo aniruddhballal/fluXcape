@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import argparse
 from pathlib import Path
 from urllib.parse import urlencode
 from urllib.request import urlopen, urlretrieve
@@ -129,13 +130,8 @@ def project_observation(data, meta, synoptic_header):
         raise ValueError('Observer longitude does not match the HMI record.')
 
     ny, nx = int(synoptic_header['NAXIS2']), int(synoptic_header['NAXIS1'])
-    x, y = np.arange(nx), np.arange(ny)
-    # SunPy documents that HMI synoptic image data use positive CDELT1 even
-    # when the FITS header says negative. This affects physical registration;
-    # the original reconstruction functions are deliberately left untouched.
-    longitude = (synoptic_header['CRVAL1'] + (x + 1 - synoptic_header['CRPIX1']) * abs(synoptic_header['CDELT1'])) % 360
-    sin_lat = synoptic_header['CRVAL2'] + (y + 1 - synoptic_header['CRPIX2']) * synoptic_header['CDELT2']
-    latitude = np.degrees(np.arcsin(np.where(abs(sin_lat) <= 1, sin_lat, np.nan)))
+    # Use the exact same HMI longitude/latitude grid as the reconstruction.
+    longitude, latitude = calculate_coordinates(np.empty((ny, nx)), synoptic_header)
     lon_grid, lat_grid = np.meshgrid(longitude, latitude)
     angle = (np.sin(np.radians(lat_grid))*np.sin(np.radians(obs_lat))
              + np.cos(np.radians(lat_grid))*np.cos(np.radians(obs_lat))
@@ -188,41 +184,56 @@ def metrics(model, observation, mask):
             'pearson_r': float(np.corrcoef(model[mask], observation[mask])[0, 1])}
 
 
-def input_fingerprints():
+def input_fingerprints(rotations=ROTATIONS):
     """Identify the reconstruction code and input maps used for a report."""
     paths = [ROOT / 'synoptic_reconstruction.py', ROOT / 'prepare_viewer_data.py', ROOT / 'validate_observations.py']
-    paths += [ROOT / 'fits_files' / '720x360' / f'hmi.Synoptic_Mr_small.{n}.fits' for n in ROTATIONS]
+    paths += [ROOT / 'fits_files' / '720x360' / f'hmi.Synoptic_Mr_small.{n}.fits' for n in rotations]
     return {str(p.relative_to(ROOT)).replace('\\', '/'): hashlib.sha256(
         p.read_text(encoding='utf-8-sig').replace('\r\n', '\n').encode('utf-8')
         if p.suffix == '.py' else p.read_bytes()).hexdigest() for p in paths}
 
 
 def main():
-    if ROTATIONS != (2119, 2120, 2121):
-        raise ValueError('This observational validation is configured for CR 2119, 2120, 2121.')
-    maps, headers = load_maps(ROOT / 'fits_files' / '720x360')
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--rotation', type=int, default=ROTATIONS[1], help='central Carrington rotation')
+    center = parser.parse_args().rotation
+    rotations = (center - 1, center, center + 1)
+    maps, headers = load_maps(ROOT / 'fits_files' / '720x360', rotations)
+    if [h.get('CAR_ROT') for h in headers] != list(rotations):
+        raise ValueError('The FITS headers must identify the requested consecutive rotations.')
     nominal, crossing, before, after, record = reference_and_record(headers[1])
-    sunpy_earth_crossing = carrington_rotation_time(ROTATIONS[1] + 0.5)
+    sunpy_earth_crossing = carrington_rotation_time(center + 0.5)
     image, meta, data, source_url = observation(record)
     observed, mu, physical_longitude, physical_latitude = project_observation(data, meta, headers[1])
     model_lon, model_lat = calculate_coordinates(maps[1], headers[1])
+    if not (np.allclose(model_lon, physical_longitude, equal_nan=True) and
+            np.allclose(model_lat, physical_latitude, equal_nan=True)):
+        raise ValueError('Reconstruction and observational coordinate grids differ.')
     ananya = reconstruction(maps, headers, model_lon, model_lat, calculate_ananya_rotation_rate(model_lat))
     fixed = reconstruction(maps, headers, model_lon, model_lat, calculate_rotation_rate(model_lat))
     # The intersection is identical for both: visible, finite observation and both models.
     mask = np.isfinite(observed) & np.isfinite(ananya) & np.isfinite(fixed) & np.isfinite(maps[1]) & (mu >= MIN_MU)
     if mask.sum() < 10:
         raise ValueError('Too few common pixels for comparison.')
+    # Registration control: sample the original map as if the negative header
+    # sign were physical. The signed and physical orientations share a mask.
+    rows, columns = np.indices(maps[1].shape)
+    reflected_columns = (2 * (headers[1]['CRPIX1'] - 1) - columns) % maps[1].shape[1]
+    negative_orientation = map_coordinates(maps[1], [rows, reflected_columns],
+                                           order=1, mode='grid-wrap')
+    registration_mask = mask & np.isfinite(negative_orientation)
     sensitivity = {}
     for cutoff in (0.8, 0.9, 0.95):
         common = mask & (mu >= cutoff)
-        sensitivity[str(cutoff)] = {'ananya': metrics(ananya, observed, common),
+        sensitivity[str(cutoff)] = {'original': metrics(maps[1], observed, common),
+                                    'ananya': metrics(ananya, observed, common),
                                     'fixed': metrics(fixed, observed, common)}
-    results = {'cr': 2120, 'input_sha256': input_fingerprints(),
+    results = {'cr': center, 'input_rotations': list(rotations), 'input_sha256': input_fingerprints(rotations),
         'reference': {'definition': 'Observed HMI central meridian longitude 180 degrees, linearly interpolated between adjacent quality-zero 45-second records',
                       'crossing_tai': crossing.tai.isot, 'crossing_utc': crossing.utc.isot,
                       'header_T_ROT_tai': nominal.tai.isot,
-                      'sunpy_earth_carrington_rotation_2120_5_tai': sunpy_earth_crossing.tai.isot,
-                      'sunpy_earth_carrington_rotation_2120_5_utc': sunpy_earth_crossing.utc.isot,
+                      'sunpy_earth_midrotation_tai': sunpy_earth_crossing.tai.isot,
+                      'sunpy_earth_midrotation_utc': sunpy_earth_crossing.utc.isot,
                       'bracketing_records': [{'T_REC': r['rec'], 'T_OBS': r['obs'], 'CRLN_OBS_deg': r['longitude']} for r in (before, after)]},
         'observation': {'series': SERIES, 'T_REC': record['rec'], 'T_OBS': record['obs'],
                         'T_OBS_utc': record['time'].utc.isot, 'offset_seconds': float((record['time'] - crossing).to_value(u.s)),
@@ -233,13 +244,17 @@ def main():
                    'interpolation': 'bilinear detector sampling; LOS divided by mu',
                    'synoptic_longitude_step': 'absolute FITS CDELT1, per SunPy HMI synoptic-map convention',
                    'mask': 'finite observation, original and both reconstructions; mu >= 0.8; finite smoothed observation neighborhood'},
-        'scores': {'ananya': metrics(ananya, observed, mask), 'fixed': metrics(fixed, observed, mask)},
+        'scores': {'original': metrics(maps[1], observed, mask), 'ananya': metrics(ananya, observed, mask), 'fixed': metrics(fixed, observed, mask)},
         'sensitivity_mu': sensitivity,
         'diagnostics': {'original_vs_observation_same_mask': metrics(maps[1], observed, mask & np.isfinite(maps[1])),
+                        'registration_control': {
+                            'positive_orientation': metrics(maps[1], observed, registration_mask),
+                            'negative_header_orientation': metrics(negative_orientation, observed, registration_mask),
+                        },
                         'header_CDELT1': float(headers[1]['CDELT1'])}}
     OUTPUT.mkdir(exist_ok=True)
-    (OUTPUT/'cr2120_observational_metrics.json').write_text(json.dumps(results,indent=2)+'\n',encoding='utf-8')
-    np.savez_compressed(OUTPUT/'cr2120_observational_arrays.npz', observation=observed, ananya=ananya, fixed=fixed,
+    (OUTPUT/f'cr{center}_observational_metrics.json').write_text(json.dumps(results,indent=2)+'\n',encoding='utf-8')
+    np.savez_compressed(OUTPUT/f'cr{center}_observational_arrays.npz', observation=observed, ananya=ananya, fixed=fixed,
                         mu=mu, mask=mask, longitude=physical_longitude, latitude=physical_latitude)
     fig, axes = plt.subplots(2,2,figsize=(13,8),constrained_layout=True)
     for ax, field, title in zip(axes.flat, (observed, ananya, fixed, fixed-observed),
@@ -248,7 +263,7 @@ def main():
         im = ax.imshow(plotted,origin='lower',cmap='RdBu_r',vmin=-100,vmax=100)
         ax.set_title(title); ax.set_xlabel('Map column'); ax.set_ylabel('Map row')
     fig.colorbar(im,ax=axes,label='Gauss',shrink=.8,extend='both')
-    fig.savefig(OUTPUT/'cr2120_observational_comparison.png',dpi=150)
+    fig.savefig(OUTPUT/f'cr{center}_observational_comparison.png',dpi=150)
     plt.close(fig)
     print(json.dumps(results,indent=2))
 

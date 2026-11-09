@@ -17,16 +17,17 @@ cd ..\..
 Then prepare the data and launch the viewer:
 
 ```powershell
-.\.venv\Scripts\python.exe SFT\validate_observations.py
+.\.venv\Scripts\python.exe SFT\validate_observations.py --rotation 2120
 .\.venv\Scripts\python.exe SFT\prepare_viewer_data.py
 cd SFT\viewer
 npm run dev
 ```
 
 Open the local URL printed by Vite (normally http://127.0.0.1:5173/). The
-validation is specific to CR 2120 and requires JSOC access. Rerun validation and
-data preparation after changing the reconstruction or input maps. Stale scores
-are omitted. Press Ctrl+C in the terminal to stop the viewer.
+validation requires JSOC access and accepts another central rotation when three
+consecutive input maps are available. Rerun validation and data preparation
+after changing the reconstruction or input maps. Stale scores are omitted.
+Press Ctrl+C in the terminal to stop the viewer.
 
 The 2D and 3D views display the same FITS values. For the globe, the renderer
 maps the FITS sine-latitude rows onto the sphere; missing pixels remain dark.

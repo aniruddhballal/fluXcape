@@ -1,0 +1,176 @@
+{
+  "cr": 2124,
+  "input_rotations": [
+    2123,
+    2124,
+    2125
+  ],
+  "input_sha256": {
+    "synoptic_reconstruction.py": "79c43e629c7e0f9ec93a3e4c974f74087c99c4759beb4a8ba4c9f0baf2e2cc6e",
+    "prepare_viewer_data.py": "9394891f5af03c377b0c854cbbf1961625148bb9a0d558d78a1f8534fce10405",
+    "validate_observations.py": "33b69ea18dd2770ca291c80931da856889d8bb85975fb64b83569e38f9fa0deb",
+    "fits_files/720x360/hmi.Synoptic_Mr_small.2123.fits": "7f066bfca1e7cb1d73a10bff065e3236a345ba5d03a9598b71910d753723a7ef",
+    "fits_files/720x360/hmi.Synoptic_Mr_small.2124.fits": "0dc4e82d61310750d6e13a7e94de05a08d1784f94b60356d417a4bf5a6f29494",
+    "fits_files/720x360/hmi.Synoptic_Mr_small.2125.fits": "63a5b0cf01163e779ffd3dbf1ba67b05594fc79e70824f3fa19adac7a2d65ad8"
+  },
+  "reference": {
+    "definition": "Observed HMI central meridian longitude 180 degrees, linearly interpolated between adjacent quality-zero 45-second records",
+    "crossing_tai": "2012-06-08T00:30:10.874",
+    "crossing_utc": "2012-06-08T00:29:36.874",
+    "header_T_ROT_tai": "2012-06-08T00:26:50.000",
+    "sunpy_earth_midrotation_tai": "2012-06-08T00:22:55.339",
+    "sunpy_earth_midrotation_utc": "2012-06-08T00:22:21.339",
+    "bracketing_records": [
+      {
+        "T_REC": "2012.06.08_00:30:00_TAI",
+        "T_OBS": "2012.06.08_00:30:07_TAI",
+        "CRLN_OBS_deg": 180.000595
+      },
+      {
+        "T_REC": "2012.06.08_00:30:45_TAI",
+        "T_OBS": "2012.06.08_00:30:52_TAI",
+        "CRLN_OBS_deg": 179.993683
+      }
+    ]
+  },
+  "observation": {
+    "series": "hmi.M_45s",
+    "T_REC": "2012.06.08_00:30:00_TAI",
+    "T_OBS": "2012.06.08_00:30:07_TAI",
+    "T_OBS_utc": "2012-06-08T00:29:33.000",
+    "offset_seconds": -3.8736979166934304,
+    "QUALITY": "0x00000000",
+    "CRLN_OBS_deg": 180.000595,
+    "CRLT_OBS_deg": 0.21104,
+    "source_url": "https://jsoc1.stanford.edu/SUM45/D332039889/S00016/magnetogram.fits",
+    "file": "hmi.M_45s.20120608_003000_TAI.magnetogram.fits",
+    "sha256": "48c68824c5860aaec41d31b7ddee3431b9b1c04a6bf2d1bb0bb835783ffcd087"
+  },
+  "method": {
+    "mu_min": 0.8,
+    "smoothing_sigma_detector_pixels": 3.0,
+    "interpolation": "bilinear detector sampling; LOS divided by mu",
+    "synoptic_longitude_step": "absolute FITS CDELT1, per SunPy HMI synoptic-map convention",
+    "mask": "finite observation, original and both reconstructions; mu >= 0.8; finite smoothed observation neighborhood"
+  },
+  "scores": {
+    "original": {
+      "count": 25700,
+      "bias_gauss": -0.07386621646472177,
+      "mae_gauss": 14.82415463532096,
+      "rmse_gauss": 43.17068507717338,
+      "pearson_r": 0.6929857586079816
+    },
+    "ananya": {
+      "count": 25700,
+      "bias_gauss": 0.03964899189660525,
+      "mae_gauss": 23.88800969765653,
+      "rmse_gauss": 73.64183495375914,
+      "pearson_r": 0.1500486879437364
+    },
+    "fixed": {
+      "count": 25700,
+      "bias_gauss": -0.0713310647702883,
+      "mae_gauss": 15.011438816067022,
+      "rmse_gauss": 43.281733496533434,
+      "pearson_r": 0.6893568336811965
+    }
+  },
+  "sensitivity_mu": {
+    "0.8": {
+      "original": {
+        "count": 25700,
+        "bias_gauss": -0.07386621646472177,
+        "mae_gauss": 14.82415463532096,
+        "rmse_gauss": 43.17068507717338,
+        "pearson_r": 0.6929857586079816
+      },
+      "ananya": {
+        "count": 25700,
+        "bias_gauss": 0.03964899189660525,
+        "mae_gauss": 23.88800969765653,
+        "rmse_gauss": 73.64183495375914,
+        "pearson_r": 0.1500486879437364
+      },
+      "fixed": {
+        "count": 25700,
+        "bias_gauss": -0.0713310647702883,
+        "mae_gauss": 15.011438816067022,
+        "rmse_gauss": 43.281733496533434,
+        "pearson_r": 0.6893568336811965
+      }
+    },
+    "0.9": {
+      "original": {
+        "count": 12844,
+        "bias_gauss": -0.2911969161336496,
+        "mae_gauss": 17.18950744763275,
+        "rmse_gauss": 45.34582233389217,
+        "pearson_r": 0.7723444416430391
+      },
+      "ananya": {
+        "count": 12844,
+        "bias_gauss": 2.2616742202787115,
+        "mae_gauss": 27.991330779776945,
+        "rmse_gauss": 76.82603887570126,
+        "pearson_r": 0.25225341346689845
+      },
+      "fixed": {
+        "count": 12844,
+        "bias_gauss": -0.30118153181368884,
+        "mae_gauss": 17.35548565648075,
+        "rmse_gauss": 45.37762621610005,
+        "pearson_r": 0.7703114312479041
+      }
+    },
+    "0.95": {
+      "original": {
+        "count": 6415,
+        "bias_gauss": 0.14853525109519253,
+        "mae_gauss": 14.634988893909327,
+        "rmse_gauss": 42.0193694623146,
+        "pearson_r": 0.7366951631872931
+      },
+      "ananya": {
+        "count": 6415,
+        "bias_gauss": 3.2737693227944256,
+        "mae_gauss": 26.182701285231612,
+        "rmse_gauss": 67.85192719918896,
+        "pearson_r": 0.33448145974365806
+      },
+      "fixed": {
+        "count": 6415,
+        "bias_gauss": 0.08484288301126418,
+        "mae_gauss": 14.984462763197074,
+        "rmse_gauss": 42.439820362709995,
+        "pearson_r": 0.730016194640048
+      }
+    }
+  },
+  "diagnostics": {
+    "original_vs_observation_same_mask": {
+      "count": 25700,
+      "bias_gauss": -0.07386621646472177,
+      "mae_gauss": 14.82415463532096,
+      "rmse_gauss": 43.17068507717338,
+      "pearson_r": 0.6929857586079816
+    },
+    "registration_control": {
+      "positive_orientation": {
+        "count": 25700,
+        "bias_gauss": -0.07386621646472177,
+        "mae_gauss": 14.82415463532096,
+        "rmse_gauss": 43.17068507717338,
+        "pearson_r": 0.6929857586079816
+      },
+      "negative_header_orientation": {
+        "count": 25700,
+        "bias_gauss": -0.06761062869247461,
+        "mae_gauss": 25.89156253784061,
+        "rmse_gauss": 74.07640276320913,
+        "pearson_r": 0.04881719466262143
+      }
+    },
+    "header_CDELT1": -0.5
+  }
+}

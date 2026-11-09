@@ -36,7 +36,7 @@ def package_result(result):
 ananya = reconstruct(calculate_ananya_rotation_rate(latitude))
 fixed = reconstruct(calculate_rotation_rate(latitude))
 header = headers[1]
-validation_file = root / 'validation_data' / 'cr2120_observational_metrics.json'
+validation_file = root / 'validation_data' / f'cr{ROTATIONS[1]}_observational_metrics.json'
 validation = None
 if validation_file.exists():
     candidate = json.loads(validation_file.read_text(encoding='utf-8'))
@@ -57,6 +57,8 @@ payload = {
     'coordinates': {key: header[key] for key in ('CRPIX1', 'CRVAL1', 'CDELT1', 'CRPIX2', 'CRVAL2', 'CDELT2')},
     'observational_validation': validation,
 }
+# Export the physical longitude convention used for reconstruction and validation.
+payload['coordinates']['CDELT1'] = abs(payload['coordinates']['CDELT1'])
 output = root / 'viewer' / 'public' / 'maps.json'
 output.parent.mkdir(parents=True, exist_ok=True)
 output.write_text(json.dumps(payload, separators=(',', ':')), encoding='utf-8')
