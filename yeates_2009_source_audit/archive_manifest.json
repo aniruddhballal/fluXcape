@@ -1,0 +1,94 @@
+{
+  "download_url": "https://research-repository.st-andrews.ac.uk/bitstream/handle/10023/734/Accompanying%20software.zip?isAllowed=y&sequence=7",
+  "archive_filename": "Accompanying software.zip",
+  "archive_bytes": 37727958,
+  "sha256": "2a08be85b03c6339fdaa13e4bfb39ea01d91f51f12fc32ec0520991670c188ce",
+  "zip_crc_integrity": "PASS",
+  "member_count": 12,
+  "members": [
+    {
+      "filename": "alphaA4.mpg",
+      "bytes": 4145152,
+      "compressed_bytes": 3828437,
+      "prefix_hex": "00 00 01 ba 21 00 01 00 01 c3 33 67 00 00 01 bb",
+      "is_directory": false
+    },
+    {
+      "filename": "alphaL4.mpg",
+      "bytes": 6436864,
+      "compressed_bytes": 5833115,
+      "prefix_hex": "00 00 01 ba 21 00 01 00 01 c3 33 67 00 00 01 bb",
+      "is_directory": false
+    },
+    {
+      "filename": "bbso.mpg",
+      "bytes": 9863168,
+      "compressed_bytes": 9608236,
+      "prefix_hex": "00 00 01 ba 21 00 01 00 01 c3 33 67 00 00 01 bb",
+      "is_directory": false
+    },
+    {
+      "filename": "dynamoadv.mpg",
+      "bytes": 1875968,
+      "compressed_bytes": 1585715,
+      "prefix_hex": "00 00 01 ba 21 00 01 00 01 c3 33 67 00 00 01 bb",
+      "is_directory": false
+    },
+    {
+      "filename": "dynamodiff.mpg",
+      "bytes": 1630208,
+      "compressed_bytes": 1369667,
+      "prefix_hex": "00 00 01 ba 21 00 01 00 01 c3 33 67 00 00 01 bb",
+      "is_directory": false
+    },
+    {
+      "filename": "hairyA4.mpg",
+      "bytes": 6518784,
+      "compressed_bytes": 6023984,
+      "prefix_hex": "00 00 01 ba 21 00 01 00 01 c3 33 67 00 00 01 bb",
+      "is_directory": false
+    },
+    {
+      "filename": "rope12.mpg",
+      "bytes": 1501184,
+      "compressed_bytes": 1394356,
+      "prefix_hex": "00 00 01 ba 21 00 01 00 01 c3 33 67 00 00 01 bb",
+      "is_directory": false
+    },
+    {
+      "filename": "rope42.mpg",
+      "bytes": 270336,
+      "compressed_bytes": 242257,
+      "prefix_hex": "00 00 01 ba 21 00 01 00 01 c3 33 67 00 00 01 bb",
+      "is_directory": false
+    },
+    {
+      "filename": "rope5.mpg",
+      "bytes": 737280,
+      "compressed_bytes": 696463,
+      "prefix_hex": "00 00 01 ba 21 00 01 00 01 c3 33 67 00 00 01 bb",
+      "is_directory": false
+    },
+    {
+      "filename": "skewA4.mpg",
+      "bytes": 4861952,
+      "compressed_bytes": 4402628,
+      "prefix_hex": "00 00 01 ba 21 00 01 00 01 c3 33 67 00 00 01 bb",
+      "is_directory": false
+    },
+    {
+      "filename": "surfaceA4.mpg",
+      "bytes": 1579008,
+      "compressed_bytes": 1513142,
+      "prefix_hex": "00 00 01 ba 21 00 01 00 01 c3 33 67 00 00 01 bb",
+      "is_directory": false
+    },
+    {
+      "filename": "surfaceL4.mpg",
+      "bytes": 1343488,
+      "compressed_bytes": 1228758,
+      "prefix_hex": "00 00 01 ba 21 00 01 00 01 c3 33 67 00 00 01 bb",
+      "is_directory": false
+    }
+  ]
+}
