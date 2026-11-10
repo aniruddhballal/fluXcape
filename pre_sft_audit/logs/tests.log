@@ -1,0 +1,30 @@
+test_actual_chronology_is_decreasing_longitude_in_increasing_time (test_audit.CompletedAuditTests.test_actual_chronology_is_decreasing_longitude_in_increasing_time) ... ok
+test_all_original_files_unchanged (test_audit.CompletedAuditTests.test_all_original_files_unchanged) ... ok
+test_literal_HMI_reference_has_no_finite_results (test_audit.CompletedAuditTests.test_literal_HMI_reference_has_no_finite_results) ... ok
+test_observations_do_not_sample_seams (test_audit.CompletedAuditTests.test_observations_do_not_sample_seams) ... ok
+test_persisted_scores_and_identical_masks (test_audit.CompletedAuditTests.test_persisted_scores_and_identical_masks) ... ok
+test_projection_registration_and_baseline_reproduction (test_audit.CompletedAuditTests.test_projection_registration_and_baseline_reproduction) ... ok
+test_raw_fits_checksum_avoids_header_normalization_artifact (test_audit.CompletedAuditTests.test_raw_fits_checksum_avoids_header_normalization_artifact) ... ok
+test_resolution_and_registration_diagnostics_use_common_masks (test_audit.CompletedAuditTests.test_resolution_and_registration_diagnostics_use_common_masks) ... ok
+test_synthetic_accuracy_and_controls (test_audit.CompletedAuditTests.test_synthetic_accuracy_and_controls) ... ok
+test_area_weights_cover_sphere_and_polar_cells (test_audit.NumericalTests.test_area_weights_cover_sphere_and_polar_cells) ... ok
+test_literal_original_matches_independent_vectorization_on_finite_arrays (test_audit.NumericalTests.test_literal_original_matches_independent_vectorization_on_finite_arrays) ... <unknown>:422: SyntaxWarning: invalid escape sequence '\s'
+ok
+test_metric_units_and_bias_direction (test_audit.NumericalTests.test_metric_units_and_bias_direction) ... ok
+test_missing_edge_and_isolated_pixels_are_not_zero_measurements (test_audit.NumericalTests.test_missing_edge_and_isolated_pixels_are_not_zero_measurements) ... ok
+test_no_longitude_edge_extrapolation (test_audit.NumericalTests.test_no_longitude_edge_extrapolation) ... ok
+test_primary_sampler_reproduces_existing_at_native_grid (test_audit.NumericalTests.test_primary_sampler_reproduces_existing_at_native_grid) ... ok
+test_boundaries_are_current_and_no_unsupported_extrapolation (test_audit.PhysicsTests.test_boundaries_are_current_and_no_unsupported_extrapolation) ... ok
+test_degenerate_inverse_fails (test_audit.PhysicsTests.test_degenerate_inverse_fails) ... ok
+test_first_order_error_is_second_order (test_audit.PhysicsTests.test_first_order_error_is_second_order) ... ok
+test_known_feature_trajectory_positive_and_negative_rates (test_audit.PhysicsTests.test_known_feature_trajectory_positive_and_negative_rates) ... ok
+test_latitude_colatitude_equivalence (test_audit.PhysicsTests.test_latitude_colatitude_equivalence) ... ok
+test_north_south_symmetry (test_audit.PhysicsTests.test_north_south_symmetry) ... ok
+test_stationary_oracle_has_no_shift (test_audit.PhysicsTests.test_stationary_oracle_has_no_shift) ... ok
+test_tabulated_rates (test_audit.PhysicsTests.test_tabulated_rates) ... ok
+test_time_tagged_seam_selects_chronological_neighbor (test_audit.PhysicsTests.test_time_tagged_seam_selects_chronological_neighbor) ... ok
+
+----------------------------------------------------------------------
+Ran 24 tests in 2.735s
+
+OK

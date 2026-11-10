@@ -1,0 +1,1991 @@
+[
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2096.fits",
+    "cr": 2096,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "gCUAj9T7gCTAg9T5",
+    "DATASUM": "155638899",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2097.fits",
+    "cr": 2097,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "QcAWQa7VQaAVQa5V",
+    "DATASUM": "1249472741",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2098.fits",
+    "cr": 2098,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "gHBogGAogGAogGAo",
+    "DATASUM": "2658019203",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2099.fits",
+    "cr": 2099,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "3ALMA3IL59ILA9IL",
+    "DATASUM": "3392975650",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2100.fits",
+    "cr": 2100,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "H8lIH7iIH7iIH7iI",
+    "DATASUM": "3801861098",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2101.fits",
+    "cr": 2101,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "egfMgdZLedfLedZL",
+    "DATASUM": "807128218",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2102.fits",
+    "cr": 2102,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "dFFfg9DZdCDfd9DZ",
+    "DATASUM": "2827380370",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2103.fits",
+    "cr": 2103,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "Z8DMg6CMZ6CMd6CM",
+    "DATASUM": "4068251558",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2104.fits",
+    "cr": 2104,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "ZUL2hUJ2ZUJ2fUJ2",
+    "DATASUM": "1635785358",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2105.fits",
+    "cr": 2105,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "HcMeKcKbHcKbHcKb",
+    "DATASUM": "1375799868",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2106.fits",
+    "cr": 2106,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "55TA73S953SA53S9",
+    "DATASUM": "153602910",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2107.fits",
+    "cr": 2107,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "GJmaHJlXGJlaGJlU",
+    "DATASUM": "2562878685",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2108.fits",
+    "cr": 2108,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "TmabUlYZTlaaTlWY",
+    "DATASUM": "4110775455",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2109.fits",
+    "cr": 2109,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "SanHVZkHSakHSWkH",
+    "DATASUM": "1991806943",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2110.fits",
+    "cr": 2110,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "UFJHaC99WCGEaC99",
+    "DATASUM": "2591871147",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2111.fits",
+    "cr": 2111,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "XZcaYYZWXYaaXYYU",
+    "DATASUM": "1424127406",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2112.fits",
+    "cr": 2112,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "9C6a9B3U9B3a9B3U",
+    "DATASUM": "3581370953",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2113.fits",
+    "cr": 2113,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "5XDi7WDf5WDf5WDf",
+    "DATASUM": "2470792508",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2114.fits",
+    "cr": 2114,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "BK8HDI7GBI7GBI7G",
+    "DATASUM": "3094187535",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2115.fits",
+    "cr": 2115,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "7eWKAcWI0cWI7cWI",
+    "DATASUM": "1093583421",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2116.fits",
+    "cr": 2116,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "OhQAOeP2OeP8OeP8",
+    "DATASUM": "708695015",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2117.fits",
+    "cr": 2117,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "GaEAHZE7GaEAGWE5",
+    "DATASUM": "1248114182",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2118.fits",
+    "cr": 2118,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "dJTgg9RddGRdd9Rd",
+    "DATASUM": "3289719441",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2119.fits",
+    "cr": 2119,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "8ZTE9XQC8XQC8XQC",
+    "DATASUM": "4071628895",
+    "audited_input": true
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2120.fits",
+    "cr": 2120,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "9ITYFIRV9IRVEIRV",
+    "DATASUM": "802276192",
+    "audited_input": true
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2121.fits",
+    "cr": 2121,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "JaHRMUEOJZEOJZEO",
+    "DATASUM": "3170228023",
+    "audited_input": true
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2122.fits",
+    "cr": 2122,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "BrTZBoQXBoQXBoQX",
+    "DATASUM": "1790299224",
+    "audited_input": true
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2123.fits",
+    "cr": 2123,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "K4PXN3MWK3MWK3MW",
+    "DATASUM": "2024852514",
+    "audited_input": true
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2124.fits",
+    "cr": 2124,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "YWA1bU81ZUA1aU71",
+    "DATASUM": "3591661808",
+    "audited_input": true
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2125.fits",
+    "cr": 2125,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "BTp4DTn3BTn3BTn3",
+    "DATASUM": "3762048598",
+    "audited_input": true
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2126.fits",
+    "cr": 2126,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "hhnbkZkahfkahZka",
+    "DATASUM": "2758705605",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2127.fits",
+    "cr": 2127,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "gXNCiWK9gWKAgWK9",
+    "DATASUM": "3082951618",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2128.fits",
+    "cr": 2128,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "5Im36Hl35Hl35Hl3",
+    "DATASUM": "551875826",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2129.fits",
+    "cr": 2129,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "oZ9ioY7goY7goY7g",
+    "DATASUM": "2009936392",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2130.fits",
+    "cr": 2130,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "B5S0C5R0B5R0B5R0",
+    "DATASUM": "4031457731",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2131.fits",
+    "cr": 2131,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "6AAS675Q6AAQ653Q",
+    "DATASUM": "3418904533",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2132.fits",
+    "cr": 2132,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "geaahcRVgcXagcXU",
+    "DATASUM": "1430728965",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2133.fits",
+    "cr": 2133,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "ZQPAaQO7UQOAZQO5",
+    "DATASUM": "2321265444",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2134.fits",
+    "cr": 2134,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "YA7Aa67ASA7AY37A",
+    "DATASUM": "4292983833",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2135.fits",
+    "cr": 2135,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "F4caF2ZTF2aZF2YZ",
+    "DATASUM": "673281693",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2136.fits",
+    "cr": 2136,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "RAigT1ZZR8fdR8ZZ",
+    "DATASUM": "249841006",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2137.fits",
+    "cr": 2137,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "AIdNC9ZLAGbLA9ZL",
+    "DATASUM": "3325470399",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2138.fits",
+    "cr": 2138,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "iGSZj9RWiERWi9RW",
+    "DATASUM": "3516418411",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2139.fits",
+    "cr": 2139,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "ZgGdag9dTgGdZg9d",
+    "DATASUM": "854256831",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2140.fits",
+    "cr": 2140,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "MNZaNMXYMMXaMMXW",
+    "DATASUM": "3028815634",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2141.fits",
+    "cr": 2141,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "e8aAe5X8e5aAe5W5",
+    "DATASUM": "3003324516",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2142.fits",
+    "cr": 2142,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "WdAhWa4gWaAgWa3g",
+    "DATASUM": "4187052920",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2143.fits",
+    "cr": 2143,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "bKEmbJ9jbJEjbJ9j",
+    "DATASUM": "1250967111",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2144.fits",
+    "cr": 2144,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "3EgG3DgG3DgG3DgG",
+    "DATASUM": "1829034489",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2145.fits",
+    "cr": 2145,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "6SYA7QY46QYA6QY3",
+    "DATASUM": "1380121338",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2146.fits",
+    "cr": 2146,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "UahdaZfaXafaaWfa",
+    "DATASUM": "2677459249",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2147.fits",
+    "cr": 2147,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "k8UAm8U1k8U8k8U8",
+    "DATASUM": "1172019694",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2148.fits",
+    "cr": 2148,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "PX3APW15PW1APW13",
+    "DATASUM": "3613229394",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2149.fits",
+    "cr": 2149,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "eGbJhEZ9eEbGeEZ9",
+    "DATASUM": "747062032",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2150.fits",
+    "cr": 2150,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "3cY56ZX33aX33YX3",
+    "DATASUM": "2492898268",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2151.fits",
+    "cr": 2151,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "dd3QfZ1Odd1OdZ1O",
+    "DATASUM": "2320453672",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2152.fits",
+    "cr": 2152,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "OUARPR5RORAROR3R",
+    "DATASUM": "785896691",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2153.fits",
+    "cr": 2153,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "9SZaDSWW9SWaCSWU",
+    "DATASUM": "694135630",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2154.fits",
+    "cr": 2154,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "5ADe55Bd5ABd55Bd",
+    "DATASUM": "1975882582",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2155.fits",
+    "cr": 2155,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "JSH6LRE4JRE4JRE4",
+    "DATASUM": "315645953",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2156.fits",
+    "cr": 2156,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "PB9bS96aPA6aP76a",
+    "DATASUM": "1426498783",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2157.fits",
+    "cr": 2157,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "9bM9DZM69bM6CZM6",
+    "DATASUM": "4221667120",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2158.fits",
+    "cr": 2158,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "G8eeI6cbG6cbG6cb",
+    "DATASUM": "2622134793",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2159.fits",
+    "cr": 2159,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "eeElgZEkebEkeZEk",
+    "DATASUM": "3955379604",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2160.fits",
+    "cr": 2160,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "ZfihgdhZZdhfddhZ",
+    "DATASUM": "3997402546",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2161.fits",
+    "cr": 2161,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "8fAe9Z5b8dAb8Z3b",
+    "DATASUM": "4090400314",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2162.fits",
+    "cr": 2162,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "Coc3Doc2Coc2Coc2",
+    "DATASUM": "3089438729",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2163.fits",
+    "cr": 2163,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "WkaCWiW9WiaCWiU9",
+    "DATASUM": "3024303065",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2164.fits",
+    "cr": 2164,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "gAiDg6fCgAfCg5fC",
+    "DATASUM": "1712923289",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2165.fits",
+    "cr": 2165,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "ZAFii39ZZACff39Z",
+    "DATASUM": "2244721576",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2166.fits",
+    "cr": 2166,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "ZA9ad56YZA6ad36Y",
+    "DATASUM": "1558551750",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2167.fits",
+    "cr": 2167,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "AeSECeQEAeQEAeQE",
+    "DATASUM": "41752119",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2168.fits",
+    "cr": 2168,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "9iCaFgCZ9gCaEgCW",
+    "DATASUM": "3939089495",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2169.fits",
+    "cr": 2169,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "Ae8fCZ6ZAb6fAZ6Z",
+    "DATASUM": "4228037175",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2170.fits",
+    "cr": 2170,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "faiMfVfMfafMfUfM",
+    "DATASUM": "193660069",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2171.fits",
+    "cr": 2171,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "ajY4djX1ajX1ajX1",
+    "DATASUM": "3279051132",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2172.fits",
+    "cr": 2172,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "95JiA3Hh23Hh93Hh",
+    "DATASUM": "2897631031",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2173.fits",
+    "cr": 2173,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "Y9Feb7DZZ7Dda7DZ",
+    "DATASUM": "3118563966",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2174.fits",
+    "cr": 2174,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "3LDF3K993KAE3K99",
+    "DATASUM": "1577312108",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2175.fits",
+    "cr": 2175,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "53aZ50VX50aX50UX",
+    "DATASUM": "2790505297",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2176.fits",
+    "cr": 2176,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "PoAqRn4nPnAnPn3n",
+    "DATASUM": "2899055847",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2177.fits",
+    "cr": 2177,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "NXOVPXNSNXNSNXNS",
+    "DATASUM": "4251108589",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2178.fits",
+    "cr": 2178,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "DA51G150D850D850",
+    "DATASUM": "1742965534",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2179.fits",
+    "cr": 2179,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "9ofaDmfR9mfXAmfX",
+    "DATASUM": "2550255656",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2180.fits",
+    "cr": 2180,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "YXnSaVmPYVmPaVmP",
+    "DATASUM": "114225597",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2181.fits",
+    "cr": 2181,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "kYiMkXiMkXiMkXiM",
+    "DATASUM": "4075419781",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2182.fits",
+    "cr": 2182,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "NV8JNV8INV8INV8I",
+    "DATASUM": "478515211",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2183.fits",
+    "cr": 2183,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "IAdgJ1ZdI8bdI8Zd",
+    "DATASUM": "2472205841",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2184.fits",
+    "cr": 2184,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "5EF7A9967EE6A996",
+    "DATASUM": "1121869326",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2185.fits",
+    "cr": 2185,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "3nTa5nTT3nTY3nTY",
+    "DATASUM": "3415065170",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2186.fits",
+    "cr": 2186,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "3OcZAMcY4McYAMcY",
+    "DATASUM": "842893080",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2187.fits",
+    "cr": 2187,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "7af6BUe69Ze6AZe6",
+    "DATASUM": "3761451528",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2188.fits",
+    "cr": 2188,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "D7aAF6T0D6Z7D6Z7",
+    "DATASUM": "1666257388",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2189.fits",
+    "cr": 2189,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "0EMl3ELl0ELl0ELl",
+    "DATASUM": "1048130414",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2190.fits",
+    "cr": 2190,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "MhANNf7LMfALMf7L",
+    "DATASUM": "3319318753",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2191.fits",
+    "cr": 2191,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "ZDlegAlZZAldfAlZ",
+    "DATASUM": "705607601",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2192.fits",
+    "cr": 2192,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "MZaIOZXFMZaFMZUF",
+    "DATASUM": "3443262461",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2193.fits",
+    "cr": 2193,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "ZXdCfUdAZUdAfUdA",
+    "DATASUM": "36385462",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2194.fits",
+    "cr": 2194,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "kTMWlRKUkRKUkRKU",
+    "DATASUM": "4245132099",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2195.fits",
+    "cr": 2195,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "kI8JlI8HkI8HkI8H",
+    "DATASUM": "1081720097",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2196.fits",
+    "cr": 2196,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "ZfMkgeMkZeMkfeMk",
+    "DATASUM": "3814080326",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2197.fits",
+    "cr": 2197,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "mVBfpUBcmUBcmUBc",
+    "DATASUM": "863985175",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2198.fits",
+    "cr": 2198,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "GdABIZ0AGd7AGZ7A",
+    "DATASUM": "897511854",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2199.fits",
+    "cr": 2199,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "1l813k701k701k70",
+    "DATASUM": "3901354748",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2200.fits",
+    "cr": 2200,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "06eM05dJ05dJ05dJ",
+    "DATASUM": "2646503439",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2201.fits",
+    "cr": 2201,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "C3gJE1eHC1eHC1eH",
+    "DATASUM": "336241859",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2202.fits",
+    "cr": 2202,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "IaTIJVSIIZSIIZSI",
+    "DATASUM": "1379115168",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2203.fits",
+    "cr": 2203,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "Daa8FZY7Daa7DYW7",
+    "DATASUM": "921226168",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2204.fits",
+    "cr": 2204,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "2Ki62Hi52Hi52Hi5",
+    "DATASUM": "2008935691",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2205.fits",
+    "cr": 2205,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "KIUqLGToKGToKGTo",
+    "DATASUM": "1138568613",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2206.fits",
+    "cr": 2206,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "ZfVfcZUeZdUebZUe",
+    "DATASUM": "554251096",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2207.fits",
+    "cr": 2207,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "aDOAc9O5aCOAa9O5",
+    "DATASUM": "2333944658",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2208.fits",
+    "cr": 2208,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "FgaaIfSUFfYaFfYU",
+    "DATASUM": "4191590591",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2209.fits",
+    "cr": 2209,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "1DA81C371C971C97",
+    "DATASUM": "1973623798",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2210.fits",
+    "cr": 2210,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "akFNbhCNahCNahCN",
+    "DATASUM": "2978664836",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2211.fits",
+    "cr": 2211,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "6aGa7VDT6ZDY6ZDY",
+    "DATASUM": "862479857",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2212.fits",
+    "cr": 2212,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "EK6NGH5KEH5KEH5K",
+    "DATASUM": "2442963902",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2213.fits",
+    "cr": 2213,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "hbgZhZfWhbfWhZfW",
+    "DATASUM": "618815756",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2214.fits",
+    "cr": 2214,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "9g3bAd2b4d2b9d2b",
+    "DATASUM": "399117291",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2215.fits",
+    "cr": 2215,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "ZGiOfEZNZEfNdEZN",
+    "DATASUM": "1711965003",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2216.fits",
+    "cr": 2216,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "7gAh8d2Z7d8f7d8Z",
+    "DATASUM": "3598456527",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2217.fits",
+    "cr": 2217,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "BVloCUimBUimBUim",
+    "DATASUM": "564125089",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2218.fits",
+    "cr": 2218,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "LIMTLFJQLFJQLFJQ",
+    "DATASUM": "1362078653",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2219.fits",
+    "cr": 2219,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "19lP18lP18lP18lP",
+    "DATASUM": "2476578100",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2220.fits",
+    "cr": 2220,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "HJDdKI9cHIAcHI9c",
+    "DATASUM": "1115764188",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2221.fits",
+    "cr": 2221,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "ZSUHeRT9ZRTGdRT9",
+    "DATASUM": "1006225280",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2222.fits",
+    "cr": 2222,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "WDfDa9f9ZAfCa9f9",
+    "DATASUM": "2146423952",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2223.fits",
+    "cr": 2223,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "RiGaTfFWRfFaRfFU",
+    "DATASUM": "3951531205",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2224.fits",
+    "cr": 2224,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "kqUhmnUhknUhknUh",
+    "DATASUM": "4216861790",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2225.fits",
+    "cr": 2225,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "86ga95ZS85dY85ZY",
+    "DATASUM": "3975443981",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2226.fits",
+    "cr": 2226,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "0A4o174o0A4o074o",
+    "DATASUM": "3048676381",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2227.fits",
+    "cr": 2227,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "DnlAEnk4Dnk9Dnk9",
+    "DATASUM": "4007928289",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2228.fits",
+    "cr": 2228,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "4cHJ6Z994bGG4Z99",
+    "DATASUM": "1149108271",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2229.fits",
+    "cr": 2229,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "iaXAlWWAiaWAiUWA",
+    "DATASUM": "1142090838",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2230.fits",
+    "cr": 2230,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "RMijSJigRJigRJig",
+    "DATASUM": "1641111483",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2231.fits",
+    "cr": 2231,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "mCi3oAZ2mAf2mAZ2",
+    "DATASUM": "2212441913",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2232.fits",
+    "cr": 2232,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "nLfaoIfUnIfanIfU",
+    "DATASUM": "1740301916",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2233.fits",
+    "cr": 2233,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "Wo9YXl7YWl7YWl7Y",
+    "DATASUM": "2404693677",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2234.fits",
+    "cr": 2234,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "JFeLMDdJJDdJJDdJ",
+    "DATASUM": "2127370505",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2235.fits",
+    "cr": 2235,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "hXnAjWk6hWkAhWk3",
+    "DATASUM": "986993739",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2236.fits",
+    "cr": 2236,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "5X7jAX6h8X6hAX6h",
+    "DATASUM": "4167980547",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2237.fits",
+    "cr": 2237,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "lTbalRbXlRbalRbW",
+    "DATASUM": "384350523",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2238.fits",
+    "cr": 2238,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "nmDjnj9hnjAhnj9h",
+    "DATASUM": "3445576226",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2239.fits",
+    "cr": 2239,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "CBPaC9PTCAPZC7PZ",
+    "DATASUM": "1762418375",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2240.fits",
+    "cr": 2240,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "YAmOa4jOZAjOa3jO",
+    "DATASUM": "2968546734",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2241.fits",
+    "cr": 2241,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "9466C4359435A435",
+    "DATASUM": "3419460645",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2242.fits",
+    "cr": 2242,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "njj4pih4nih4nih4",
+    "DATASUM": "117366368",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2243.fits",
+    "cr": 2243,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "CGaJEGVHCGaHCGUH",
+    "DATASUM": "1982695955",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2244.fits",
+    "cr": 2244,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "YafoZWZmYafmYUZm",
+    "DATASUM": "891353517",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2245.fits",
+    "cr": 2245,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "dZpQgWnOdWnOdWnO",
+    "DATASUM": "1054569104",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2246.fits",
+    "cr": 2246,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "FXZnIXYmFXYmFXYm",
+    "DATASUM": "1144910851",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2247.fits",
+    "cr": 2247,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "TCKTWBITTBITTBIT",
+    "DATASUM": "2389791682",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2248.fits",
+    "cr": 2248,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "mRhhpQefmQefmQef",
+    "DATASUM": "1443044199",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2249.fits",
+    "cr": 2249,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "9cKmHZIm9bImGZIm",
+    "DATASUM": "779417890",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2250.fits",
+    "cr": 2250,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "c3HNe1EMc1EMc1EM",
+    "DATASUM": "3582491541",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2251.fits",
+    "cr": 2251,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "fJYkgGXjfGXjfGXj",
+    "DATASUM": "1999766407",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2252.fits",
+    "cr": 2252,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "OfDbPe9aOeCaOe9a",
+    "DATASUM": "380252901",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2253.fits",
+    "cr": 2253,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "MjYWPgXWMgXWMgXW",
+    "DATASUM": "205999081",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2254.fits",
+    "cr": 2254,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "9kFKCj9K9jCKAj9K",
+    "DATASUM": "4170746395",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2255.fits",
+    "cr": 2255,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "8alj8Zji8aji8Yji",
+    "DATASUM": "905579057",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2256.fits",
+    "cr": 2256,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "BdgoDcelBcelBcel",
+    "DATASUM": "554630423",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2257.fits",
+    "cr": 2257,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "oddeqdbZodbbodbZ",
+    "DATASUM": "270219104",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2258.fits",
+    "cr": 2258,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "BWc3CWZ1BWb1BWZ1",
+    "DATASUM": "3721368543",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2259.fits",
+    "cr": 2259,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "iABIi299i9AGi999",
+    "DATASUM": "1464950081",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2260.fits",
+    "cr": 2260,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "WpllZmklWmklWmkl",
+    "DATASUM": "2208410247",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2261.fits",
+    "cr": 2261,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "ZFRdZ9QZZCQdZ9QZ",
+    "DATASUM": "1107876468",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2262.fits",
+    "cr": 2262,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "5e3D5Z1B5d1B5Z1B",
+    "DATASUM": "3296222228",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2263.fits",
+    "cr": 2263,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "3AAa5A5U3AAa3A3U",
+    "DATASUM": "1012725268",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2264.fits",
+    "cr": 2264,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "cfagdZVZcdZfcZZZ",
+    "DATASUM": "3303006306",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2265.fits",
+    "cr": 2265,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "GaAJHTA9GZAGGZA9",
+    "DATASUM": "3577434825",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2266.fits",
+    "cr": 2266,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "kELjl9JikEJik9Ji",
+    "DATASUM": "1158788660",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2267.fits",
+    "cr": 2267,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "FFCDHFB9FFBCFFB9",
+    "DATASUM": "859204803",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2268.fits",
+    "cr": 2268,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "JZINLWFKJWFKJWFK",
+    "DATASUM": "3592891567",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2269.fits",
+    "cr": 2269,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "Z41Gi20GZ20Gf20G",
+    "DATASUM": "1954301281",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2270.fits",
+    "cr": 2270,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "0HKM3HHM0HHM0HHM",
+    "DATASUM": "572795923",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2271.fits",
+    "cr": 2271,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "ZrDphoAoZoAofoAo",
+    "DATASUM": "1933353315",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2272.fits",
+    "cr": 2272,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "gaa9jTY9gZa9gZY9",
+    "DATASUM": "3485627206",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2273.fits",
+    "cr": 2273,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "daGegTFedZFedZFe",
+    "DATASUM": "3509434703",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2274.fits",
+    "cr": 2274,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "9WIdFT9c9TGcET9c",
+    "DATASUM": "4080325596",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2275.fits",
+    "cr": 2275,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "YbeCcbd9ZbdCabd9",
+    "DATASUM": "3064556139",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2276.fits",
+    "cr": 2276,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "h1UIi1UFh1UFh1UF",
+    "DATASUM": "1978087995",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2277.fits",
+    "cr": 2277,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "DaWdDZUaDaUaDWUa",
+    "DATASUM": "3337671636",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2278.fits",
+    "cr": 2278,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "9We0HWb09Wb0EWb0",
+    "DATASUM": "3685851107",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2279.fits",
+    "cr": 2279,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "ZbHFdZGDZaGDdYGD",
+    "DATASUM": "3289989976",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2280.fits",
+    "cr": 2280,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "G9fSG9ZQG9dQG9ZQ",
+    "DATASUM": "1405555407",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2281.fits",
+    "cr": 2281,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "YLRAaJQ6ZJQAaJQ3",
+    "DATASUM": "570650221",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2282.fits",
+    "cr": 2282,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "9VkA9Vh69VhA9Vh5",
+    "DATASUM": "3801904125",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2283.fits",
+    "cr": 2283,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "9MIABJG49JGAAJG3",
+    "DATASUM": "472804081",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2284.fits",
+    "cr": 2284,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "U8Faa5ERX5EXa5EX",
+    "DATASUM": "1579481205",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2285.fits",
+    "cr": 2285,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "LaXZOTXWLYXWLYXW",
+    "DATASUM": "3553949612",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2286.fits",
+    "cr": 2286,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "ZH1aeH0WZH0abH0W",
+    "DATASUM": "3827527385",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2287.fits",
+    "cr": 2287,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "NDN3P9N2NCN2N9N2",
+    "DATASUM": "462429738",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2288.fits",
+    "cr": 2288,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "N3g6P0e5N0e5N0e5",
+    "DATASUM": "1766201114",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2289.fits",
+    "cr": 2289,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "oKTApHT7oHTAoHT5",
+    "DATASUM": "4103402905",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2290.fits",
+    "cr": 2290,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "S3ADV26DS2ADS23D",
+    "DATASUM": "1361434870",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2291.fits",
+    "cr": 2291,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "bQeUdPZRbPdRbPZR",
+    "DATASUM": "4037191371",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2292.fits",
+    "cr": 2292,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "HcnhJZkfHbkfHZkf",
+    "DATASUM": "2769115160",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2293.fits",
+    "cr": 2293,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "MdiYMdgYMdgYMdgY",
+    "DATASUM": "1598452499",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2294.fits",
+    "cr": 2294,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "9RVAGRT49RT9ERT9",
+    "DATASUM": "3549819214",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2295.fits",
+    "cr": 2295,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "gBg5i9e4gAe4g7e4",
+    "DATASUM": "811993761",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2296.fits",
+    "cr": 2296,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "9AJVA1GS98GSA8GS",
+    "DATASUM": "951806297",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2297.fits",
+    "cr": 2297,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "gCd9hCZ8gCd8gCZ8",
+    "DATASUM": "4196869503",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2298.fits",
+    "cr": 2298,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "bAfpd4dobAdob3do",
+    "DATASUM": "789988538",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2299.fits",
+    "cr": 2299,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "F5AfH40fF47fF47f",
+    "DATASUM": "820207907",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2300.fits",
+    "cr": 2300,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "jiQMmhPMjhPMjhPM",
+    "DATASUM": "1905504634",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2301.fits",
+    "cr": 2301,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "ZXjPdWjNZWjNdWjN",
+    "DATASUM": "3376515015",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2302.fits",
+    "cr": 2302,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "hANYh6MVhAMVh3MV",
+    "DATASUM": "332822700",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2303.fits",
+    "cr": 2303,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "3FdAADc84DcAADc5",
+    "DATASUM": "3615679328",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2304.fits",
+    "cr": 2304,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "7r5Q7o2O7o2O7o2O",
+    "DATASUM": "1360895841",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2305.fits",
+    "cr": 2305,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "LjXeLhVcLhVcLhVc",
+    "DATASUM": "1904833807",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2306.fits",
+    "cr": 2306,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "VDYAXDW2VDW9VDW9",
+    "DATASUM": "7472372",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2307.fits",
+    "cr": 2307,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "1SoA1Ql51QlA1Ql5",
+    "DATASUM": "3977832824",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2308.fits",
+    "cr": 2308,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "QeV1RZT0QdT0QZT0",
+    "DATASUM": "3581028354",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2309.fits",
+    "cr": 2309,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "VkA6Vk55VkA5Vk35",
+    "DATASUM": "2194989313",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2310.fits",
+    "cr": 2310,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "3Lg1AIZ06If0AIZ0",
+    "DATASUM": "3494118226",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2311.fits",
+    "cr": 2311,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "XfonYZlnXflnXZln",
+    "DATASUM": "3004116690",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2312.fits",
+    "cr": 2312,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "Nh4iQh2fNh2fNh2f",
+    "DATASUM": "1962750976",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2313.fits",
+    "cr": 2313,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "QkL5TkL4QkL4QkL4",
+    "DATASUM": "1336348420",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2314.fits",
+    "cr": 2314,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "8fgSAZdR1ddR8ZdR",
+    "DATASUM": "2337382754",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2315.fits",
+    "cr": 2315,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "mSphpQogmQogmQog",
+    "DATASUM": "3457488517",
+    "audited_input": false
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2316.fits",
+    "cr": 2316,
+    "raw_file_checksum_hex": "0xffffffff",
+    "raw_checksum_valid": true,
+    "CHECKSUM": "QI35TF04QF04QF04",
+    "DATASUM": "3795392491",
+    "audited_input": false
+  }
+]

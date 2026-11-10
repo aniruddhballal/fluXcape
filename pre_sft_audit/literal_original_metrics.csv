@@ -1,0 +1,4 @@
+central_cr,variant,finite_output_pixels,status,count,bias_G,mae_G,rmse_G,pearson_r,median_abs_G,p95_abs_G
+2120,literal_original_on_available_HMI,0,not observationally scoreable on these NaN-containing HMI inputs,0,,,,,,
+2122,literal_original_on_available_HMI,0,not observationally scoreable on these NaN-containing HMI inputs,0,,,,,,
+2124,literal_original_on_available_HMI,0,not observationally scoreable on these NaN-containing HMI inputs,0,,,,,,

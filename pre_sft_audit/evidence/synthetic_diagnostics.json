@@ -1,0 +1,38 @@
+[
+  {
+    "case": "smooth_rotation",
+    "common_pixels": 129508,
+    "first_order_vs_exact_max_shift_deg": 19.360400152992497,
+    "first_order_vs_exact_field_rmse_G": 0.6597353130780248
+  },
+  {
+    "case": "seam_features",
+    "common_pixels": 129508,
+    "first_order_vs_exact_max_shift_deg": 19.360400152992497,
+    "first_order_vs_exact_field_rmse_G": 2.0661568463370292
+  },
+  {
+    "case": "missing_data",
+    "common_pixels": 128074,
+    "first_order_vs_exact_max_shift_deg": 19.360400152992497,
+    "first_order_vs_exact_field_rmse_G": 2.0776895299138487
+  },
+  {
+    "case": "stationary_control",
+    "common_pixels": 129508,
+    "first_order_vs_exact_max_shift_deg": 19.360400152992497,
+    "first_order_vs_exact_field_rmse_G": 0.7841796467145534
+  },
+  {
+    "case": "opposite_rotation_control",
+    "common_pixels": 129508,
+    "first_order_vs_exact_max_shift_deg": 19.360400152992497,
+    "first_order_vs_exact_field_rmse_G": 0.9114390050012142
+  },
+  {
+    "case": "evolving_control",
+    "common_pixels": 129508,
+    "first_order_vs_exact_max_shift_deg": 19.360400152992497,
+    "first_order_vs_exact_field_rmse_G": 2.067202984897254
+  }
+]

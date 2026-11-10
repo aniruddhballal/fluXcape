@@ -1,0 +1,8 @@
+test_hmi_negative_header_maps_to_increasing_physical_longitude (test_coordinate_registration.CoordinateRegistrationTests.test_hmi_negative_header_maps_to_increasing_physical_longitude) ... ok
+test_original_sample_positions_reproduce_input (test_coordinate_registration.CoordinateRegistrationTests.test_original_sample_positions_reproduce_input) ... ok
+test_rotation_boundary_chooses_and_samples_correct_map (test_coordinate_registration.CoordinateRegistrationTests.test_rotation_boundary_chooses_and_samples_correct_map) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.006s
+
+OK

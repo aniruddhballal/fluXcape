@@ -1,0 +1,2008 @@
+[
+  {
+    "path": ".gitignore",
+    "bytes": 30,
+    "sha256": "061830dec9ff45907398d094d179f71c9fbc1838a30f0f869b43dccb98a87d7d"
+  },
+  {
+    "path": "Solar Physics - Research Topics.md",
+    "bytes": 10017,
+    "sha256": "25e311035a6167fff599d698e4279b00f42c4bc50e7674da1558a0759c1237cc",
+    "lines": 103
+  },
+  {
+    "path": "layers of the sun.md",
+    "bytes": 2255,
+    "sha256": "0b35dfcec146559031019fd2510d824b4db9309e71a22c4ba8a0341eb11d4a81",
+    "lines": 7
+  },
+  {
+    "path": "pre_sft_correction_audit.md",
+    "bytes": 8513,
+    "sha256": "b9bea71e66d1d32fe658e6d8dd87e1b4d19f29de58fcaf26de8cf3380f26f15f",
+    "lines": 62
+  },
+  {
+    "path": "research-question.md",
+    "bytes": 2952,
+    "sha256": "fb8010a66de993ff24e7e7fc9507d57e2a1b353234725357df34530ddf200aeb",
+    "lines": 27
+  },
+  {
+    "path": "SFT/download_synoptic_maps.py",
+    "bytes": 5895,
+    "sha256": "4060593eb8148455576b3f160837e7a4602a0976708d650cf7ad8f3d82ada9cc",
+    "lines": 144,
+    "functions": [
+      {
+        "name": "query",
+        "line": 23
+      },
+      {
+        "name": "archive_records",
+        "line": 32
+      },
+      {
+        "name": "make_header",
+        "line": 46
+      },
+      {
+        "name": "download_map",
+        "line": 67
+      },
+      {
+        "name": "main",
+        "line": 90
+      }
+    ],
+    "imports": [
+      "from astropy.io import fits",
+      "from pathlib import Path",
+      "from urllib.parse import urlencode",
+      "from urllib.request import urlopen",
+      "import json",
+      "import math",
+      "import re",
+      "import sys",
+      "import warnings"
+    ]
+  },
+  {
+    "path": "SFT/observational_validation.md",
+    "bytes": 8612,
+    "sha256": "09885a52e0ab25e149022d2065870ed8a6f8a59434a6ac9684e3dee968b84bef",
+    "lines": 148
+  },
+  {
+    "path": "SFT/pre-sft comparision.md",
+    "bytes": 3374,
+    "sha256": "b1864152dff99a5f0795df5e0c7438457d0d409836ac467b0afc48e9fe0a3db6",
+    "lines": 70
+  },
+  {
+    "path": "SFT/prepare_viewer_data.py",
+    "bytes": 3114,
+    "sha256": "480d978bf35587f3c12bdf90b2c9240fa545c9a89204b53b70e0f03f96766da2",
+    "lines": 65,
+    "functions": [
+      {
+        "name": "reconstruct",
+        "line": 17
+      },
+      {
+        "name": "encode",
+        "line": 22
+      },
+      {
+        "name": "package_result",
+        "line": 26
+      }
+    ],
+    "imports": [
+      "from pathlib import Path",
+      "from synoptic_reconstruction import ROTATIONS, load_maps, calculate_coordinates, calculate_delta_t, calculate_rotation_rate, calculate_ananya_rotation_rate, calculate_phi_prime, select_source_map, interpolate_field",
+      "import base64",
+      "import hashlib",
+      "import json",
+      "import numpy as np"
+    ]
+  },
+  {
+    "path": "SFT/requirements.txt",
+    "bytes": 49,
+    "sha256": "baf39d01ad0803db7ad2d531bfe1e757c3990f0e3226680eebd71f8dc623fa16",
+    "lines": 4
+  },
+  {
+    "path": "SFT/steps.md",
+    "bytes": 4460,
+    "sha256": "fcfa5b2a0014e25357bdb75df7c4a4aa6ab8fbc640bdff38f3caf529daeb044b",
+    "lines": 71
+  },
+  {
+    "path": "SFT/synoptic_reconstruction.py",
+    "bytes": 8647,
+    "sha256": "2727847b94bf293a25afb773d7454d8370d997adef56446bbcead44c617304cb",
+    "lines": 183,
+    "functions": [
+      {
+        "name": "sunalyse_colormap",
+        "line": 13
+      },
+      {
+        "name": "load_maps",
+        "line": 39
+      },
+      {
+        "name": "calculate_coordinates",
+        "line": 46
+      },
+      {
+        "name": "calculate_delta_t",
+        "line": 61
+      },
+      {
+        "name": "calculate_rotation_rate",
+        "line": 66
+      },
+      {
+        "name": "calculate_ananya_rotation_rate",
+        "line": 72
+      },
+      {
+        "name": "calculate_phi_prime",
+        "line": 78
+      },
+      {
+        "name": "select_source_map",
+        "line": 83
+      },
+      {
+        "name": "interpolate_field",
+        "line": 89
+      },
+      {
+        "name": "plot_maps",
+        "line": 110
+      },
+      {
+        "name": "plot_reconstruction",
+        "line": 128
+      },
+      {
+        "name": "animate",
+        "line": 164
+      }
+    ],
+    "imports": [
+      "from astropy.io import fits",
+      "from matplotlib.animation import FuncAnimation",
+      "from matplotlib.colors import ListedColormap, Normalize",
+      "from pathlib import Path",
+      "from scipy.interpolate import RectBivariateSpline",
+      "import matplotlib.pyplot as plt",
+      "import numpy as np"
+    ]
+  },
+  {
+    "path": "SFT/test_coordinate_registration.py",
+    "bytes": 1749,
+    "sha256": "5b93ef8b4006e8fcac852e453dcbbb85ff44e3ddecd995482bd889ea1da50baf",
+    "lines": 38,
+    "functions": [
+      {
+        "name": "setUp",
+        "line": 11
+      },
+      {
+        "name": "test_hmi_negative_header_maps_to_increasing_physical_longitude",
+        "line": 16
+      },
+      {
+        "name": "test_original_sample_positions_reproduce_input",
+        "line": 20
+      },
+      {
+        "name": "test_rotation_boundary_chooses_and_samples_correct_map",
+        "line": 28
+      }
+    ],
+    "imports": [
+      "from synoptic_reconstruction import calculate_coordinates, interpolate_field, select_source_map",
+      "import numpy as np",
+      "import unittest"
+    ]
+  },
+  {
+    "path": "SFT/validate_observations.py",
+    "bytes": 15482,
+    "sha256": "31d6f80873d919739b50d463e4708fb47e915a1916664b85282b0a0aeb260a5d",
+    "lines": 272,
+    "functions": [
+      {
+        "name": "query",
+        "line": 38
+      },
+      {
+        "name": "parse_tai",
+        "line": 46
+      },
+      {
+        "name": "record_values",
+        "line": 54
+      },
+      {
+        "name": "reference_and_record",
+        "line": 58
+      },
+      {
+        "name": "observation",
+        "line": 82
+      },
+      {
+        "name": "project_observation",
+        "line": 113
+      },
+      {
+        "name": "reconstruction",
+        "line": 173
+      },
+      {
+        "name": "metrics",
+        "line": 179
+      },
+      {
+        "name": "input_fingerprints",
+        "line": 187
+      },
+      {
+        "name": "main",
+        "line": 196
+      }
+    ],
+    "imports": [
+      "from __future__ import annotations",
+      "from astropy.coordinates import SkyCoord",
+      "from astropy.io import fits",
+      "from astropy.time import Time",
+      "from astropy.wcs import WCS",
+      "from pathlib import Path",
+      "from scipy.ndimage import gaussian_filter, map_coordinates",
+      "from sunpy.coordinates.frames import HeliographicCarrington, HeliographicStonyhurst, Helioprojective",
+      "from sunpy.coordinates.sun import carrington_rotation_time",
+      "from synoptic_reconstruction import ROTATIONS, load_maps, calculate_coordinates, calculate_delta_t, calculate_rotation_rate, calculate_ananya_rotation_rate, calculate_phi_prime, select_source_map, interpolate_field",
+      "from urllib.parse import urlencode",
+      "from urllib.request import urlopen, urlretrieve",
+      "import argparse",
+      "import astropy.units as u",
+      "import hashlib",
+      "import json",
+      "import matplotlib.pyplot as plt",
+      "import numpy as np"
+    ]
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2096.fits",
+    "bytes": 1045440,
+    "sha256": "ac62ec2884c7fb755007e0c7aff60f069383be1ce4d326a7c3a099ffcab7b0c8"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2097.fits",
+    "bytes": 1045440,
+    "sha256": "6cb565e18c84c3ec6bed68504717f059c144c74121b710182488d2cb047bd9ad"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2098.fits",
+    "bytes": 1045440,
+    "sha256": "6c238dc11aaa6f3b53963417fd139ee909e974d42537247828599fd0f0f41d80"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2099.fits",
+    "bytes": 1045440,
+    "sha256": "f7a1a6c70c3e33fbaf1f028a0e27270000d5d6cad1213e9d0cfc931b3152f00e"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2100.fits",
+    "bytes": 1045440,
+    "sha256": "89f4cf159f797a49d197c6c8de81769d89496372c3bfd725a05a55f005b33d51"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2101.fits",
+    "bytes": 1045440,
+    "sha256": "f04c23eb04e0c9bf50cd61af319f13c3fae8099c3004596fc4d58ba484817f20"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2102.fits",
+    "bytes": 1045440,
+    "sha256": "d694759eaf4f181c85d98f172fe54d2d148d395f04b986fd8fb869b98ed9eadf"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2103.fits",
+    "bytes": 1045440,
+    "sha256": "6313f0b368dfa4cee9afd82ad7c35804ccd4cd97761a818f99e4ce1d642d5b29"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2104.fits",
+    "bytes": 1045440,
+    "sha256": "5bca7f5eb96ae66e2d75aa86ed9a5d88d9cf3fa868cf2f71f26b14e839f24be1"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2105.fits",
+    "bytes": 1045440,
+    "sha256": "4792dc47efaa0eb6490c84aaf4636a873139c446466a4694b5eec5bb307fcf22"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2106.fits",
+    "bytes": 1045440,
+    "sha256": "fcb63f441d105f39e22ca66ea11e961798b7734b1ed75a7f87fcb433ef0755bf"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2107.fits",
+    "bytes": 1045440,
+    "sha256": "d7d4ca960828ab68a3bf868ae5d46258904a2ae100abeec9126c7589c1f0e642"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2108.fits",
+    "bytes": 1045440,
+    "sha256": "362f637e9d47ff3aa4fe5ae3b93190c8fd2f5d69cf48449465da777dbd51d665"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2109.fits",
+    "bytes": 1045440,
+    "sha256": "7ee0f148f7eb361fb80c6a3888941fd9753c1f24e8cff16bc803d346892e8d45"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2110.fits",
+    "bytes": 1045440,
+    "sha256": "7c8feca7e330be0c8f90b25c3f2d44984eee89154984cd65df3db0d67fd82d59"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2111.fits",
+    "bytes": 1045440,
+    "sha256": "5e580ef9fc79c5c9ea501880109b118a5b941681d51e63b919b79bf480a6ed9d"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2112.fits",
+    "bytes": 1045440,
+    "sha256": "a9324851164fe9e4942ed61fb9130290ad639ab8d51b31ac567fc67fb8bec307"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2113.fits",
+    "bytes": 1045440,
+    "sha256": "cac708501cb57ff19e041cd862fee72406fee36ad34fe9691eaecb7d2077d72b"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2114.fits",
+    "bytes": 1045440,
+    "sha256": "6c2141daf86e5053a3da364e495ddb7712ecacef729b07a16054c2dba95616f2"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2115.fits",
+    "bytes": 1045440,
+    "sha256": "151ab7a509d560bf6b3fec141b44742fa80ee9c8055558eb927129c7f218f0e6"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2116.fits",
+    "bytes": 1045440,
+    "sha256": "431a72dd8d981b65a60040f801fa24df058cff0b27c6d37db50b223015908b96"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2117.fits",
+    "bytes": 1045440,
+    "sha256": "7b94f6f83ec4149a05b391a3f100bbdfa148256405789af3d86672d4c3e7d74c"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2118.fits",
+    "bytes": 1045440,
+    "sha256": "b7068b5de21023ce8ce9123927fa89ce9dc25f5c3f229f22e92c5ef5dc3bd9f4"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2119.fits",
+    "bytes": 1042560,
+    "sha256": "4e46b43b9836de83242e23c26a6c0e61172f6f3a76cd7f2251c91de91881e9f9"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2120.fits",
+    "bytes": 1042560,
+    "sha256": "cd94afec13cfda0515235fda2efb384c26892a359e5428380796847c0ef18bbb"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2121.fits",
+    "bytes": 1042560,
+    "sha256": "e1d73cd8766f0ff3bf8eddb567c6e1fa39cdd26442be118353cd274d8ab01c24"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2122.fits",
+    "bytes": 1042560,
+    "sha256": "881845ae3d083da6719939e9db6f3e8d66c65065ea553a2a51fa30e985c0465f"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2123.fits",
+    "bytes": 1042560,
+    "sha256": "7f066bfca1e7cb1d73a10bff065e3236a345ba5d03a9598b71910d753723a7ef"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2124.fits",
+    "bytes": 1042560,
+    "sha256": "0dc4e82d61310750d6e13a7e94de05a08d1784f94b60356d417a4bf5a6f29494"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2125.fits",
+    "bytes": 1042560,
+    "sha256": "63a5b0cf01163e779ffd3dbf1ba67b05594fc79e70824f3fa19adac7a2d65ad8"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2126.fits",
+    "bytes": 1042560,
+    "sha256": "195b0546453c8400285312fa73aebdb18e2e408141d61b54d43098de5aaa6533"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2127.fits",
+    "bytes": 1042560,
+    "sha256": "7ade651550a4579536f407110ff6de50be8000b53f630fc0be5e625725bd9475"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2128.fits",
+    "bytes": 1045440,
+    "sha256": "048a6d42bb5a57d905981c41b44b49ea1b7c80eb71ccffeeca0f6c2dbf1b21e9"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2129.fits",
+    "bytes": 1045440,
+    "sha256": "a82030162e02dce42057220242ea49df9f9683f3d58758686bdd5e2e5b8e4ec4"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2130.fits",
+    "bytes": 1045440,
+    "sha256": "c7f57e59dec75be6c54be222d6229983677050ed7e8cd96dfc771bef4b82ab7e"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2131.fits",
+    "bytes": 1045440,
+    "sha256": "e7e352e8acd168f30fb1921672bfa4b2fa8f232a910b75498ad202e8530b8e6c"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2132.fits",
+    "bytes": 1045440,
+    "sha256": "e3e1de45c5aebb1d87040c141c82d851d36b9d2dd5add548450f4ce2289f97a2"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2133.fits",
+    "bytes": 1045440,
+    "sha256": "f8dfac6406d6408c4c24c5b6c76d366e927b9d3b89e8495df7da17eb5d6138d7"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2134.fits",
+    "bytes": 1045440,
+    "sha256": "aad6afed1bb07c09d3f0daec417db7e4f67ba387112942f0169ed17d81fd5bbc"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2135.fits",
+    "bytes": 1045440,
+    "sha256": "cbc791365de1a66753f5897cd375096c7bfd63c966d6c2a918031c5df5b14fd0"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2136.fits",
+    "bytes": 1045440,
+    "sha256": "fd14d6c209c9a18e00039ab7b5fbaa498963330de03fcde0af99730e279055fa"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2137.fits",
+    "bytes": 1045440,
+    "sha256": "02153d83bb5401f76bd15b6b4a4d2f0336e4a57514574de56baf8349a669ad21"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2138.fits",
+    "bytes": 1045440,
+    "sha256": "0e88b3ae31508435f60ad07c303969152e5acf8eee4228806fdd22db3f49653b"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2139.fits",
+    "bytes": 1045440,
+    "sha256": "66c907ee497757abc32617b134f1275c3c5bd191086678d328fca5f7ad77795e"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2140.fits",
+    "bytes": 1045440,
+    "sha256": "29c71ee248926177bf59fa5a08a596dc1d618a7bdb05260bc81b101a4f1eb802"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2141.fits",
+    "bytes": 1045440,
+    "sha256": "1275fd9b582561a7be13ec692915d19d7b92227ca080b56c5e1fa21748a3ea51"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2142.fits",
+    "bytes": 1045440,
+    "sha256": "17990b653b9c3219a6cee5c747971ecd0f7045797645d3066452e6b2ea5e92de"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2143.fits",
+    "bytes": 1045440,
+    "sha256": "b728a6b00315763a82258d7a201e68f591db356c41aab2482b5fd35f77096ac2"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2144.fits",
+    "bytes": 1045440,
+    "sha256": "346447fae561fa7353281cfcaf2ab2acdfbf53b8ed5ae2b80d16c4064c85b93b"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2145.fits",
+    "bytes": 1045440,
+    "sha256": "743d705d070af9bbb59e89037859145fd223ca1e470ee2d9d0f72963225ac3ee"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2146.fits",
+    "bytes": 1045440,
+    "sha256": "9826d19639b5f134e4ea2486301fac3f17ddde06ea9539b8e3c0a376200fd9ed"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2147.fits",
+    "bytes": 1045440,
+    "sha256": "39518e79ccca51d66ff2d9419d12603a8ccafb82da0dd10054c77eb217a3b7de"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2148.fits",
+    "bytes": 1045440,
+    "sha256": "8f1699c20f19c0624c909e8f63f44cf7fdf045f11bc79710d66dc398477db826"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2149.fits",
+    "bytes": 1045440,
+    "sha256": "716170560ad0a34827193b64cda2a9af1546ab785c8738e7779250f6ee56f484"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2150.fits",
+    "bytes": 1045440,
+    "sha256": "a82547fb12e08169312ba75d57bcb66f72fe2def4852ac24a365b2e493d907ec"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2151.fits",
+    "bytes": 1045440,
+    "sha256": "61851c5227dc0fac88a3d4f256aaa448b489601d01e7cb6f4beaab944ffcaacd"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2152.fits",
+    "bytes": 1045440,
+    "sha256": "bedbd645a3aee216a096c122fad387350246f2368972265f7bc0d83a17a01be2"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2153.fits",
+    "bytes": 1045440,
+    "sha256": "e9a2e643e6509b16f45f2a50c058e318b375f322c25da384e8dcc2e7b73244f7"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2154.fits",
+    "bytes": 1045440,
+    "sha256": "a51ed1b6d823245aa555292f31cf4877d77b6bb19b47966695be5f43bea680f2"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2155.fits",
+    "bytes": 1045440,
+    "sha256": "757b8f7fefdb5ad1601f8f9804b31afb60da53b78dbd4fb1fd1e4f092fda9b8c"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2156.fits",
+    "bytes": 1045440,
+    "sha256": "4b7679886093f1579e0160f01f7adc144e6d5aea4de093d450c33af67678cb5e"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2157.fits",
+    "bytes": 1045440,
+    "sha256": "c9b13d013193c4f8e5d505e7538a0b5100495337d8534a56fd28495c2c4cd7f9"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2158.fits",
+    "bytes": 1045440,
+    "sha256": "a914b731d6bb291aa9981ab2ffacccd5da0ca7883ef9bf7390c0e2e9f502711a"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2159.fits",
+    "bytes": 1045440,
+    "sha256": "34d63729c1ce1f07d4bd36820d44889e94f868a228ffdd3d8606a0e466462502"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2160.fits",
+    "bytes": 1045440,
+    "sha256": "87d5473bc9bc8491da0b35572299b43edd587166c1c5121cdcd68a8ca8c1faf2"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2161.fits",
+    "bytes": 1045440,
+    "sha256": "73bf7477b6a2d304c5e22f3e51a333b55ada94f01f1e859467b42dcf01ae015b"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2162.fits",
+    "bytes": 1045440,
+    "sha256": "8e652adadc01a6ef4f762e3c0d5ac90994639e121459cbc64d19a0cc08422a5b"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2163.fits",
+    "bytes": 1045440,
+    "sha256": "4887b8e89940481cde521e7bc81152d104e78d9fec1231ce29b28150ea33f674"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2164.fits",
+    "bytes": 1045440,
+    "sha256": "248ff0c649ba6943cb2460bafe7e62895ef32e4a4a2ab6f25d2e438eda18e55a"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2165.fits",
+    "bytes": 1045440,
+    "sha256": "bccbd3fc4decc9baeb3f6351a6ea8e08c96ab9f5b78c05092b5ed0c31da8f0c8"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2166.fits",
+    "bytes": 1045440,
+    "sha256": "0f70e552cd18450a77cc07a79273dfa67d16f047131d38f15f8e472e7f636426"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2167.fits",
+    "bytes": 1045440,
+    "sha256": "8a4d702d044e48831d2a19817eb2c3ca39c6caf9708ab1fb300baf4ac41330bb"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2168.fits",
+    "bytes": 1045440,
+    "sha256": "ca752c80e1723efe8a689e1db0333e404c31522e61e3a404cdeed7c505e38843"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2169.fits",
+    "bytes": 1045440,
+    "sha256": "c27388d4b6c899a25415de92baf28385015d150e749cdda8ed8536c93ab09993"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2170.fits",
+    "bytes": 1045440,
+    "sha256": "2384d1008acd92c853e91dc53625011b21bcb50fd094c9de458485be649baca0"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2171.fits",
+    "bytes": 1045440,
+    "sha256": "87b79efd00d34031cef7f1d7f89b4404eb3d1013a4fe9439f8cc814c63950af1"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2172.fits",
+    "bytes": 1045440,
+    "sha256": "bf465982e7a8bfdd8e67d0db8371aedf73328986db82074b0959bc5c0b6a83ba"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2173.fits",
+    "bytes": 1045440,
+    "sha256": "41308fc860036ebc8bad383745df69943827baf318ac24575ce8c49b71ce2365"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2174.fits",
+    "bytes": 1045440,
+    "sha256": "9276c7a8bdc01a356cdd1bcbe48216ffff89937df225bcff4c1f05c252aff0c0"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2175.fits",
+    "bytes": 1045440,
+    "sha256": "3ade2f7ad9744ef766c0df6656200db580d0c1a4a82a3733956178ee5b89023d"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2176.fits",
+    "bytes": 1045440,
+    "sha256": "c8a3835ea9bf9ef37d32d75be474be2050fb715c9da319548ebafe324e8c85f8"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2177.fits",
+    "bytes": 1045440,
+    "sha256": "80b0e6ef7aeeb71aab731bab7b0e9163217c54f4cc37697766709262cb89b091"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2178.fits",
+    "bytes": 1045440,
+    "sha256": "11fe844b44a3e54df9ff3333aff2d9a129d9f2398de7ceb9e5cbb0b37f1e3429"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2179.fits",
+    "bytes": 1045440,
+    "sha256": "5c62be3db0e0c1f686ff45b9bf04ed6435fbc3dbd328709cf83466c860abaeb2"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2180.fits",
+    "bytes": 1045440,
+    "sha256": "91dea3f14f143c01ffa0596d94e8ad66ef7b16832dfc6ddecc0d7ee8dc29faa0"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2181.fits",
+    "bytes": 1045440,
+    "sha256": "c52401192f43c9c9c1459a6d39d64a16d80d0d30addb88de9f8a71f2d2e90a38"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2182.fits",
+    "bytes": 1045440,
+    "sha256": "4efc7eb49caf22adf2048b4d127d70677a25311b59c1720c97bc950dc5240e28"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2183.fits",
+    "bytes": 1045440,
+    "sha256": "95fdafa6c78833eebe2278bff55a860f19d8c54297e2a28de406fd6931faf693"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2184.fits",
+    "bytes": 1045440,
+    "sha256": "3f6c7922bc756e1be96e22601dc29828391dc7ec605c2b8f95c0317ccab5b47a"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2185.fits",
+    "bytes": 1045440,
+    "sha256": "792c83f5941551995ce8ca0e7d05232d34e2dd02e89a51878a83b481300702d1"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2186.fits",
+    "bytes": 1045440,
+    "sha256": "ae779509e9c7ea8b2e499181a39d8dd65ceee2d606ca3fe6a2bff22e4f26b4cf"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2187.fits",
+    "bytes": 1045440,
+    "sha256": "6c35e500d55a0ca9c5efc400109ea993c459eb894d75402e737924589e715bf2"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2188.fits",
+    "bytes": 1045440,
+    "sha256": "9dafdba4eb1430d6902c233409c136a3f7d9cd657e3b19b625cbb1e91aaa76df"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2189.fits",
+    "bytes": 1045440,
+    "sha256": "73452cf8786e7b7fda6b58e078fae0e284187befe45f3517a43eedee9c512e2e"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2190.fits",
+    "bytes": 1045440,
+    "sha256": "f3c7bc3fb6394bd18618a8c9aceca5f32ae288f2f52cba79db0e466f1ef5260c"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2191.fits",
+    "bytes": 1045440,
+    "sha256": "b9ed626968b3dadf399ba4dc01e3e30d2abba52a94783799dc558330258f46a7"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2192.fits",
+    "bytes": 1045440,
+    "sha256": "77e5e897cd094370ad2167f54c83a8ce51b2cb7ad748f2a9177d6ac807f59e21"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2193.fits",
+    "bytes": 1045440,
+    "sha256": "47b3c2bbc37e4ef210fd6ebc10584a95b0fe9c5980351115ecb3f6f20bf56e69"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2194.fits",
+    "bytes": 1045440,
+    "sha256": "77fb118da7d1d13159e566718390ed7b3e70811da606decfb6d1ed0bbe064290"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2195.fits",
+    "bytes": 1045440,
+    "sha256": "7357e69bff497784578da744bc72efc299a48814b539014116cfdc20c2598f11"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2196.fits",
+    "bytes": 1045440,
+    "sha256": "3d064701b342d1078049cda98d48d14c80d8d88f5436ac1c7bdab067d87f688a"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2197.fits",
+    "bytes": 1045440,
+    "sha256": "e4b102e11ad053d128eba2642bda44871d2dadaf8c639de94edbf4f210670cdc"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2198.fits",
+    "bytes": 1045440,
+    "sha256": "34de84badd3ff7ece2aa345075f41b957681de22f11ca7f44851d1695a1f6092"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2199.fits",
+    "bytes": 1045440,
+    "sha256": "28f7679a3cc2f18cc8524ebd22f63901685cc271260ad81ea4c2ecbd812f6202"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2200.fits",
+    "bytes": 1045440,
+    "sha256": "c9b990e05590f60a59c037491cbc42a563fb895b696135ad986e265e59cebc12"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2201.fits",
+    "bytes": 1045440,
+    "sha256": "b128b24e0af484b94a353e8feb74c9cfc0e9903d8a24b53d826a1bea9d5d1ab1"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2202.fits",
+    "bytes": 1045440,
+    "sha256": "e06d6e3791f897b3f423603763248a36ef796f66eea010962d5a7f21cb544969"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2203.fits",
+    "bytes": 1045440,
+    "sha256": "e5e125f7c47a2595f44718322050378a323df2ee2471f914176257561ef6cfad"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2204.fits",
+    "bytes": 1045440,
+    "sha256": "50b8843be04b2988e6d707ffdb6c4c2b48d3e276956ae77593b1e974868b00f3"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2205.fits",
+    "bytes": 1045440,
+    "sha256": "437ebec4e9fe472bf89a3bd9a94fb06975628e22fe5cb0135c9452a178554d7b"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2206.fits",
+    "bytes": 1045440,
+    "sha256": "961639cc8c2c210e1e583f2870dc79aac7aa7a8968ec0395249623dfdc79844a"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2207.fits",
+    "bytes": 1045440,
+    "sha256": "a4fa3df1558b4154a07e1905bce0cc449717972a4c06a7f4ea4e4660e8c7a552"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2208.fits",
+    "bytes": 1045440,
+    "sha256": "f922586d7e8f221db3c6f64684aea30deb02f5c4ccc7b2fa1e705ca512207122"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2209.fits",
+    "bytes": 1045440,
+    "sha256": "92c5c073c3b57f979da002e67f8811d0ac8c3dab43eba234dd81384b9db3e5ed"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2210.fits",
+    "bytes": 1045440,
+    "sha256": "7c260dd9520adbcaa6cc3e539d941b8ddda06ffabeeb9cc7938978bf6e3e4a29"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2211.fits",
+    "bytes": 1045440,
+    "sha256": "13fbbdc6f41357ab6ef5e385aa911f2437e8fb6e38cab739becd01d32696b8c9"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2212.fits",
+    "bytes": 1045440,
+    "sha256": "9bb99bb1717a3b33049d8b05e3cecf86e464b64d2ead2f038919cfb69da4ca6e"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2213.fits",
+    "bytes": 1045440,
+    "sha256": "57574ebf02b85341be05de43d8d911cffeb878ad6f51adfbdd8c549434c42dee"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2214.fits",
+    "bytes": 1045440,
+    "sha256": "e8ae28e17356a1effd24e718088823eb8b71dcfc14293c9805a0036e439deacf"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2215.fits",
+    "bytes": 1045440,
+    "sha256": "90dd7941dc09a60367680f0d96ca06ffe7455f8e3761438850733e82cf7b20d1"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2216.fits",
+    "bytes": 1045440,
+    "sha256": "5e79d6d8fffee0643c028fcff9b0f91ec38f0e77987674744838fb6a37b17ae9"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2217.fits",
+    "bytes": 1045440,
+    "sha256": "39647a8fe5b1a100fb5f5b5cca67748fcf9d735709eb6f48082eecff34894abc"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2218.fits",
+    "bytes": 1045440,
+    "sha256": "2d6a2f87ce46d096046a4ff37acadf584b39ccc3685a311420cda7a6bd04d303"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2219.fits",
+    "bytes": 1045440,
+    "sha256": "0029165072b50002f91ef15ae20c48cace36df8a866e711ed960642211d3ce10"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2220.fits",
+    "bytes": 1045440,
+    "sha256": "996849c8d2965cca7d4f4b61770b9a077a5ba7314d2cec332cfebe9aa0282294"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2221.fits",
+    "bytes": 1045440,
+    "sha256": "e0bd122a82e7c89c53b92813b46a590428fcd589cf997abb1d99f9790c9e170c"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2222.fits",
+    "bytes": 1045440,
+    "sha256": "47d08b64ffe2fbe74e66cdbdbf9a49a8fb9570115a7cda7eaf85c7e74a865cd7"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2223.fits",
+    "bytes": 1045440,
+    "sha256": "af3fd17be65ea0bd4b7a2eebbb17217bb0eb9d4172efbcea75b3b083769d0aca"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2224.fits",
+    "bytes": 1045440,
+    "sha256": "0d33d7fd0f0f4c3cb15262b42b710f8bd5d0598078104f97c24c719ac97a0161"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2225.fits",
+    "bytes": 1045440,
+    "sha256": "f37c63fe218a843651a88cdcdffa09e4009b4acb44ffd8301227d85ead6eb66b"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2226.fits",
+    "bytes": 1045440,
+    "sha256": "e79e80a7c3643cc3eca5d7b5b5df2dcef362bf0e79b9404f90c00e0332417fa1"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2227.fits",
+    "bytes": 1045440,
+    "sha256": "cd0ea1cf47b339d123959f0363cbcfd950b4ecd131ffb5017ee7c7d94d9107e7"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2228.fits",
+    "bytes": 1045440,
+    "sha256": "4121242a443546069a8015c4019f83922186846aeb15cb8b535e5656e3ebe4c7"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2229.fits",
+    "bytes": 1045440,
+    "sha256": "99af24ddbe486ada3cde61a8bd84ab3555973e6f86662b9582b612c054f5ff24"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2230.fits",
+    "bytes": 1045440,
+    "sha256": "b094caad4a67e96b216852fd1e129ac04995d3d5da4a96a0c2659a9d3afe6fdd"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2231.fits",
+    "bytes": 1045440,
+    "sha256": "6fec4f89de5ff8a3c3fa919af35eac5f98c172a8bb378456548faea4a1f042d0"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2232.fits",
+    "bytes": 1045440,
+    "sha256": "9a11f769e961e570f962f8aa4404aa17a1a2393dbc3bb39683c51480c7ce6b0e"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2233.fits",
+    "bytes": 1045440,
+    "sha256": "3788bb4e72c65614818bebc1a9b6193a293a240f6ceea55943cdffcef8157899"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2234.fits",
+    "bytes": 1045440,
+    "sha256": "3de1bb9edf89a72a7a3493145bc4466bf28c937c031d086a953e0a0fe573a085"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2235.fits",
+    "bytes": 1045440,
+    "sha256": "99bae162a0da5fa3acf4a5357c7497322cf97d6b238ff70a1270a2fb4b8ab1d6"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2236.fits",
+    "bytes": 1045440,
+    "sha256": "af5f1f46d9309db1de340acca8238c520642013fd8dd95641c1f3f201e682bfe"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2237.fits",
+    "bytes": 1045440,
+    "sha256": "06592a970d958e7d2ab7655dcb587d7b8e7828f8ad7d38119e0972f352b9e3df"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2238.fits",
+    "bytes": 1045440,
+    "sha256": "03a20aaff614471ea840d9700b149ab523b807b23df7197a430372b2368b3274"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2239.fits",
+    "bytes": 1045440,
+    "sha256": "7883d2e4bb551844eafa80cac44aa20b34619f6e664e62cd7c156adc9759f37f"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2240.fits",
+    "bytes": 1045440,
+    "sha256": "9b302133318208465b58c7cb10fc420ffcfa43bd04edacf7d235d00865f2059d"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2241.fits",
+    "bytes": 1045440,
+    "sha256": "4d39a72d67f0dd0e91da13c5fb8a12a8e7e706bd036b27c027bc1f2c238dd0d0"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2242.fits",
+    "bytes": 1045440,
+    "sha256": "dd54085487c3026150ac0b560a60ac02e33924ce265b528e4f54d01005539a28"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2243.fits",
+    "bytes": 1045440,
+    "sha256": "593242a38adcf03789f9c57db1cc33a7075f52ce3da100de3f910096550604e7"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2244.fits",
+    "bytes": 1045440,
+    "sha256": "a0de8505f021d536f6987fa4f74619f68a4c169a28856858c7c0cae7ad905b89"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2245.fits",
+    "bytes": 1045440,
+    "sha256": "575371870b6ed08e2cad2b63db1a82cae55c69043ea4016dbf4ab3162c21c01d"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2246.fits",
+    "bytes": 1045440,
+    "sha256": "464b4d6634dde1cbd26630cdbb7187cfc7def38c5787d6eea991d6889a3cbc76"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2247.fits",
+    "bytes": 1045440,
+    "sha256": "8ad6431117710a240624046b491b72f0258e8afe1b2a221f9bb8930ec1a0d1e7"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2248.fits",
+    "bytes": 1045440,
+    "sha256": "69c3d61c88037fb2dc647fd8ddc04ffaa7f7cd47f91a0c0df8851a4b9f231332"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2249.fits",
+    "bytes": 1045440,
+    "sha256": "a4c6d2c4ea5561a92564a37344063c137d5573b1b07429e73068a284eeb02f8d"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2250.fits",
+    "bytes": 1045440,
+    "sha256": "b2b8af36b38565cec3a762af6ef0db65c2466c6d1df05374d4606011b5578f99"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2251.fits",
+    "bytes": 1045440,
+    "sha256": "bcfda1899f8b4695b25a381fc615a12077fa1b3dc5188949a905043fc87e97c7"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2252.fits",
+    "bytes": 1045440,
+    "sha256": "af51b6c6c8174f1be43736e7587ae6962d3fd3ddb345a3fd7114f00247409184"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2253.fits",
+    "bytes": 1045440,
+    "sha256": "a03405f9c45f316397e3e8584b1511bbdaee8687a1526889a372ccb4f4c16751"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2254.fits",
+    "bytes": 1045440,
+    "sha256": "2376b69a8b907c5c8cfeb6e2c820173cabc1ff2fed0cf2a6b05dc24af1814a2d"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2255.fits",
+    "bytes": 1045440,
+    "sha256": "878f2f619e6c3dbdf7d17001e920ff17215b75e606ebc77e76499aaeceb8eb15"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2256.fits",
+    "bytes": 1045440,
+    "sha256": "9c6384586dcb0a782ac118255e2fd5b9e9ba75af6d7e767a1f0864c2cd8d94f0"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2257.fits",
+    "bytes": 1045440,
+    "sha256": "71fe14b4d344ffc22d9145519d8569279ede952ffb5afce52340abcd24bdacfd"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2258.fits",
+    "bytes": 1045440,
+    "sha256": "c23e91c20496faeb10fd16517dff693ef650cf43dd4be4db4ca4f539d7b14f36"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2259.fits",
+    "bytes": 1045440,
+    "sha256": "d97506401b26cbfb84532e9a8c62a4fc0e20b08cb28c151e772f607c21d7305f"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2260.fits",
+    "bytes": 1045440,
+    "sha256": "68c81f25bd1f7cbd555a20b7c0f5ce0c2773805588f23131f3ba7ac1bb708c95"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2261.fits",
+    "bytes": 1045440,
+    "sha256": "eac323b5a70b258c27aead7cddc01e9f024085ca31bb6157dabd1b00bb501633"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2262.fits",
+    "bytes": 1045440,
+    "sha256": "6282b6164dc7ab83c3b24ad60956dd97c13630a077100967abea30e4713fb305"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2263.fits",
+    "bytes": 1045440,
+    "sha256": "afcab9fa486315ad812363cd028a87714fe8331eb207369248e132c7c92513f3"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2264.fits",
+    "bytes": 1045440,
+    "sha256": "99243604e1b97630363ba7de2747bcdd40d8eeaf1bcfe2fd3d16d393d0e879c3"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2265.fits",
+    "bytes": 1045440,
+    "sha256": "cdd79d3c4b9abe6d0263d10487ed4d18e9b417a3275f4d0a7bf94c990d5f9e33"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2266.fits",
+    "bytes": 1045440,
+    "sha256": "8ccbb822287cf5844e6dc0c9c30cdc3597c9ba1965331c344f0f7e17de8092cc"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2267.fits",
+    "bytes": 1045440,
+    "sha256": "66e519c45210d66f6fbafd4ea068a04684ddbe1140243290b8546587fd27f6ce"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2268.fits",
+    "bytes": 1045440,
+    "sha256": "4e73a56e3049faa0eb551f897e2f305b5de1fd1bb82b7c5665032b51246c9a4b"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2269.fits",
+    "bytes": 1045440,
+    "sha256": "718ebc8c5b40edfe931eed8c8bcf7d7a24da0ab4add0f246f46184489b40841c"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2270.fits",
+    "bytes": 1045440,
+    "sha256": "2178aa984cd3950f5eb53bd0488e98236f8254b6666807533fee8e96b329ae7d"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2271.fits",
+    "bytes": 1045440,
+    "sha256": "cb21df57c95513da096ea82febfbc921ae7e50765b600ca44ac1e880965083be"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2272.fits",
+    "bytes": 1045440,
+    "sha256": "c68781597105128fa58e27dd9714182676fa91ef867363d213a59c4bca005a0a"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2273.fits",
+    "bytes": 1045440,
+    "sha256": "3c57dfe4f418d2bb4d78e8dee0cfc36fb91dff7b9ceb6665f8bac339ec126364"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2274.fits",
+    "bytes": 1045440,
+    "sha256": "b50beecf21f1d8b87dd6f7073af5b10cbbf863405cebe0202de476012219cc00"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2275.fits",
+    "bytes": 1045440,
+    "sha256": "25702568da33ea31b3ecf61875415000a74a50c3a6fc10cf8b30d89b7274fdd3"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2276.fits",
+    "bytes": 1045440,
+    "sha256": "6a9e71a8b12b18b3b60ccd3c337b84eeb2357e51dd2d492da3d975b43ea09bc4"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2277.fits",
+    "bytes": 1045440,
+    "sha256": "25e42aadc06aba7ec5d18caa73cbd1bd332f2d05f215c3c4ef4c4db5da6c298a"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2278.fits",
+    "bytes": 1045440,
+    "sha256": "700a03616d4663fca467391691c362c55574508db7e17231f0145ce4d89ce574"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2279.fits",
+    "bytes": 1045440,
+    "sha256": "73ea4989a3a82bd210cbb3839418942c9a247261ea53a2b9a555ed19f0030a2b"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2280.fits",
+    "bytes": 1045440,
+    "sha256": "1d3d8da36e6fb86298ecd7033d6720edefdbea9d00cdd36f2765aa40cac21021"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2281.fits",
+    "bytes": 1045440,
+    "sha256": "2d39fa3487a954656cb64b9fe878e37079eaab067398e21caff528e0da02c27a"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2282.fits",
+    "bytes": 1045440,
+    "sha256": "b9e2a6367cd4280fbf60d16590fa227bdaa056874929ece04700a23e90ae33df"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2283.fits",
+    "bytes": 1045440,
+    "sha256": "23dbd7de22e057c9551d4656702b090de07626b4e28e38025410328850cee016"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2284.fits",
+    "bytes": 1045440,
+    "sha256": "86a935f126fab9a2d74db269e216412bdb50355399fead1a1c6263b7d42def49"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2285.fits",
+    "bytes": 1045440,
+    "sha256": "e548a6a5e7a52b15bc135f0427f74671ad515c14905e33f71ba4a7fd58e32767"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2286.fits",
+    "bytes": 1042560,
+    "sha256": "4f0c035e8093f7ee8cb9ae5fd236f72dc3e0c4863d40b36c8789bcec84806b75"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2287.fits",
+    "bytes": 1042560,
+    "sha256": "8179415292f291096dd06ee597a113a909e6a1e0ba4bb49ff984795b95d49d40"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2288.fits",
+    "bytes": 1042560,
+    "sha256": "31bf5b9db8865148f1dbf0c7494163d825c0b063acb69b03fc44cbddffa079f0"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2289.fits",
+    "bytes": 1042560,
+    "sha256": "6217b9872400f620d2051ac73c0983eedcd1926451e1bbf172d445e3968a97ce"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2290.fits",
+    "bytes": 1042560,
+    "sha256": "5d66175547266276cd66bcd640b1689853a2804b487997594046a90f342cb40d"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2291.fits",
+    "bytes": 1042560,
+    "sha256": "3d90236563a1625dac9fae1caf8d6c784544021a725f011a81dff1512d85d9ea"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2292.fits",
+    "bytes": 1042560,
+    "sha256": "28efe2907e8de0df2665c17221ebca0fffd60c9012f447ce0b84ba718fb19484"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2293.fits",
+    "bytes": 1042560,
+    "sha256": "ffca11521cd9e06912dfc05949dddd7104d97d27efa86ba617c9fb9a147ed579"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2294.fits",
+    "bytes": 1042560,
+    "sha256": "2876df2247b4193b26aa3de8ba85a767e92cb0ad2515965c7cc701daf4a0fd64"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2295.fits",
+    "bytes": 1042560,
+    "sha256": "6d3bc8e5e5a9d9369d3e8ea2b145c161807ab8a11097f6bf3bd8f3d6cae66db7"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2296.fits",
+    "bytes": 1042560,
+    "sha256": "accc30cbc86ec2768bb726f83bf76d7f354c633fd0c5b9d0586e17bd125229e5"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2297.fits",
+    "bytes": 1042560,
+    "sha256": "b8f4e8919da84b669c5f509fc62f634c60602bd2356f5df6a19847bc6f446d3d"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2298.fits",
+    "bytes": 1042560,
+    "sha256": "39328bbf2c6992d1f3e9bec6e3f822ae7d9173862874c17738407d623f6a0dd6"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2299.fits",
+    "bytes": 1042560,
+    "sha256": "d8d27d9b57453a9563f386b8d38a5ba3f349deacf2aa6dd1d646c8cea8b34bc7"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2300.fits",
+    "bytes": 1042560,
+    "sha256": "a7c07da466442c33f0379c712829f79a870af15c1eb4555ddfa8619c1c67cbd6"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2301.fits",
+    "bytes": 1042560,
+    "sha256": "dc3879c96562c7a0c048606f3687b1eb3e8a7042b0db00297d0e397ed84a5769"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2302.fits",
+    "bytes": 1042560,
+    "sha256": "9cad93df934d778b2318e31db79d7c3403f8a5388680896ae04b1394d025d0a1"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2303.fits",
+    "bytes": 1042560,
+    "sha256": "b71e1af26d462e9986aabdff4bd37b8654552ffbf9d1415f17d07a7b606992c1"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2304.fits",
+    "bytes": 1042560,
+    "sha256": "319248fa5bb205ed943cd5a410f7a9ad7b686daa70dfa85909ca4344396e8781"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2305.fits",
+    "bytes": 1042560,
+    "sha256": "bcf2214e611bdfa5a5288442a014e4a05e0679578b0818ba899befc04e573ad9"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2306.fits",
+    "bytes": 1042560,
+    "sha256": "d64dbcbc910226ab5ff06bebe1033c108d94fddcc1015f038657ddf86f973be5"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2307.fits",
+    "bytes": 1042560,
+    "sha256": "5bfe5c963827c8dc1f193a166589aa90dd7ae25c1377cbf553b1a72b60e14f87"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2308.fits",
+    "bytes": 1042560,
+    "sha256": "0a2c4cf55f8e43f075d2f741e180c7d2630d38736b5d8e5e7809819a9613bfd0"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2309.fits",
+    "bytes": 1042560,
+    "sha256": "21c37f26e2e79b81c8b6fdd9bef1f7504b0696058431507c0268e6f524e81b3b"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2310.fits",
+    "bytes": 1042560,
+    "sha256": "6f970156fb709906ea36dd1165e50a7afa3ca118ba72bc0926665aae39c4c1be"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2311.fits",
+    "bytes": 1042560,
+    "sha256": "c86df960332ccbb267e551b15cf34d97eef284d70f72ee2d33ca40896aac4660"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2312.fits",
+    "bytes": 1042560,
+    "sha256": "c41a38335c92a976fd7c4dccbf18bca7b5fde5b3043a67118a79ee2814d3f4dc"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2313.fits",
+    "bytes": 1042560,
+    "sha256": "f105bced0123ca70e2ccc16ea27743b34c31b6ae07ed647b594b831fb4cc70ee"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2314.fits",
+    "bytes": 1042560,
+    "sha256": "2eab482d028f3c35c5ca3f19493d0ccef466b7d42cc95fb3d5f74bd394bb9218"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2315.fits",
+    "bytes": 1042560,
+    "sha256": "e9fec13d88dbeb5bb49515694784f3afccccfdfd2c67146917867f92006271d9"
+  },
+  {
+    "path": "SFT/fits_files/720x360/hmi.Synoptic_Mr_small.2316.fits",
+    "bytes": 1042560,
+    "sha256": "6f9aa8c62dde5cfcd4e3887582ee8be882855b5dd587e21f876f2a998547292b"
+  },
+  {
+    "path": "SFT/validation_data/.gitignore",
+    "bytes": 23,
+    "sha256": "a8a99668ac3d43192badf6611df9086caba334360745de0d4fc4bc7a1c010aae"
+  },
+  {
+    "path": "SFT/validation_data/cr2120_observational_arrays.npz",
+    "bytes": 6177750,
+    "sha256": "4dbddf6c983285f9434e69193e1268979ad9f6e1ea2a7d0ec6567198ee355b9d"
+  },
+  {
+    "path": "SFT/validation_data/cr2120_observational_comparison.png",
+    "bytes": 377164,
+    "sha256": "7c98d21b85f50583a12ecc994af74df7f2872937aecf9bc0436f359226fe0e96"
+  },
+  {
+    "path": "SFT/validation_data/cr2120_observational_metrics.json",
+    "bytes": 6034,
+    "sha256": "fae4556e8bc2aaefbb298d810d3b10989e53de79d6127f7f86a3ef7e03127203",
+    "lines": 176
+  },
+  {
+    "path": "SFT/validation_data/cr2122_observational_arrays.npz",
+    "bytes": 6177563,
+    "sha256": "40ebe6b4cffa4f2786994db78187db78665b1c96e56c1778adaf3a9f52c8fbe6"
+  },
+  {
+    "path": "SFT/validation_data/cr2122_observational_comparison.png",
+    "bytes": 386665,
+    "sha256": "5329d319d6e3c5681a335626a233a02206a1a7faf5e02664ef975de8276369ca"
+  },
+  {
+    "path": "SFT/validation_data/cr2122_observational_metrics.json",
+    "bytes": 6053,
+    "sha256": "9fa410aeebbc99c54b51a82ec968495713375bc9e00f26433cff1e16f48c90b1",
+    "lines": 176
+  },
+  {
+    "path": "SFT/validation_data/cr2124_observational_arrays.npz",
+    "bytes": 6186919,
+    "sha256": "e5c142cf5eef8ffba0e26841b7850fefaf21a8146931e1660dafb7f22090c254"
+  },
+  {
+    "path": "SFT/validation_data/cr2124_observational_comparison.png",
+    "bytes": 398774,
+    "sha256": "c3b6680c3a321e02d5674b243d7baef8dcaf23b5fc4d49e6c17177c0a742a63b"
+  },
+  {
+    "path": "SFT/validation_data/cr2124_observational_metrics.json",
+    "bytes": 6041,
+    "sha256": "83aa7907cb93149ec9191307015b4e370b3b7aac6286c07fa8eeb76a105e30b3",
+    "lines": 176
+  },
+  {
+    "path": "SFT/validation_data/hmi.M_45s.20120219_225530_TAI.jsoc.json",
+    "bytes": 9641,
+    "sha256": "98526ee53160261c4c1e4ed898fb1a4b753a9a7dd11d70d6999243ae0cf1a3a3",
+    "lines": 550
+  },
+  {
+    "path": "SFT/validation_data/hmi.M_45s.20120219_225530_TAI.magnetogram.fits",
+    "bytes": 15670080,
+    "sha256": "99edac9897121e065aa9153294e34b58fa2a7e6b42783ad377f0ec836c1d306e"
+  },
+  {
+    "path": "SFT/validation_data/hmi.M_45s.20120414_133945_TAI.jsoc.json",
+    "bytes": 9643,
+    "sha256": "4798b88c94266fc647c8e8c84a8b017d966a93ac50705144ffd76e2855daef4f",
+    "lines": 550
+  },
+  {
+    "path": "SFT/validation_data/hmi.M_45s.20120414_133945_TAI.magnetogram.fits",
+    "bytes": 15243840,
+    "sha256": "5c0941b10dca18faa0a226add5b4d2281cd9bfce883d83d07c04785b18f07490"
+  },
+  {
+    "path": "SFT/validation_data/hmi.M_45s.20120608_003000_TAI.jsoc.json",
+    "bytes": 9636,
+    "sha256": "65cb6cd91627e786ac6cc4141ea8700330688a011b4cb353d2fe71c9c3aeb058",
+    "lines": 550
+  },
+  {
+    "path": "SFT/validation_data/hmi.M_45s.20120608_003000_TAI.magnetogram.fits",
+    "bytes": 15062400,
+    "sha256": "48c68824c5860aaec41d31b7ddee3431b9b1c04a6bf2d1bb0bb835783ffcd087"
+  },
+  {
+    "path": "SFT/viewer/.gitignore",
+    "bytes": 55,
+    "sha256": "e30fd3b9b08c2560c8348047031d035f44efac2422a02d2ed7733612c51f3236"
+  },
+  {
+    "path": "SFT/viewer/README.md",
+    "bytes": 1458,
+    "sha256": "c5e8b6674985b544e721db4717332ea1f39b8d8303438b8875b9dde59f4ddfff",
+    "lines": 36
+  },
+  {
+    "path": "SFT/viewer/index.html",
+    "bytes": 376,
+    "sha256": "5a88bb0fe36ffdb321eef1c912af0e51c347abcb5cbeb43337fd731697a42963",
+    "lines": 1
+  },
+  {
+    "path": "SFT/viewer/package-lock.json",
+    "bytes": 62441,
+    "sha256": "e02e47621956f85cd9dfbc9f8fa851ac2a99e0aa69b16701d13a57da50af9c7f",
+    "lines": 1796
+  },
+  {
+    "path": "SFT/viewer/package.json",
+    "bytes": 427,
+    "sha256": "0e311298d5533b3231503fa77c9c045e07a59888b0085b7c625e351951634fce",
+    "lines": 1
+  },
+  {
+    "path": "SFT/viewer/tsconfig.json",
+    "bytes": 231,
+    "sha256": "d6ba4e83d520a88a12708d98de11343afba7830a5f3649cab10723e7915a4aff",
+    "lines": 1
+  },
+  {
+    "path": "SFT/viewer/tsconfig.tsbuildinfo",
+    "bytes": 67,
+    "sha256": "d1bd155ef055818fa55a7e2a2e7abf562383dc19a7da00648c60b8f217994ea2"
+  },
+  {
+    "path": "SFT/viewer/public/favicon.svg",
+    "bytes": 353,
+    "sha256": "45c9ba9a1975e01e85d47b9d0cf3584dcf66bfb0482fd359eec9a2a5533a9522"
+  },
+  {
+    "path": "SFT/viewer/public/maps.json",
+    "bytes": 4152267,
+    "sha256": "000fab11e8e54f1f32fd3d7a29828449747a3d9ecaba494d562b75c07e155635",
+    "lines": 1
+  },
+  {
+    "path": "SFT/viewer/src/main.tsx",
+    "bytes": 10639,
+    "sha256": "f7f4d5ab92ec8891af86f288e5c77d6b7463a8a767b1ce10a80f687653f288dc",
+    "lines": 73
+  },
+  {
+    "path": "SFT/viewer/src/style.css",
+    "bytes": 7701,
+    "sha256": "a4aa661f18a96d8979a5a5c45e480efd9d2894255d453372bbbf4de2c064e150",
+    "lines": 117
+  },
+  {
+    "path": "SFT/viewer/src/vite-env.d.ts",
+    "bytes": 38,
+    "sha256": "65996936fbb042915f7b74a200fcdde7e410f32a669b1ab9597cfaa4b0faddb5",
+    "lines": 1
+  },
+  {
+    "path": "ananya_research_work-main/README.md",
+    "bytes": 718,
+    "sha256": "e41707d24d40f4589540fa5bc8b23aadf2478b8ad58d6ef105928c7bde595b5c",
+    "lines": 8
+  },
+  {
+    "path": "ananya_research_work-main/sft-implementation-and-magnetogram-handling-review.md",
+    "bytes": 32630,
+    "sha256": "2ccd7e75699fbbd4e50ee513bf74c503fd17ddf14d739efb9c1829153aa7b188",
+    "lines": 470
+  },
+  {
+    "path": "ananya_research_work-main/PFSS/CR_2193_80_full.py",
+    "bytes": 16139,
+    "sha256": "a76f837041bb4168612976592c4e269fbb43ba2f7f1477d26e12df91992f36f0",
+    "lines": 478,
+    "functions": [
+      {
+        "name": "Y_lm",
+        "line": 22
+      },
+      {
+        "name": "func_integ",
+        "line": 54
+      },
+      {
+        "name": "simpson_weights",
+        "line": 59
+      },
+      {
+        "name": "simpson_2D_weight_matrix",
+        "line": 65
+      },
+      {
+        "name": "C_lm",
+        "line": 73
+      },
+      {
+        "name": "compute_c_for_i",
+        "line": 86
+      },
+      {
+        "name": "compute_sum1_for_i",
+        "line": 101
+      },
+      {
+        "name": "rad_to_deg",
+        "line": 133
+      },
+      {
+        "name": "B_final",
+        "line": 226
+      },
+      {
+        "name": "simpson_weights",
+        "line": 327
+      },
+      {
+        "name": "simpson_2D_weight_matrix",
+        "line": 333
+      },
+      {
+        "name": "flux",
+        "line": 343
+      },
+      {
+        "name": "simpson_weights",
+        "line": 367
+      },
+      {
+        "name": "simpson_2D_weight_matrix",
+        "line": 373
+      },
+      {
+        "name": "dYlm_dtheta",
+        "line": 419
+      },
+      {
+        "name": "B_final2",
+        "line": 431
+      },
+      {
+        "name": "B_final3",
+        "line": 453
+      },
+      {
+        "name": "compute_sum_for_i",
+        "line": 227
+      },
+      {
+        "name": "compute_sum_for_i",
+        "line": 432
+      },
+      {
+        "name": "compute_sum_for_i",
+        "line": 454
+      }
+    ],
+    "imports": [
+      "from astropy.io import fits",
+      "from joblib import Parallel, delayed",
+      "from joblib import parallel_backend",
+      "from matplotlib.animation import FuncAnimation",
+      "from matplotlib.colors import Normalize",
+      "from matplotlib.ticker import FuncFormatter",
+      "from mpl_toolkits.mplot3d import Axes3D",
+      "from scipy.interpolate import interp1d, RectBivariateSpline",
+      "from scipy.special import lpmv",
+      "from scipy.special import sph_harm",
+      "import matplotlib.pyplot as plt",
+      "import numpy as np"
+    ]
+  },
+  {
+    "path": "ananya_research_work-main/PFSS/jul80_field_line.py",
+    "bytes": 7109,
+    "sha256": "fdc3eebc4404ef09cf6696b4798c1ea3c019060d7f9d7d19c8d2775fc7d2b0aa",
+    "lines": 231,
+    "functions": [
+      {
+        "name": "bTrace",
+        "line": 49
+      },
+      {
+        "name": "rk4",
+        "line": 76
+      }
+    ],
+    "imports": [
+      "from scipy.interpolate import RegularGridInterpolator as rgi",
+      "import matplotlib.pyplot as plt",
+      "import numpy as n",
+      "import numpy as np"
+    ]
+  },
+  {
+    "path": "ananya_research_work-main/SFT/Instruction.txt",
+    "bytes": 7301,
+    "sha256": "f7dc7404c38b48504d65fe5e7dff913689997996f5b51e16ba52e3bd9c163691",
+    "lines": 81
+  },
+  {
+    "path": "ananya_research_work-main/SFT/SFT.py",
+    "bytes": 21106,
+    "sha256": "eb0d3b59b8155433ebee24ec052158847691819c31977c325d74a52c184e8174",
+    "lines": 637,
+    "functions": [
+      {
+        "name": "omega",
+        "line": 18
+      },
+      {
+        "name": "u",
+        "line": 25
+      },
+      {
+        "name": "y",
+        "line": 136
+      },
+      {
+        "name": "theta",
+        "line": 139
+      },
+      {
+        "name": "apply_boundary_conditions",
+        "line": 289
+      },
+      {
+        "name": "apply_boundary_condition",
+        "line": 307
+      },
+      {
+        "name": "compute_B_from_A_staggered",
+        "line": 321
+      },
+      {
+        "name": "update_A_staggered",
+        "line": 353
+      },
+      {
+        "name": "Ay_func",
+        "line": 450
+      },
+      {
+        "name": "Bz_func",
+        "line": 531
+      }
+    ],
+    "imports": [
+      "from astropy.io import fits",
+      "from numba import njit, prange",
+      "from scipy.interpolate import interp1d, RectBivariateSpline",
+      "import datetime",
+      "import matplotlib.pyplot as plt",
+      "import numpy as np",
+      "import pandas as pd"
+    ]
+  },
+  {
+    "path": "ananya_research_work-main/SFT/bmrsharps_evol.txt",
+    "bytes": 158327,
+    "sha256": "1e3a8d95bc2accafc40d07e6feb9987f0808fd1bf1bdd28df459f61576d55385",
+    "lines": 1157
+  },
+  {
+    "path": "ananya_research_work-main/SFT/main.py",
+    "bytes": 2265,
+    "sha256": "bf45e15c6e66157ba613cad3f592f73e4c8d4f10d2fe725de2609ea2404afb84",
+    "lines": 63,
+    "functions": [],
+    "imports": [
+      "import datetime",
+      "import matplotlib.pyplot as plt",
+      "import numpy as np",
+      "import os",
+      "import sharptools"
+    ]
+  },
+  {
+    "path": "ananya_research_work-main/SFT/sharptools.py",
+    "bytes": 39163,
+    "sha256": "3dad892d58ce402e694699c08af7f31e4bea01d49bd2b0f2ebaafa3e5e5ba75e",
+    "lines": 902,
+    "functions": [
+      {
+        "name": "bmr2d",
+        "line": 22
+      },
+      {
+        "name": "correct_flux_multiplicative",
+        "line": 70
+      },
+      {
+        "name": "derotate",
+        "line": 90
+      },
+      {
+        "name": "evolve_forward",
+        "line": 128
+      },
+      {
+        "name": "get_bmrs",
+        "line": 250
+      },
+      {
+        "name": "get_pair_overlaps",
+        "line": 385
+      },
+      {
+        "name": "get_sharps",
+        "line": 547
+      },
+      {
+        "name": "getSHARPs",
+        "line": 578
+      },
+      {
+        "name": "readmap",
+        "line": 630
+      },
+      {
+        "name": "readSHARP",
+        "line": 668
+      },
+      {
+        "name": "SHARPtime",
+        "line": 801
+      },
+      {
+        "name": "vs",
+        "line": 168
+      },
+      {
+        "name": "__init__",
+        "line": 846
+      },
+      {
+        "name": "prep_sft",
+        "line": 852
+      },
+      {
+        "name": "setbr",
+        "line": 877
+      },
+      {
+        "name": "evolve",
+        "line": 883
+      }
+    ],
+    "imports": [
+      "from astropy.io import fits",
+      "from matplotlib import gridspec",
+      "from scipy.interpolate import RegularGridInterpolator",
+      "from scipy.interpolate import interp2d, griddata",
+      "from scipy.io import netcdf",
+      "from scipy.ndimage.filters import gaussian_filter as gauss",
+      "from sunpy.coordinates.sun import carrington_rotation_number",
+      "import datetime",
+      "import drms",
+      "import matplotlib.pyplot as plt",
+      "import numpy as np",
+      "import pickle",
+      "import sunpy.map",
+      "import sys"
+    ]
+  },
+  {
+    "path": "ananya_research_work-main/SFT/test_length_zero_line_diffusion.py",
+    "bytes": 31025,
+    "sha256": "cffdf2ca0495acb4c5840cd9bc0038ffe44f37379f876f384f360a1aa0270c8d",
+    "lines": 988,
+    "parse_error": "expected an indented block after function definition on line 406 (<unknown>, line 408)"
+  },
+  {
+    "path": "ananya_research_work-main/SFT/test_p_advection_diffusion.py",
+    "bytes": 24010,
+    "sha256": "90d8de32f6e6a91d74d8e7912a31a6dd9dc430f261187d25ff4990d3f91eacae",
+    "lines": 741,
+    "parse_error": "expected an indented block after function definition on line 561 (<unknown>, line 563)"
+  },
+  {
+    "path": "ananya_research_work-main/SFT/test_p_diffusion.py",
+    "bytes": 19002,
+    "sha256": "fc55eac49c2c7a6ea99ee658557abf75803fb99a8131948facf64256d8f0a800",
+    "lines": 591,
+    "parse_error": "expected an indented block after function definition on line 381 (<unknown>, line 383)"
+  },
+  {
+    "path": "ananya_research_work-main/SFT/test_zero_length_line_advection_diffusion.py",
+    "bytes": 41218,
+    "sha256": "7a6a731dad55a00f825ce3fd3144d5a4ca37ba7e97025764819d6f5a3e17e7e9",
+    "lines": 1247,
+    "functions": [
+      {
+        "name": "omega",
+        "line": 35
+      },
+      {
+        "name": "u",
+        "line": 40
+      },
+      {
+        "name": "Y_lm",
+        "line": 52
+      },
+      {
+        "name": "y",
+        "line": 76
+      },
+      {
+        "name": "theta",
+        "line": 79
+      },
+      {
+        "name": "C_lm",
+        "line": 204
+      },
+      {
+        "name": "compute_c_for_i",
+        "line": 210
+      },
+      {
+        "name": "compute_sum1_for_i",
+        "line": 224
+      },
+      {
+        "name": "pil_length_from_sign_changes",
+        "line": 261
+      },
+      {
+        "name": "apply_boundary_conditions",
+        "line": 436
+      },
+      {
+        "name": "apply_boundary_conditions_Bz",
+        "line": 454
+      },
+      {
+        "name": "compute_B_from_A_staggered",
+        "line": 466
+      },
+      {
+        "name": "update_A_staggered",
+        "line": 486
+      },
+      {
+        "name": "update_A_staggered1",
+        "line": 550
+      },
+      {
+        "name": "pil_length_pixels",
+        "line": 776
+      },
+      {
+        "name": "apply_boundary_conditions",
+        "line": 920
+      },
+      {
+        "name": "apply_boundary_conditions_Bz",
+        "line": 938
+      },
+      {
+        "name": "compute_B_from_A_staggered",
+        "line": 950
+      },
+      {
+        "name": "update_A_staggered",
+        "line": 970
+      },
+      {
+        "name": "update_A_staggered1",
+        "line": 1034
+      }
+    ],
+    "imports": [
+      "from astropy.io import fits",
+      "from joblib import Parallel, delayed",
+      "from joblib import parallel_backend",
+      "from numba import njit, prange",
+      "from numpy.polynomial.legendre import leggauss",
+      "from scipy.interpolate import RegularGridInterpolator",
+      "from scipy.interpolate import interp1d, RectBivariateSpline",
+      "from scipy.special import sph_harm",
+      "from skimage.measure import find_contours",
+      "import matplotlib.pyplot as plt",
+      "import numpy as np"
+    ]
+  },
+  {
+    "path": "magnetofriction/engine.py",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "lines": 0,
+    "functions": [],
+    "imports": []
+  },
+  {
+    "path": "magnetofriction/model_input.py",
+    "bytes": 771,
+    "sha256": "7e0e2f1506f8eea5c4179c4f2d1d3a4b692ae74b678405a622f2bc2e2ca5dd8a",
+    "lines": 7,
+    "parse_error": "unterminated string literal (detected at line 1) (<unknown>, line 1)"
+  },
+  {
+    "path": "magnetofriction/model_output.py",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "lines": 0,
+    "functions": [],
+    "imports": []
+  },
+  {
+    "path": "magnetofriction/theory-and-numerical-methods/magnetofriction-equations-and-numerical-choices-qa.md",
+    "bytes": 25449,
+    "sha256": "83e2bb8f0f7ede4959063ad80086824927e6b1a1304874a90903fc864e6ec14f",
+    "lines": 411
+  },
+  {
+    "path": "magnetofriction/theory-and-numerical-methods/magnetofriction-fundamentals-qa.md",
+    "bytes": 23455,
+    "sha256": "c1a2edbac7194c231d58998c4f3d7b8aa0680b640bf7c4ccf4e9949415924111",
+    "lines": 252
+  }
+]

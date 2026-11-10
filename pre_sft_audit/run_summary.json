@@ -1,0 +1,28 @@
+{
+  "observational_rows": 27,
+  "synthetic_rows": 66,
+  "centers": [
+    2120,
+    2122,
+    2124
+  ],
+  "input_map_count": 221,
+  "variants": [
+    "000",
+    "100",
+    "010",
+    "001",
+    "110",
+    "101",
+    "011",
+    "111"
+  ],
+  "synthetic_cases": [
+    "evolving_control",
+    "missing_data",
+    "opposite_rotation_control",
+    "seam_features",
+    "smooth_rotation",
+    "stationary_control"
+  ]
+}
