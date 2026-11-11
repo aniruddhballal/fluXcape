@@ -1,6 +1,7 @@
 """Load the three neighboring HMI synoptic maps used before SFT."""
 
 from pathlib import Path
+from math import cos, radians
 
 from astropy.io import fits
 
@@ -48,6 +49,23 @@ def calculate_delta_t(phi, theta):
     return (REFERENCE_LONGITUDE - phi) / OMEGA_0
 
 
+def omega(theta):
+    """Return the differential rotation rate for colatitude theta.
+
+    Parameters
+    ----------
+    theta : float
+        Colatitude in degrees.
+
+    Returns
+    -------
+    float
+        Differential rotation rate in degrees per day.
+    """
+    cos_theta = cos(radians(theta))
+    return 0.18 - 2.3 * cos_theta**2 - 1.62 * cos_theta**4
+
+
 def grid_info(path):
     """Return the grid dimensions and spatial resolution from a FITS file."""
     with fits.open(path, memmap=False) as hdul:
@@ -66,6 +84,8 @@ def grid_info(path):
 
 if __name__ == "__main__":
     phi = float(input("Enter phi (longitude in degrees): "))
-    theta = float(input("Enter theta (latitude in degrees): "))
+    theta = float(input("Enter theta (colatitude in degrees): "))
     delta_t = calculate_delta_t(phi, theta)
+    rotation_rate = omega(theta)
     print(f"delta t: {delta_t} days")
+    print(f"omega(theta): {rotation_rate} degrees/day")
