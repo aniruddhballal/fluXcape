@@ -28,6 +28,29 @@ REFERENCE_LONGITUDE = float(CURRENT_HEADER["CRVAL1"]) % 360.0
 OMEGA_0 = 13.2  # degrees per day
 
 
+def map_coordinates():
+    """Return the current map's longitude, latitude, and colatitude grids."""
+    longitude_pixels = np.arange(B_curr.shape[1]) + 1
+    latitude_pixels = np.arange(B_curr.shape[0]) + 1
+
+    longitudes = (
+        CURRENT_HEADER["CRVAL1"]
+        + (longitude_pixels - CURRENT_HEADER["CRPIX1"])
+        * abs(CURRENT_HEADER["CDELT1"])
+    ) % 360.0
+    latitudes = np.degrees(
+        np.arcsin(
+            CURRENT_HEADER["CRVAL2"]
+            + (latitude_pixels - CURRENT_HEADER["CRPIX2"])
+            * CURRENT_HEADER["CDELT2"]
+        )
+    )
+    return longitudes, latitudes, 90.0 - latitudes
+
+
+LONGITUDES, LATITUDES, COLATITUDES = map_coordinates()
+
+
 MAP_PATHS = {
     "CR2190 (Previous)": PREVIOUS_PATH,
     "CR2191 (Current)": CURRENT_PATH,
@@ -80,28 +103,46 @@ def current_map_value(phi, theta):
     theta is converted with latitude = 90 - theta.  The nearest grid cell is
     returned because the map is discrete.
     """
-    longitude_pixels = np.arange(B_curr.shape[1]) + 1
-    latitude_pixels = np.arange(B_curr.shape[0]) + 1
-
-    longitudes = (
-        CURRENT_HEADER["CRVAL1"]
-        + (longitude_pixels - CURRENT_HEADER["CRPIX1"])
-        * abs(CURRENT_HEADER["CDELT1"])
-    ) % 360.0
-    latitudes = np.degrees(
-        np.arcsin(
-            CURRENT_HEADER["CRVAL2"]
-            + (latitude_pixels - CURRENT_HEADER["CRPIX2"])
-            * CURRENT_HEADER["CDELT2"]
-        )
-    )
-
     target_latitude = 90.0 - theta
-    longitude_distance = np.abs((longitudes - phi + 180.0) % 360.0 - 180.0)
+    longitude_distance = np.abs((LONGITUDES - phi + 180.0) % 360.0 - 180.0)
     longitude_index = np.argmin(longitude_distance)
-    latitude_index = np.argmin(np.abs(latitudes - target_latitude))
+    latitude_index = np.argmin(np.abs(LATITUDES - target_latitude))
 
     return B_curr[latitude_index, longitude_index]
+
+
+def nearest_longitude_index(phi):
+    """Return the index of the closest supported longitude grid cell."""
+    distance = np.abs((LONGITUDES - phi + 180.0) % 360.0 - 180.0)
+    return int(np.argmin(distance))
+
+
+def reconstruct_b_new():
+    """Reconstruct the central map using nearest-neighbor backward sampling."""
+    B_new = np.empty_like(B_curr)
+
+    for latitude_index, theta in enumerate(COLATITUDES):
+        for longitude_index, phi in enumerate(LONGITUDES):
+            source_longitude = phi_prime(phi, theta)
+
+            if source_longitude < 0.0:
+                source_map = B_prev
+                source_longitude %= 360.0
+            elif source_longitude > 360.0:
+                source_map = B_next
+                source_longitude %= 360.0
+            else:
+                source_map = B_curr
+
+            source_longitude_index = nearest_longitude_index(source_longitude)
+            B_new[latitude_index, longitude_index] = source_map[
+                latitude_index, source_longitude_index
+            ]
+
+    return B_new
+
+
+B_new = reconstruct_b_new()
 
 
 def grid_info(path):
@@ -121,15 +162,4 @@ def grid_info(path):
 
 
 if __name__ == "__main__":
-    phi = float(input("Enter phi (longitude in degrees): "))
-    theta = float(input("Enter theta (colatitude in degrees): "))
-    current_value = current_map_value(phi, theta)
-    delta_t = calculate_delta_t(phi, theta)
-    rotation_rate = omega(theta)
-    rotated_phi = phi_prime(phi, theta)
-    remapped_value = current_map_value(rotated_phi, theta)
-    print(f"b(phi, theta) before remapping: {current_value} G")
-    print(f"delta t: {delta_t} days")
-    print(f"omega(theta): {rotation_rate} degrees/day")
-    print(f"phi prime: {rotated_phi} degrees")
-    print(f"b(phi prime, theta): {remapped_value} G")
+    print(f"B_new reconstructed with shape: {B_new.shape}")
