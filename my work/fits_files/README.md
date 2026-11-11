@@ -6,9 +6,10 @@ extracts the JSOC record metadata into the downloaded FITS headers.
 The local `.gitattributes` marks FITS files as binary to preserve their exact bytes
 in Git.
 
-From the repository root, run:
+From the repository root, install the downloader dependency and run:
 
 ```powershell
+.\.venv\Scripts\python.exe -m pip install -r ".\my work\requirements.txt"
 .\.venv\Scripts\python.exe ".\my work\download_synoptic_maps.py"
 ```
 
@@ -16,19 +17,15 @@ Choose `1` for `720x360/` (`hmi.mrsynop_small_720s`) or `2` for
 `3600x1440/` (`hmi.synoptic_mr_720s`). The script checks the archive, skips
 existing files, and asks before downloading missing rotations. Downloads
 always go into this directory, regardless of the shell's working directory.
-The existing Python dependencies are in `my work/SFT/requirements.txt`.
+The downloader's Astropy dependency is declared in `my work/requirements.txt`.
 
-The SFT reconstruction and observation validator use the
-shared default path defined by `FITS_FOLDER` in
-`my work/SFT/synoptic_reconstruction.py`. Explicit folders can still be passed
-to `load_maps()` when needed.
+These synoptic inputs and their downloader are independent of the deleted
+reconstruction/comparison experiment. The downloader resolves this directory
+from its own script location and requires no files from that experiment.
 
-HMI 45-second snapshot observations and validation results remain in
-`my work/SFT/validation_data/`. Their saved fingerprint labels such as
-`fits_files/720x360/...` are logical input identifiers; the actual synoptic
-files are here. Historical results retain their original input fingerprints;
-new validation runs fingerprint the current reconstruction, validator and maps.
-
-**Deleted:** the React viewer at `my work/SFT/viewer/` and its exporter
-`my work/SFT/prepare_viewer_data.py`. They are no longer required to use these
-inputs or run observational validation.
+**Deleted:** `my work/SFT/`, including its reconstruction and observation
+validator, coordinate tests, comparison reports, cached HMI 45-second snapshot
+observations, and validation outputs. Its React viewer and exporter had already
+been deleted. Historical findings are retained in
+`my work/pre_sft_audit_record.md`; the tracked implementation remains in Git
+history. The shared synoptic maps in this directory are retained.

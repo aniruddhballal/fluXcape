@@ -1,0 +1,2 @@
+# Shared HMI FITS downloader and metadata extraction.
+astropy>=7.2,<8

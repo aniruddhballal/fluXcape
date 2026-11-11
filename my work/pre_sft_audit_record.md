@@ -2,17 +2,28 @@
 
 Consolidated on **2026-11-11 (Asia/Calcutta)** from the completed audit and its saved results. This file sits at the repository root, outside `pre_sft_audit/`, so it remains available if that implementation folder is removed. This consolidation adds no scientific runs, observations, measurements, or new issue verdicts.
 
-**Component status update — 2026-11-11:** The React viewer at
-`my work/SFT/viewer/` (historically `SFT/viewer/`) and the exporter
-`prepare_viewer_data.py` are **deleted**, including the app's dependencies,
-build outputs and generated map JSON. Every reference to the viewer, its
-exporter, React/Vite setup or viewer launch commands in this record is a
-historical reference to a deleted component, not a current instruction.
-Archived text payloads and their original hashes remain unchanged as evidence.
-The reconstruction, shared FITS inputs and standalone observation validator
-remain available; the current validator no longer requires the deleted exporter.
-Historical recovery/reproduction examples may restore or depend on deleted
-components and should be read in that context.
+**Current component status — 2026-11-11:** The complete experimental
+`my work/SFT/` folder is **deleted**: reconstruction, observation validator,
+coordinate tests, comparison documents, cached HMI 45-second observations and
+validation outputs. Its React viewer and `prepare_viewer_data.py` exporter were
+deleted earlier. References to those experimental files, their old `SFT/...`
+paths, viewer setup, and reproduction commands in this record are historical
+references to deleted components. Archived text payloads and their hashes remain
+unchanged as evidence.
+
+The 221 shared synoptic FITS inputs in `my work/fits_files/`, their standalone
+`my work/download_synoptic_maps.py` downloader, this record, and Ananya's
+original research files are retained. The downloader's Astropy dependency is now
+declared in `my work/requirements.txt`; it does not depend on the deleted folder.
+
+The last tracked comparison implementation before this cleanup is recoverable
+from commit `d46593e` using
+`git restore --source d46593e -- "my work/SFT"` after removal. That restores
+tracked files only. The nine ignored observation FITS, NPZ arrays and PNG plots
+are not in Git or embedded here and would require redownloading/regeneration.
+Historical recovery/reproduction examples can depend on removed components and
+should be read in that context. This cleanup concerns only the experimental
+`my work/SFT/` folder; `ananya's research work/SFT/` remains unchanged.
 
 ## 1. Intent and the question we were trying to answer
 
