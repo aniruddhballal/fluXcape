@@ -4,6 +4,7 @@ from pathlib import Path
 from math import cos, radians
 
 from astropy.io import fits
+import numpy as np
 
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "fits_files" / "720x360"
@@ -72,6 +73,37 @@ def phi_prime(phi, theta):
     return phi + omega(theta) * delta_t
 
 
+def current_map_value(phi, theta):
+    """Return b(phi, theta) from CR2191 before any remapping.
+
+    The FITS map stores latitude, while the calculation uses colatitude, so
+    theta is converted with latitude = 90 - theta.  The nearest grid cell is
+    returned because the map is discrete.
+    """
+    longitude_pixels = np.arange(B_curr.shape[1]) + 1
+    latitude_pixels = np.arange(B_curr.shape[0]) + 1
+
+    longitudes = (
+        CURRENT_HEADER["CRVAL1"]
+        + (longitude_pixels - CURRENT_HEADER["CRPIX1"])
+        * abs(CURRENT_HEADER["CDELT1"])
+    ) % 360.0
+    latitudes = np.degrees(
+        np.arcsin(
+            CURRENT_HEADER["CRVAL2"]
+            + (latitude_pixels - CURRENT_HEADER["CRPIX2"])
+            * CURRENT_HEADER["CDELT2"]
+        )
+    )
+
+    target_latitude = 90.0 - theta
+    longitude_distance = np.abs((longitudes - phi + 180.0) % 360.0 - 180.0)
+    longitude_index = np.argmin(longitude_distance)
+    latitude_index = np.argmin(np.abs(latitudes - target_latitude))
+
+    return B_curr[latitude_index, longitude_index]
+
+
 def grid_info(path):
     """Return the grid dimensions and spatial resolution from a FITS file."""
     with fits.open(path, memmap=False) as hdul:
@@ -91,9 +123,11 @@ def grid_info(path):
 if __name__ == "__main__":
     phi = float(input("Enter phi (longitude in degrees): "))
     theta = float(input("Enter theta (colatitude in degrees): "))
+    current_value = current_map_value(phi, theta)
     delta_t = calculate_delta_t(phi, theta)
     rotation_rate = omega(theta)
     rotated_phi = phi_prime(phi, theta)
+    print(f"b(phi, theta) before remapping: {current_value} G")
     print(f"delta t: {delta_t} days")
     print(f"omega(theta): {rotation_rate} degrees/day")
     print(f"phi prime: {rotated_phi} degrees")
