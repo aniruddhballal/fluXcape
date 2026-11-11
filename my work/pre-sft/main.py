@@ -143,6 +143,16 @@ def reconstruct_b_new():
 
 
 B_new = reconstruct_b_new()
+B_old = B_curr
+B = B_new
+
+
+def print_field_statistics(name, field):
+    """Print average, maximum, and minimum finite field values in gauss."""
+    print(name)
+    print(f"  b_avg: {np.nanmean(field)} G")
+    print(f"  b_max: {np.nanmax(field)} G")
+    print(f"  b_min: {np.nanmin(field)} G")
 
 
 def grid_info(path):
@@ -163,3 +173,5 @@ def grid_info(path):
 
 if __name__ == "__main__":
     print(f"B_new reconstructed with shape: {B_new.shape}")
+    print_field_statistics("B_old (original CR2191)", B_old)
+    print_field_statistics("B (reconstructed)", B)
