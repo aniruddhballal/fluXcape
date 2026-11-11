@@ -66,6 +66,12 @@ def omega(theta):
     return 0.18 - 2.3 * cos_theta**2 - 1.62 * cos_theta**4
 
 
+def phi_prime(phi, theta):
+    """Return the longitude phi prime after differential rotation."""
+    delta_t = calculate_delta_t(phi, theta)
+    return phi + omega(theta) * delta_t
+
+
 def grid_info(path):
     """Return the grid dimensions and spatial resolution from a FITS file."""
     with fits.open(path, memmap=False) as hdul:
@@ -87,5 +93,7 @@ if __name__ == "__main__":
     theta = float(input("Enter theta (colatitude in degrees): "))
     delta_t = calculate_delta_t(phi, theta)
     rotation_rate = omega(theta)
+    rotated_phi = phi_prime(phi, theta)
     print(f"delta t: {delta_t} days")
     print(f"omega(theta): {rotation_rate} degrees/day")
+    print(f"phi prime: {rotated_phi} degrees")
