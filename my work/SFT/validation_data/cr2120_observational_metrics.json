@@ -172,5 +172,16 @@
       }
     },
     "header_CDELT1": -0.5
+  },
+  "component_status": {
+    "react_viewer": {
+      "status": "deleted",
+      "deleted_on": "2026-11-11",
+      "paths": [
+        "my work/SFT/viewer/",
+        "my work/SFT/prepare_viewer_data.py"
+      ],
+      "note": "The prepare_viewer_data.py hash in input_sha256 is retained as historical provenance for the deleted exporter; it is not a dependency of the current validator."
+    }
   }
 }

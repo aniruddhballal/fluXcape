@@ -18,7 +18,7 @@ existing files, and asks before downloading missing rotations. Downloads
 always go into this directory, regardless of the shell's working directory.
 The existing Python dependencies are in `my work/SFT/requirements.txt`.
 
-The SFT reconstruction, observation validator and viewer exporter use the
+The SFT reconstruction and observation validator use the
 shared default path defined by `FITS_FOLDER` in
 `my work/SFT/synoptic_reconstruction.py`. Explicit folders can still be passed
 to `load_maps()` when needed.
@@ -26,5 +26,9 @@ to `load_maps()` when needed.
 HMI 45-second snapshot observations and validation results remain in
 `my work/SFT/validation_data/`. Their saved fingerprint labels such as
 `fits_files/720x360/...` are logical input identifiers; the actual synoptic
-files are here. Historical results are preserved, and the existing provenance
-checks will flag changed calculation scripts when regenerating viewer data.
+files are here. Historical results retain their original input fingerprints;
+new validation runs fingerprint the current reconstruction, validator and maps.
+
+**Deleted:** the React viewer at `my work/SFT/viewer/` and its exporter
+`my work/SFT/prepare_viewer_data.py`. They are no longer required to use these
+inputs or run observational validation.

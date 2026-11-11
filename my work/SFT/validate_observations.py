@@ -187,7 +187,7 @@ def metrics(model, observation, mask):
 
 def input_fingerprints(rotations=ROTATIONS):
     """Identify the reconstruction code and input maps used for a report."""
-    paths = [ROOT / 'synoptic_reconstruction.py', ROOT / 'prepare_viewer_data.py', ROOT / 'validate_observations.py']
+    paths = [ROOT / 'synoptic_reconstruction.py', ROOT / 'validate_observations.py']
     paths += [FITS_FOLDER / '720x360' / f'hmi.Synoptic_Mr_small.{n}.fits' for n in rotations]
     # Keep the existing logical input labels even though data now live outside SFT.
     return {str(p.relative_to(ROOT if p.suffix == '.py' else FITS_FOLDER.parent)).replace('\\', '/'): hashlib.sha256(

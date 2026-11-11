@@ -15,9 +15,9 @@ degrees. SunPy's [`HMISynopticMap` documentation](https://docs.sunpy.org/en/stab
 and its installed HMI source code both state that the HMI data array uses the
 **positive** step even when the header value is negative. We now use
 `abs(CDELT1)` in one shared `calculate_coordinates()` function for
-reconstruction, interpolation and observational registration. Viewer
-coordinates are exported with the same positive step. The original FITS files
-and pixel arrays are not modified.
+reconstruction, interpolation and observational registration. The React viewer
+(deleted) previously exported coordinates with the same positive step. The
+original FITS files and pixel arrays are not modified.
 
 As an independent registration check, the unchanged central map was compared
 with each full-disk HMI observation on a common visible mask. We compared the
@@ -139,12 +139,17 @@ observation if needed.
 .\.venv\Scripts\python.exe ".\my work\SFT\validate_observations.py" --rotation 2120
 .\.venv\Scripts\python.exe ".\my work\SFT\validate_observations.py" --rotation 2122
 .\.venv\Scripts\python.exe ".\my work\SFT\validate_observations.py" --rotation 2124
-.\.venv\Scripts\python.exe ".\my work\SFT\prepare_viewer_data.py"
 ```
 
 Synoptic inputs are loaded from `my work/fits_files/720x360/`; download and
 update them using `my work/download_synoptic_maps.py`.
 Metrics JSON, arrays and diagnostic plots are saved in `my work/SFT/validation_data`.
-Large FITS, NPZ and PNG files are ignored by Git. The viewer export includes
-observational scores only when its input maps and calculation scripts match the
-saved result hashes. Its generated data file remains ignored by Git.
+Large snapshot FITS, NPZ and PNG files in that results directory are ignored by
+Git. Input fingerprints cover the reconstruction script, validator and synoptic
+maps.
+
+**Deleted:** the React app at `my work/SFT/viewer/`, its dependencies and build
+outputs, and the exporter `my work/SFT/prepare_viewer_data.py`. They are no longer
+part of this workflow. The validator runs directly and saves scientific results
+without the app. Older result files retain the deleted exporter's hash as
+historical provenance, explicitly marked by their component-status metadata.
