@@ -18,11 +18,34 @@ B_curr = fits.getdata(CURRENT_PATH)
 B_next = fits.getdata(NEXT_PATH)
 
 
+# Use the current map's WCS reference longitude as the working "now"
+# longitude.  CRVAL1 is stored as an absolute Carrington longitude, so
+# normalize it to one 0--360 degree Carrington-longitude cycle.
+CURRENT_HEADER = fits.getheader(CURRENT_PATH)
+REFERENCE_LONGITUDE = float(CURRENT_HEADER["CRVAL1"]) % 360.0
+OMEGA_0 = 13.2  # degrees per day
+
+
 MAP_PATHS = {
     "CR2190 (Previous)": PREVIOUS_PATH,
     "CR2191 (Current)": CURRENT_PATH,
     "CR2192 (Next)": NEXT_PATH,
 }
+
+
+def calculate_delta_t(phi, theta):
+    """Calculate the time offset for a longitude, in days.
+
+    Parameters
+    ----------
+    phi : float
+        Input longitude in degrees.
+    theta : float
+        Input latitude in degrees. Accepted for the later latitude-dependent
+        calculation; it does not affect delta t yet.
+    """
+    del theta
+    return (REFERENCE_LONGITUDE - phi) / OMEGA_0
 
 
 def grid_info(path):
@@ -43,6 +66,13 @@ def grid_info(path):
 
 def print_grid_info():
     """Print the grid size and spatial resolution for each synoptic map."""
+    print(
+        "Reference (now) longitude: "
+        f"{REFERENCE_LONGITUDE} {CURRENT_HEADER.get('CUNIT1', 'degrees')} "
+        "from the current map (CR2191)"
+    )
+    print()
+
     for label, path in MAP_PATHS.items():
         info = grid_info(path)
         print(label)
@@ -57,3 +87,8 @@ def print_grid_info():
 
 if __name__ == "__main__":
     print_grid_info()
+
+    phi = float(input("Enter phi (longitude in degrees): "))
+    theta = float(input("Enter theta (latitude in degrees): "))
+    delta_t = calculate_delta_t(phi, theta)
+    print(f"delta t: {delta_t} days")
