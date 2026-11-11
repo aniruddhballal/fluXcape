@@ -64,30 +64,7 @@ def grid_info(path):
     }
 
 
-def print_grid_info():
-    """Print the grid size and spatial resolution for each synoptic map."""
-    print(
-        "Reference (now) longitude: "
-        f"{REFERENCE_LONGITUDE} {CURRENT_HEADER.get('CUNIT1', 'degrees')} "
-        "from the current map (CR2191)"
-    )
-    print()
-
-    for label, path in MAP_PATHS.items():
-        info = grid_info(path)
-        print(label)
-        print(f"  latitudes: {info['latitudes']}")
-        print(f"  longitudes: {info['longitudes']}")
-        print(
-            "  spatial resolution: "
-            f"{info['longitude_resolution']} {info['longitude_unit']} longitude, "
-            f"{info['latitude_resolution']} {info['latitude_unit']} latitude"
-        )
-
-
 if __name__ == "__main__":
-    print_grid_info()
-
     phi = float(input("Enter phi (longitude in degrees): "))
     theta = float(input("Enter theta (latitude in degrees): "))
     delta_t = calculate_delta_t(phi, theta)
