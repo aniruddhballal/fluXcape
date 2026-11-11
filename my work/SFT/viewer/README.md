@@ -9,24 +9,23 @@ display only; it does not run the reconstruction.
 From the repository root, install the viewer dependencies once:
 
 ```powershell
-cd SFT\viewer
-npm install
-cd ..\..
+npm --prefix ".\my work\SFT\viewer" install
 ```
 
 Then prepare the data and launch the viewer:
 
 ```powershell
-.\.venv\Scripts\python.exe SFT\validate_observations.py --rotation 2120
-.\.venv\Scripts\python.exe SFT\prepare_viewer_data.py
-cd SFT\viewer
-npm run dev
+.\.venv\Scripts\python.exe ".\my work\SFT\validate_observations.py" --rotation 2120
+.\.venv\Scripts\python.exe ".\my work\SFT\prepare_viewer_data.py"
+npm --prefix ".\my work\SFT\viewer" run dev
 ```
 
 Open the local URL printed by Vite (normally http://127.0.0.1:5173/). The
 validation requires JSOC access and accepts another central rotation when three
 consecutive input maps are available. Rerun validation and data preparation
 after changing the reconstruction or input maps. Stale scores are omitted.
+Synoptic input maps are shared from `my work/fits_files/`; the downloader is
+`my work/download_synoptic_maps.py`.
 Press Ctrl+C in the terminal to stop the viewer.
 
 The 2D and 3D views display the same FITS values. For the globe, the renderer

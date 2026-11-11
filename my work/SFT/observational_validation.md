@@ -135,14 +135,16 @@ compatible inputs and an available HMI record. It queries JSOC and downloads the
 observation if needed.
 
 ```powershell
-.\.venv\Scripts\python.exe -m pip install -r SFT\requirements.txt
-.\.venv\Scripts\python.exe SFT\validate_observations.py --rotation 2120
-.\.venv\Scripts\python.exe SFT\validate_observations.py --rotation 2122
-.\.venv\Scripts\python.exe SFT\validate_observations.py --rotation 2124
-.\.venv\Scripts\python.exe SFT\prepare_viewer_data.py
+.\.venv\Scripts\python.exe -m pip install -r ".\my work\SFT\requirements.txt"
+.\.venv\Scripts\python.exe ".\my work\SFT\validate_observations.py" --rotation 2120
+.\.venv\Scripts\python.exe ".\my work\SFT\validate_observations.py" --rotation 2122
+.\.venv\Scripts\python.exe ".\my work\SFT\validate_observations.py" --rotation 2124
+.\.venv\Scripts\python.exe ".\my work\SFT\prepare_viewer_data.py"
 ```
 
-Metrics JSON, arrays and diagnostic plots are saved in `SFT/validation_data`.
+Synoptic inputs are loaded from `my work/fits_files/720x360/`; download and
+update them using `my work/download_synoptic_maps.py`.
+Metrics JSON, arrays and diagnostic plots are saved in `my work/SFT/validation_data`.
 Large FITS, NPZ and PNG files are ignored by Git. The viewer export includes
 observational scores only when its input maps and calculation scripts match the
 saved result hashes. Its generated data file remains ignored by Git.

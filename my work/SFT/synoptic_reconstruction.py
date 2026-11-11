@@ -7,6 +7,7 @@ from pathlib import Path
 from scipy.interpolate import RectBivariateSpline
 
 ROTATIONS = (2119, 2120, 2121)
+FITS_FOLDER = Path(__file__).resolve().parent.parent / "fits_files"
 DISPLAY_LIMIT = 100  # Gauss; values outside +/- this limit saturate in the plot.
 
 
@@ -36,9 +37,9 @@ PHOTO_CMAP = sunalyse_colormap()
 PHOTO_NORM = Normalize(vmin=-DISPLAY_LIMIT, vmax=DISPLAY_LIMIT, clip=True)
 
 
-def load_maps(folder, rotations=ROTATIONS):
-    """Load the three maps and their FITS headers."""
-    paths = [f"{folder}/hmi.Synoptic_Mr_small.{rotation}.fits" for rotation in rotations]
+def load_maps(folder=FITS_FOLDER / "720x360", rotations=ROTATIONS):
+    """Load the three maps; default to the shared my work/fits_files inputs."""
+    paths = [Path(folder) / f"hmi.Synoptic_Mr_small.{rotation}.fits" for rotation in rotations]
     loaded = [fits.getdata(path, header=True) for path in paths]
     return [item[0] for item in loaded], [item[1] for item in loaded]
 
@@ -172,8 +173,7 @@ def plot_reconstruction(current, reconstructed, header):
 
 
 if __name__ == "__main__":
-    folder = Path(__file__).resolve().parent / "fits_files" / "720x360"
-    maps, headers = load_maps(folder)
+    maps, headers = load_maps()
     longitude, latitude = calculate_coordinates(maps[1], headers[1])
     delta_t = calculate_delta_t(longitude)
     rotation_rate = calculate_rotation_rate(latitude)

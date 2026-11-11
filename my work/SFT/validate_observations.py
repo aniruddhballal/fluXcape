@@ -1,7 +1,8 @@
 """Validate CR 2120 reconstructions against an independent HMI 45-second image.
 
 Run from the repository root using the project virtual environment.
-The source image is cached in SFT/validation_data and downloaded from JSOC if absent.
+Synoptic inputs are in my work/fits_files. The source image is cached in
+my work/SFT/validation_data and downloaded from JSOC if absent.
 """
 from __future__ import annotations
 
@@ -23,7 +24,7 @@ from scipy.ndimage import gaussian_filter, map_coordinates
 from sunpy.coordinates.frames import HeliographicCarrington, HeliographicStonyhurst, Helioprojective
 from sunpy.coordinates.sun import carrington_rotation_time
 
-from synoptic_reconstruction import (ROTATIONS, load_maps, calculate_coordinates,
+from synoptic_reconstruction import (FITS_FOLDER, ROTATIONS, load_maps, calculate_coordinates,
     calculate_delta_t, calculate_rotation_rate, calculate_ananya_rotation_rate,
     calculate_phi_prime, select_source_map, interpolate_field)
 
@@ -187,8 +188,9 @@ def metrics(model, observation, mask):
 def input_fingerprints(rotations=ROTATIONS):
     """Identify the reconstruction code and input maps used for a report."""
     paths = [ROOT / 'synoptic_reconstruction.py', ROOT / 'prepare_viewer_data.py', ROOT / 'validate_observations.py']
-    paths += [ROOT / 'fits_files' / '720x360' / f'hmi.Synoptic_Mr_small.{n}.fits' for n in rotations]
-    return {str(p.relative_to(ROOT)).replace('\\', '/'): hashlib.sha256(
+    paths += [FITS_FOLDER / '720x360' / f'hmi.Synoptic_Mr_small.{n}.fits' for n in rotations]
+    # Keep the existing logical input labels even though data now live outside SFT.
+    return {str(p.relative_to(ROOT if p.suffix == '.py' else FITS_FOLDER.parent)).replace('\\', '/'): hashlib.sha256(
         p.read_text(encoding='utf-8-sig').replace('\r\n', '\n').encode('utf-8')
         if p.suffix == '.py' else p.read_bytes()).hexdigest() for p in paths}
 
@@ -198,7 +200,7 @@ def main():
     parser.add_argument('--rotation', type=int, default=ROTATIONS[1], help='central Carrington rotation')
     center = parser.parse_args().rotation
     rotations = (center - 1, center, center + 1)
-    maps, headers = load_maps(ROOT / 'fits_files' / '720x360', rotations)
+    maps, headers = load_maps(rotations=rotations)
     if [h.get('CAR_ROT') for h in headers] != list(rotations):
         raise ValueError('The FITS headers must identify the requested consecutive rotations.')
     nominal, crossing, before, after, record = reference_and_record(headers[1])

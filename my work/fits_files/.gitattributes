@@ -1,0 +1,2 @@
+# FITS inputs must remain byte-for-byte unchanged in Git.
+*.fits binary

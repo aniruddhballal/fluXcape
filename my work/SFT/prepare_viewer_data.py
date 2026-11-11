@@ -4,12 +4,12 @@ import hashlib
 import json
 from pathlib import Path
 import numpy as np
-from synoptic_reconstruction import (ROTATIONS, load_maps, calculate_coordinates,
+from synoptic_reconstruction import (FITS_FOLDER, ROTATIONS, load_maps, calculate_coordinates,
     calculate_delta_t, calculate_rotation_rate, calculate_ananya_rotation_rate, calculate_phi_prime,
     select_source_map, interpolate_field)
 
 root = Path(__file__).resolve().parent
-maps, headers = load_maps(root / 'fits_files' / '720x360')
+maps, headers = load_maps()
 longitude, latitude = calculate_coordinates(maps[1], headers[1])
 delta_t = calculate_delta_t(longitude)
 
@@ -41,14 +41,15 @@ validation = None
 if validation_file.exists():
     candidate = json.loads(validation_file.read_text(encoding='utf-8'))
     paths = [root / 'synoptic_reconstruction.py', root / 'prepare_viewer_data.py', root / 'validate_observations.py']
-    paths += [root / 'fits_files' / '720x360' / f'hmi.Synoptic_Mr_small.{n}.fits' for n in ROTATIONS]
-    fingerprints = {str(p.relative_to(root)).replace('\\', '/'): hashlib.sha256(
+    paths += [FITS_FOLDER / '720x360' / f'hmi.Synoptic_Mr_small.{n}.fits' for n in ROTATIONS]
+    # Use the same logical labels as the validator, independent of data location.
+    fingerprints = {str(p.relative_to(root if p.suffix == '.py' else FITS_FOLDER.parent)).replace('\\', '/'): hashlib.sha256(
         p.read_text(encoding='utf-8-sig').replace('\r\n', '\n').encode('utf-8')
         if p.suffix == '.py' else p.read_bytes()).hexdigest() for p in paths}
     if candidate.get('cr') == ROTATIONS[1] and candidate.get('input_sha256') == fingerprints:
         validation = candidate
     else:
-        print('Observational validation is stale; rerun SFT/validate_observations.py.')
+        print('Observational validation is stale; rerun "my work/SFT/validate_observations.py".')
 payload = {
     'rotation': ROTATIONS[1], 'rotations': list(ROTATIONS),
     'width': maps[1].shape[1], 'height': maps[1].shape[0],

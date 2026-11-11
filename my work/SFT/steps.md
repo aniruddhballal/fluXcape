@@ -1,5 +1,9 @@
 Yes. `synoptic_reconstruction.py` should take three consecutive Carrington rotation (CR) FITS files, visualize them, reconstruct one approximately time-aligned magnetic-field map, and display/save the result.
 
+The shared synoptic inputs are in `my work/fits_files/`, and their download/update
+script is `my work/download_synoptic_maps.py`. Reconstruction scripts stay in
+`my work/SFT/` and resolve the data path from their own file location.
+
 I'd organize it into these functions, in execution order.
 
 ## Proposed functions
