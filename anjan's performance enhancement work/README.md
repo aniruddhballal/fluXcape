@@ -272,3 +272,7 @@ These are source-level findings or questions, not a validation of the scientific
 4. `laplace.py:85`: inspect the initial-field solver actually used.
 
 The best initial performance investigation is **Main.py together with vectormath.py and the active solver in laplace.py**. The user has confirmed `Main.py` as the target; a runtime profile is still needed to measure its bottlenecks.
+
+## Original FITS inputs are local
+
+The three original FITS files are preserved on this machine but are ignored and untracked by Git. A fresh clone requires separate acquisition of `Bp`, `Bt` and `Br` from `hmi.sharp_cea_720s`, patch 4698, at `2014.10.22_00:00:00_TAI`, with the filenames expected by `fitsdataextraction.py`. No downloader for this set is supplied. The downloaders in `my work/` target different data products and do not fetch these SHARP inputs.

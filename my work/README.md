@@ -180,3 +180,7 @@ python "my work/pre_sft_reconstruction/reconstruct_synoptic_map.py"
 Use `python3` instead of `python` where that is the interpreter command in your
 environment. The reconstruction needs its three existing synoptic input files;
 it does not invoke either downloader automatically.
+
+## Local FITS storage and cloning
+
+FITS files are ignored and untracked; the local collection described above remains on the working machine but is not included in a fresh clone. Use the synoptic downloader to acquire the required rotations before running reconstruction (currently CR2190–2192). Use the observation downloader for the fixed CR2191 full-disk records when needed. Fetching newer observations does not replace the specific inputs required to reproduce these experiments.

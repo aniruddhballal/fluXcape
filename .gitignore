@@ -4,3 +4,10 @@ __pycache__/
 
 # Generated 3D weight volume; regenerate with weightfunction.py.
 anjan's performance enhancement work/**/weight_function/W.npy
+
+# Observation data stay local; acquire the required records separately.
+*.[fF][iI][tT][sS]
+*.[fF][iI][tT]
+*.[fF][tT][sS]
+*.[fF][iI][tT][sS].gz
+*.[fF][iI][tT][sS].fz

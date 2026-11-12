@@ -172,9 +172,20 @@ Successive solver iterations depend on previous states. Work within an iteration
 ## Root files, execution and repository state
 
 - `allinonesunvisual.md` currently contains one external solar-visualisation URL. It is a bookmark, not a local application.
-- `.gitignore` excludes `.venv/`, Python caches/bytecode and the generated `weight_function/W.npy` volume. Anjan’s other research files and documentation are included in version control.
+- `.gitignore` excludes `.venv/`, Python caches/bytecode, generated products and FITS observation files. FITS data are kept locally, not distributed with a clone. Previously committed data remain in Git history.
 - `.git/` holds repository metadata. `__pycache__/` folders contain generated interpreter caches rather than research source or results.
 
 There is no single command that runs this whole repository. For the current data tools, follow [my work/README.md](<my work/README.md>); inherited research scripts need their own inputs, dependencies and configuration. Many scripts execute substantial work when imported. Paths, dates and output locations should be checked before running them.
 
 This overview is based on the current files, source inspection and retained reports. Preparing it did not run the SFT, PFSS, WSR or MF simulations or independently reproduce the archived numerical comparisons.
+
+## Acquiring observation inputs after cloning
+
+FITS files are local data and are not tracked by Git. The inventories above describe the local research data and expected inputs, not files guaranteed to arrive with a clone.
+
+- Run `my work/download_synoptic_maps.py` and select the low-resolution product to acquire the synoptic maps. The current reconstruction specifically needs CR2190, CR2191 and CR2192; newer maps are not substitutes for that experiment. The downloader checks the archive and offers missing maps, rather than automatically running an analysis.
+- Run `my work/download_cr2191_hmi_observations.py` to reacquire its fixed June 2017 full-disk observation records if repeating the observational comparison. The cleaned comparison archive does not include its original analysis runner.
+- Anjan’s three SHARP files require separate acquisition: `hmi.sharp_cea_720s`, patch 4698, `2014.10.22_00:00:00_TAI`, segments `Bp`, `Bt`, `Br`. There is no downloader for that set in this repository. Existing local copies are preserved.
+- Ananya’s original MDI-labelled maps, CR2193 PFSS input and dated experiment map also require separate acquisition and provenance checks; the supplied scripts do not provide one automatic downloader for all of them.
+
+These scripts require archive availability and suitable dependencies. Retrieving the latest observations alone does not reproduce the historical experiments.
