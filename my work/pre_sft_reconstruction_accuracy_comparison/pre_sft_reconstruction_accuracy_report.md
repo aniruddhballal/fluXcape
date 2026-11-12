@@ -1,4 +1,4 @@
-# Fresh independent pre-SFT accuracy comparison
+# Pre-SFT reconstruction accuracy: synthetic tests and HMI observations
 
 Completed 12 November 2026. All numerical results were calculated anew from original code and FITS/record metadata. No previous audit, experiment, report, or result was consulted. Neither original implementation was edited. The full SFT simulation was never run.
 
@@ -18,7 +18,7 @@ The region results are mixed against the baseline. At 11:00 TAI, the user's disk
 
 Inputs are the 360×720 HMI radial synoptic FITS maps CR2190, CR2191, and CR2192; and the 10:48, 11:00, and 11:12 TAI records in `fits_files/observations/cr2191`. All three synoptic rotations are actually used as source data. All three observation times are independently decoded. The reference time in CR2191's header is 2017-06-09 10:56:34 TAI. Record QUALITY values, observer longitudes, and exact observation times are retained in the consolidation appendix below.
 
-Both original implementation files remain in their original project locations. Two sets of analysis-only source snapshots were verified byte-for-byte against them. The snapshots, runtime environment, and raw-input hashes are optional reproducibility artifacts; the source identifiers, input description, numerical validation outcomes, and analysis methodology are preserved here. Cleanup is proposed only; no files have been deleted.
+Both original implementation files remain in their original project locations. Two sets of analysis-only source snapshots were verified byte-for-byte against them. The snapshots, runtime environment, and raw-input hashes are optional reproducibility artifacts; the source identifiers, input description, numerical validation outcomes, and analysis methodology are preserved here. The approved cleanup was subsequently completed; only the retained report, numerical tables, and plots remain in this archive.
 
 Only `pre-sft/main.py` is imported. From `SFT.py`, only the AST of its `omega` function is executed. Its reconstruction expressions are reproduced with batch evaluation of the same SciPy tensor spline, validated against scalar calls. No SFT grid initialization, curl calculation, flow integration, flux emergence, or time stepping is executed. The evaluated endpoint is Ananya's `B_day106` versus the user's `B_new`, before the later SFT-specific grid conversion. Those names are historical; all inputs here are CR2190–2192.
 
@@ -97,7 +97,7 @@ Four fields are tested: a constant field; smooth low-order longitude/latitude st
 | evolution_2.5pct_per_day / all | user | 259200 | 2.56278 | 1.19967 | 0.983561 | 0.0397459 |
 | evolution_2.5pct_per_day / all | ananya_native | 259200 | 15.0705 | 3.09353 | 0.117825 | -0.199858 |
 
-A static field favors the unremapped baseline, which has exactly zero error. Neither remapping is universally superior to leaving the map unchanged. Source noise cannot be removed by pure interpolation; intrinsic emergence/decay cannot be undone by a rotation-only reconstruction. Low-latitude, mid-latitude, polar, and seam metrics for every primary synthetic case are retained in [all_metrics.csv](all_metrics.csv).
+A static field favors the unremapped baseline, which has exactly zero error. Neither remapping is universally superior to leaving the map unchanged. Source noise cannot be removed by pure interpolation; intrinsic emergence/decay cannot be undone by a rotation-only reconstruction. Low-latitude, mid-latitude, polar, and seam metrics for every primary synthetic case are retained in [all_metrics.csv](synthetic_and_observational_accuracy_metrics.csv).
 
 ## Observational reference construction
 
@@ -212,28 +212,28 @@ Error e=prediction−reference, in gauss. RMSE=sqrt(mean(e²)); MAE=mean(|e|); b
 
 This archive prioritizes the analysis and its results. It does not require retaining rerun scripts, raw observations, pixel arrays, source snapshots, package lock information, or intermediate logs. Their essential methodological details and validation outcomes are consolidated in this report.
 
-- [all_metrics.csv](all_metrics.csv): **342 rows**, comprising 330 primary-run rows and 12 noise/evolution rows, with all 16 recorded columns at their original numeric precision.
-- [quadrature4/metrics.csv](quadrature4/metrics.csv): **330 rows**, retaining every result of the independently sampled 4×4 averaging sensitivity run, including all times and regions. Synthetic results repeat the main run exactly; observational results differ and must be preserved.
+- [all_metrics.csv](synthetic_and_observational_accuracy_metrics.csv): **342 rows**, comprising 330 primary-run rows and 12 noise/evolution rows, with all 16 recorded columns at their original numeric precision.
+- [quadrature4/metrics.csv](spatial_averaging_sensitivity_4x4/accuracy_metrics_4x4_spatial_averaging.csv): **330 rows**, retaining every result of the independently sampled 4×4 averaging sensitivity run, including all times and regions. Synthetic results repeat the main run exactly; observational results differ and must be preserved.
 
 Both tables preserve `case`, `region`, `model`, `n`, `truth_valid`, `rmse`, `mae`, `bias`, `correlation`, `nrmse_std`, `p95_abs_error`, `sign_agreement`, `truth_rms`, `prediction_mean`, `truth_mean`, and `unsigned_ratio`. Empty metric cells mean undefined or unscorable, not zero. `truth_valid` counts finite eligible reference pixels before prediction-intersection masking; `n` is the scored intersection. These CSVs preserve every JSON numerical result, including cases and regions not repeated in the shorter narrative tables.
 
 ### Observational comparisons
 
-![RMSE across all three observation times](summary.png)
+![RMSE across all three observation times](observational_rmse_comparison_across_observation_times.png)
 
-![Reference-versus-prediction distributions at 11:00 TAI](observational_scatter.png)
+![Reference-versus-prediction distributions at 11:00 TAI](observed_vs_reconstructed_radial_field_scatter_2017-06-09_1100_TAI.png)
 
-![LOS proxy, reconstructions, and errors at 11:00 TAI](observation_20170609_110000_TAI_los_radial_proxy.png)
+![LOS proxy, reconstructions, and errors at 11:00 TAI](los_radial_field_proxy_reconstruction_and_errors_2017-06-09_1100_TAI.png)
 
-![Vector radial reference, reconstructions, and errors at 11:00 TAI](observation_20170609_110000_TAI_vector_radial.png)
+![Vector radial reference, reconstructions, and errors at 11:00 TAI](vector_radial_field_reconstruction_and_errors_2017-06-09_1100_TAI.png)
 
 ### Nominal synthetic comparisons
 
-![Smooth analytic field and errors](synthetic_smooth_rotation1.png)
+![Smooth analytic field and errors](synthetic_smooth_field_reconstruction_nominal_rotation.png)
 
-![Fine analytic field and errors](synthetic_fine_rotation1.png)
+![Fine analytic field and errors](synthetic_fine_structure_field_reconstruction_nominal_rotation.png)
 
-![Localized bipoles and longitude-seam structure](synthetic_bipoles_rotation1.png)
+![Localized bipoles and longitude-seam structure](synthetic_bipolar_field_reconstruction_nominal_rotation.png)
 
 Map-panel rows use a shared symmetric color range stated in each figure title; the bottom row is prediction minus reference. Horizontal coordinates are native longitude-column indices, and vertical coordinates are CEA row indices increasing with sin(latitude). The scatter plots show logarithmic density and clip displayed axes at a 99th-percentile absolute-field scale; the numerical metrics use all valid scored pixels, including outliers outside the displayed range. Correlation and bias conclusions must be read from the numerical tables rather than inferred solely from these clipped plots.
 
@@ -317,26 +317,26 @@ Numerical environment used: Python 3.12.3; numpy 2.5.4, scipy 1.18.1, astropy 7.
 
 The completed calculation checked that the user adapter matches its imported reconstruction exactly (maximum absolute difference 0 G), and that the batched Ananya expressions match seven selected scalar spline calls exactly (0 G). A radial-vector basis roundtrip had absolute error 1.4210854715202004e−14 G; a constant-field preservation check had error 0 G. These are implementation checks, not external physical calibration. The artifact verification independently recomputed RMSE, MAE, and bias for 72 scored primary/all-region metric rows from saved arrays, with maximum difference 0, and rechecked 32 consumed-input hashes including unchanged originals. The review also confirms every field of all 672 numerical rows survives in the two retained CSVs. No new solar reconstruction or SFT simulation was run during this consolidation.
 
-## Proposed cleanup — no deletion performed
+## Historical cleanup review and retained-file inventory
 
-Reviewed all **76 untracked files** initially present under `my work/fresh_accuracy_comparison/`. Each text/JSON/CSV file was read or parsed, every NPZ array was decoded and its layout/finite coverage checked, and every PNG was decoded. The numerical JSON exports and their proposed retained CSV equivalents were compared field by field. Source snapshot copies match the originals, and the repeated synthetic artifacts and reconstruction arrays under `quadrature4/` match their main-run equivalents exactly.
+The original cleanup review covered all **76 untracked files** initially present under the former archive name `my work/fresh_accuracy_comparison/`. The current archive is `my work/pre_sft_reconstruction_accuracy_comparison/`; retained-file names below reflect the new descriptive names. Deleted-file paths in the historical inventory retain their original names. Each text/JSON/CSV file was read or parsed, every NPZ array was decoded and its layout/finite coverage checked, and every PNG was decoded. The numerical JSON exports and their proposed retained CSV equivalents were compared field by field. Source snapshot copies match the originals, and the repeated synthetic artifacts and reconstruction arrays under `quadrature4/` match their main-run equivalents exactly.
 
-### Keep these 10 files
+### Retained analysis files (current descriptive names)
 
-All paths in this table are relative to `my work/fresh_accuracy_comparison/`.
+All paths in this table are relative to `my work/pre_sft_reconstruction_accuracy_comparison/`.
 
 | File | Reason |
 |---|---|
-| `REPORT.md` | Consolidated methodology, findings, comparisons, limitations, and this reviewed cleanup proposal. |
-| `all_metrics.csv` | Complete primary and supplemental numerical results, all columns and full numeric precision. |
-| `observation_20170609_110000_TAI_los_radial_proxy.png` | Figure embedded in this report; preserves visual comparisons without requiring pixel arrays. |
-| `observation_20170609_110000_TAI_vector_radial.png` | Figure embedded in this report; preserves visual comparisons without requiring pixel arrays. |
-| `observational_scatter.png` | Figure embedded in this report; preserves visual comparisons without requiring pixel arrays. |
-| `quadrature4/metrics.csv` | Complete averaging-sensitivity numerical results at all times and in all regions. |
-| `summary.png` | Figure embedded in this report; preserves visual comparisons without requiring pixel arrays. |
-| `synthetic_bipoles_rotation1.png` | Figure embedded in this report; preserves visual comparisons without requiring pixel arrays. |
-| `synthetic_fine_rotation1.png` | Figure embedded in this report; preserves visual comparisons without requiring pixel arrays. |
-| `synthetic_smooth_rotation1.png` | Figure embedded in this report; preserves visual comparisons without requiring pixel arrays. |
+| `pre_sft_reconstruction_accuracy_report.md` | Consolidated methodology, findings, comparisons, limitations, and this reviewed cleanup proposal. |
+| `synthetic_and_observational_accuracy_metrics.csv` | Complete primary and supplemental numerical results, all columns and full numeric precision. |
+| `los_radial_field_proxy_reconstruction_and_errors_2017-06-09_1100_TAI.png` | Figure embedded in this report; preserves visual comparisons without requiring pixel arrays. |
+| `vector_radial_field_reconstruction_and_errors_2017-06-09_1100_TAI.png` | Figure embedded in this report; preserves visual comparisons without requiring pixel arrays. |
+| `observed_vs_reconstructed_radial_field_scatter_2017-06-09_1100_TAI.png` | Figure embedded in this report; preserves visual comparisons without requiring pixel arrays. |
+| `spatial_averaging_sensitivity_4x4/accuracy_metrics_4x4_spatial_averaging.csv` | Complete averaging-sensitivity numerical results at all times and in all regions. |
+| `observational_rmse_comparison_across_observation_times.png` | Figure embedded in this report; preserves visual comparisons without requiring pixel arrays. |
+| `synthetic_bipolar_field_reconstruction_nominal_rotation.png` | Figure embedded in this report; preserves visual comparisons without requiring pixel arrays. |
+| `synthetic_fine_structure_field_reconstruction_nominal_rotation.png` | Figure embedded in this report; preserves visual comparisons without requiring pixel arrays. |
+| `synthetic_smooth_field_reconstruction_nominal_rotation.png` | Figure embedded in this report; preserves visual comparisons without requiring pixel arrays. |
 
 ### Remove these 66 files after approval
 
@@ -479,4 +479,4 @@ hmi.M_720s/series_structure.json
 manifest.json
 ```
 
-No files have been deleted, staged, or committed during this review. Only REPORT.md has been updated. The keep/remove lists are ready for review before any deletion.
+Historical status: this review originally proposed the cleanup without deleting files. The approved cleanup was later committed as `1ed678a`, after the complete pre-cleanup archive was preserved in `ee2fc11`. The remaining files were subsequently given descriptive names; the scientific findings, numerical tables, and plots were preserved.
