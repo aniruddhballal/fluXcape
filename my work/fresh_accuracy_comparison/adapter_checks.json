@@ -1,6 +1,0 @@
-{
-  "user_import_vs_adapter_max_error": 0.0,
-  "ananya_scalar_vs_batch_max_error": 0.0,
-  "vector_radial_roundtrip_error_G": 1.4210854715202004e-14,
-  "constant_preservation_user_max_error": 0.0
-}
