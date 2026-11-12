@@ -17,11 +17,10 @@ reconstructing a photospheric magnetic-field map before surface flux transport
 | [pre_iisc_self_study/](<pre_iisc_self_study/>) | Personal solar-physics exploration from before joining IISc, undertaken out of interest over roughly one week before work began. These are historical learning notes and early research directions. |
 | [pre_sft_reconstruction/](pre_sft_reconstruction/) | The implemented three-map pre-SFT reconstruction and its retained accuracy comparison. |
 | [hmi_fits_data/](hmi_fits_data/) | Shared FITS data storage. Currently contains 221 low-resolution HMI synoptic maps in `720x360/`. |
-| [download_synoptic_maps.py](download_synoptic_maps.py) | Checks the JSOC archive and downloads missing HMI radial synoptic maps. |
-| [download_cr2191_hmi_observations.py](download_cr2191_hmi_observations.py) | Downloads the specific full-disk observations used for the CR2191 observational comparison. |
+| [data_acquisition/](data_acquisition/) | Data-download utilities for HMI synoptic maps and CR2191 full-disk observations. |
 | [requirements.txt](requirements.txt) | Python dependency requirements for the FITS tools and pre-SFT reconstruction. This is a `.txt` file, not a `.tsx` file. |
 
-There are **two Python scripts directly in this folder**: the two downloaders.
+The two HMI downloaders are grouped in `data_acquisition/`.
 There are additional Python files inside `pre_sft_reconstruction/` and `magnetofriction/`,
 explained below.
 
@@ -97,7 +96,7 @@ in `720x360/`.
 
 ### Synoptic-map downloader
 
-[download_synoptic_maps.py](download_synoptic_maps.py) checks which Carrington
+[data_acquisition/download_synoptic_maps.py](data_acquisition/download_synoptic_maps.py) checks which Carrington
 rotations are available from JSOC and which files are already stored locally.
 It offers two resolutions:
 
@@ -113,7 +112,7 @@ shape, rotation, and FITS checksums are verified.
 
 ### CR2191 observation downloader
 
-[download_cr2191_hmi_observations.py](download_cr2191_hmi_observations.py) retrieves
+[data_acquisition/download_cr2191_hmi_observations.py](data_acquisition/download_cr2191_hmi_observations.py) retrieves
 specific full-disk records at **2017-06-09 10:48, 11:00, and 11:12 TAI**:
 
 - `hmi.M_720s`: LOS magnetograms.
@@ -155,10 +154,10 @@ Choose the task to run:
 
 ```bash
 # Check the archive and optionally download missing synoptic maps.
-python "my work/download_synoptic_maps.py"
+python "my work/data_acquisition/download_synoptic_maps.py"
 
 # Download the fixed CR2191 full-disk observation set.
-python "my work/download_cr2191_hmi_observations.py"
+python "my work/data_acquisition/download_cr2191_hmi_observations.py"
 
 # Reconstruct CR2191 and inspect a user-selected sample.
 python "my work/pre_sft_reconstruction/reconstruct_synoptic_map.py"

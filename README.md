@@ -86,8 +86,7 @@ These findings guide what to investigate or change; they do not amount to reject
 
 | Path | Purpose |
 | --- | --- |
-| [download_synoptic_maps.py](<my work/download_synoptic_maps.py>) | Checks the JSOC archive and downloads missing HMI radial synoptic maps, offering 720×360 and 3600×1440 products. Prompts before downloading. |
-| [download_cr2191_hmi_observations.py](<my work/download_cr2191_hmi_observations.py>) | Acquires the fixed CR2191 comparison observations at 2017-06-09 10:48, 11:00 and 11:12 TAI, preserving raw segments and recording metadata/hashes. Uses three download workers; starts its acquisition without an interactive confirmation. |
+| [data_acquisition/](<my work/data_acquisition/>) | HMI data-acquisition utilities for synoptic maps and fixed CR2191 full-disk observations. |
 | [hmi_fits_data/720x360/](<my work/hmi_fits_data/720x360/>) | Local collection of 221 HMI radial synoptic maps, CR2096–CR2316 inclusive. Filenames identify each Carrington rotation; these files share the same data role. |
 | [hmi_fits_data/.gitattributes](<my work/hmi_fits_data/.gitattributes>) | Marks FITS files as binary to preserve their bytes. |
 | [requirements.txt](<my work/requirements.txt>) | Astropy and SciPy requirements for the current data tools and reconstruction, with NumPy available through dependencies. It is not a complete environment specification for all inherited code or the future MF solver. |
@@ -170,8 +169,8 @@ This overview is based on the current files, source inspection and retained repo
 
 FITS files are local data and are not tracked by Git. The inventories above describe the local research data and expected inputs, not files guaranteed to arrive with a clone.
 
-- Run `my work/download_synoptic_maps.py` and select the low-resolution product to acquire the synoptic maps. The current reconstruction specifically needs CR2190, CR2191 and CR2192; newer maps are not substitutes for that experiment. The downloader checks the archive and offers missing maps, rather than automatically running an analysis.
-- Run `my work/download_cr2191_hmi_observations.py` to reacquire its fixed June 2017 full-disk observation records if repeating the observational comparison. The cleaned comparison archive does not include its original analysis runner.
+- Run `my work/data_acquisition/download_synoptic_maps.py` and select the low-resolution product to acquire the synoptic maps. The current reconstruction specifically needs CR2190, CR2191 and CR2192; newer maps are not substitutes for that experiment. The downloader checks the archive and offers missing maps, rather than automatically running an analysis.
+- Run `my work/data_acquisition/download_cr2191_hmi_observations.py` to reacquire its fixed June 2017 full-disk observation records if repeating the observational comparison. The cleaned comparison archive does not include its original analysis runner.
 - Anjan’s three SHARP files require separate acquisition: `hmi.sharp_cea_720s`, patch 4698, `2014.10.22_00:00:00_TAI`, segments `Bp`, `Bt`, `Br`. There is no downloader for that set in this repository. Existing local copies are preserved.
 - Ananya’s original MDI-labelled maps, CR2193 PFSS input and dated experiment map also require separate acquisition and provenance checks; the supplied scripts do not provide one automatic downloader for all of them.
 
