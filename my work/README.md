@@ -16,7 +16,7 @@ reconstructing a photospheric magnetic-field map before surface flux transport
 | [magnetofriction/](magnetofriction/) | The intended final model: planning files and theory/numerical-method study notes. The solver is not implemented yet. |
 | [pre_iisc_self_study/](<pre_iisc_self_study/>) | Personal solar-physics exploration from before joining IISc, undertaken out of interest over roughly one week before work began. These are historical learning notes and early research directions. |
 | [pre_sft_reconstruction/](pre_sft_reconstruction/) | The implemented three-map pre-SFT reconstruction and its retained accuracy comparison. |
-| [hmi_fits_data/](hmi_fits_data/) | Shared FITS data storage. Currently contains 221 low-resolution HMI synoptic maps in `720x360/`. |
+| [hmi_fits_data/](hmi_fits_data/) | Shared FITS data storage. Currently contains 221 low-resolution HMI synoptic maps in `720x360/`, CR2096–CR2316 inclusive. CR2096 is the preserved historical input; CR2097–CR2316 are the current JSOC archive range. |
 | [data_acquisition/](data_acquisition/) | Data-download utilities for HMI synoptic maps and CR2191 full-disk observations. |
 | [requirements.txt](requirements.txt) | Python dependency requirements for the FITS tools and pre-SFT reconstruction. This is a `.txt` file, not a `.tsx` file. |
 

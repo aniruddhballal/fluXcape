@@ -87,7 +87,7 @@ These findings guide what to investigate or change; they do not amount to reject
 | Path | Purpose |
 | --- | --- |
 | [data_acquisition/](<my work/data_acquisition/>) | HMI data-acquisition utilities for synoptic maps and fixed CR2191 full-disk observations. |
-| [hmi_fits_data/720x360/](<my work/hmi_fits_data/720x360/>) | Local collection of 221 HMI radial synoptic maps, CR2096–CR2316 inclusive. Filenames identify each Carrington rotation; these files share the same data role. |
+| [hmi_fits_data/720x360/](<my work/hmi_fits_data/720x360/>) | Local collection of 221 HMI radial synoptic maps, CR2096–CR2316 inclusive. CR2096 is the preserved historical input; CR2097–CR2316 are the current JSOC archive range. |
 | [hmi_fits_data/.gitattributes](<my work/hmi_fits_data/.gitattributes>) | Marks FITS files as binary to preserve their bytes. |
 | [requirements.txt](<my work/requirements.txt>) | Astropy and SciPy requirements for the current data tools and reconstruction, with NumPy available through dependencies. It is not a complete environment specification for all inherited code or the future MF solver. |
 
