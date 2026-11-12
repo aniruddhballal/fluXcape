@@ -21,11 +21,7 @@ B_curr = fits.getdata(CURRENT_PATH)
 B_next = fits.getdata(NEXT_PATH)
 
 
-# Use the current map's WCS reference longitude as the working "now"
-# longitude.  CRVAL1 is stored as an absolute Carrington longitude, so
-# normalize it to one 0--360 degree Carrington-longitude cycle.
 CURRENT_HEADER = fits.getheader(CURRENT_PATH)
-REFERENCE_LONGITUDE = float(CURRENT_HEADER["CRVAL1"]) % 360.0
 OMEGA_0 = 13.2  # degrees per day
 
 
