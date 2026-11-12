@@ -59,18 +59,16 @@ MAP_PATHS = {
 
 
 def calculate_delta_t(phi, theta):
-    """Calculate the time offset for a longitude, in days.
+    """Calculate delta t = t_ref - t_obs in days.
 
     Parameters
     ----------
     phi : float
         Input longitude in degrees.
     theta : float
-        Input latitude in degrees. Accepted for the later latitude-dependent
-        calculation; it does not affect delta t yet.
+        Colatitude in degrees.
     """
-    del theta
-    return (REFERENCE_LONGITUDE - phi) / OMEGA_0
+    return (phi - 180.0) / (OMEGA_0 + omega(theta))
 
 
 def omega(theta):
@@ -93,7 +91,8 @@ def omega(theta):
 def phi_prime(phi, theta):
     """Return the longitude phi prime after differential rotation."""
     delta_t = calculate_delta_t(phi, theta)
-    return phi + omega(theta) * delta_t
+    return phi - omega(theta) * delta_t
+
 
 
 def current_map_value(phi, theta):
