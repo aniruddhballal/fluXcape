@@ -26,6 +26,6 @@ from its own script location and requires no files from that experiment.
 **Deleted:** `my work/SFT/`, including its reconstruction and observation
 validator, coordinate tests, comparison reports, cached HMI 45-second snapshot
 observations, and validation outputs. Its React viewer and exporter had already
-been deleted. Historical findings are retained in
-`my work/pre_sft_audit_record.md`; the tracked implementation remains in Git
-history. The shared synoptic maps in this directory are retained.
+been deleted. The earlier audit record has also been removed; its findings
+and the tracked implementation remain recoverable from Git history.
+The shared synoptic maps in this directory are retained.
