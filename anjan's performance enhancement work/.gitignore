@@ -5,6 +5,7 @@
 *.png
 *.gif
 preproc
+*.exe
 PFSSmagneticfield*/
 Optimizedmagneticfield/
 Preprocessedmagneticfield*/
