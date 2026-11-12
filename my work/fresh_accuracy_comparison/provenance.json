@@ -1,0 +1,103 @@
+{
+  "sha256": {
+    "ananya's research work/SFT/SFT.py": "eb0d3b59b8155433ebee24ec052158847691819c31977c325d74a52c184e8174",
+    "my work/pre-sft/main.py": "7190599d3c91f0b8eed5c37ff8d0999a8509ae844dcf2ca6f738c9316883c502",
+    "my work/fits_files/720x360/hmi.Synoptic_Mr_small.2190.fits": "f3c7bc3fb6394bd18618a8c9aceca5f32ae288f2f52cba79db0e466f1ef5260c",
+    "my work/fits_files/720x360/hmi.Synoptic_Mr_small.2191.fits": "b9ed626968b3dadf399ba4dc01e3e30d2abba52a94783799dc558330258f46a7",
+    "my work/fits_files/720x360/hmi.Synoptic_Mr_small.2192.fits": "77e5e897cd094370ad2167f54c83a8ce51b2cb7ad748f2a9177d6ac807f59e21",
+    "my work/fits_files/observations/cr2191/hmi.M_720s/20170609_104800_TAI.record.json": "1b55afb0c8212b6406badc8ad071f0e03212f156f8c39292053958199049a573",
+    "my work/fits_files/observations/cr2191/hmi.B_720s/20170609_104800_TAI.record.json": "442a81bc62c9f2d0fe25d8ae4bc74300dea8a20f72d2d9c5ba444f2e96daea45",
+    "my work/fits_files/observations/cr2191/hmi.M_720s/hmi.M_720s.20170609_104800_TAI.magnetogram.fits": "7397f58dae3c957e988e5cb05029a5b02e1318c2e0e190af620a6aa8ad7b526e",
+    "my work/fits_files/observations/cr2191/hmi.B_720s/hmi.B_720s.20170609_104800_TAI.field.fits": "fe992d300b353ec96543bae84edadb14bbe30b19fb7f6c6c2bcb07d80dd388bf",
+    "my work/fits_files/observations/cr2191/hmi.B_720s/hmi.B_720s.20170609_104800_TAI.inclination.fits": "9e8755d794c8b4432800a54897183f493d46a6b2be495a6ddc87169f632f129b",
+    "my work/fits_files/observations/cr2191/hmi.B_720s/hmi.B_720s.20170609_104800_TAI.azimuth.fits": "0d0633a695b9118719e6dcc0909cb3e9db207b0465038cae07dfd57791e18c7d",
+    "my work/fits_files/observations/cr2191/hmi.B_720s/hmi.B_720s.20170609_104800_TAI.disambig.fits": "886d8bbfa414101473898784b932e8865a2f8219c781f7de12e0409bad5c2af0",
+    "my work/fits_files/observations/cr2191/hmi.B_720s/hmi.B_720s.20170609_104800_TAI.conf_disambig.fits": "42c422e3bc23e4fbdff570377c21584e14802b51920961b7a61fe56047ce1049",
+    "my work/fits_files/observations/cr2191/hmi.B_720s/hmi.B_720s.20170609_104800_TAI.conv_flag.fits": "a05f025fc4415e56363f92dc9e8a1cda8c31e948dee390f06cb2b4e37934cb3c",
+    "my work/fits_files/observations/cr2191/hmi.M_720s/20170609_110000_TAI.record.json": "1ebcf944be40628b3d32b92a7b2888c4408887d7f7e6ffc325f0cfe6df8ede3b",
+    "my work/fits_files/observations/cr2191/hmi.B_720s/20170609_110000_TAI.record.json": "6517619a074d0249b9681c8abd3fb695888248c016d58711d3505edca617185a",
+    "my work/fits_files/observations/cr2191/hmi.M_720s/hmi.M_720s.20170609_110000_TAI.magnetogram.fits": "0be5c9b78ae6c2df21d3af5f1b3f10aa385b90a74dfccf15eebea0386fb77a2d",
+    "my work/fits_files/observations/cr2191/hmi.B_720s/hmi.B_720s.20170609_110000_TAI.field.fits": "6aa60f13334a57c913869ac3da1d8792158d6a4e1cd2905542722e1dc250f8d1",
+    "my work/fits_files/observations/cr2191/hmi.B_720s/hmi.B_720s.20170609_110000_TAI.inclination.fits": "8f351fa32b111d1af2d8838b22cdda831c6b8d1b1eaa3dc435fb26c15e7e8db6",
+    "my work/fits_files/observations/cr2191/hmi.B_720s/hmi.B_720s.20170609_110000_TAI.azimuth.fits": "9beb4783f728a1f4c0ce20fef030029834e9bb408e77a11d923bedf48da92059",
+    "my work/fits_files/observations/cr2191/hmi.B_720s/hmi.B_720s.20170609_110000_TAI.disambig.fits": "45e45bdc2b3f93751064a6397829a670cdb52fc70d8792693be8b8cb2b2a96d0",
+    "my work/fits_files/observations/cr2191/hmi.B_720s/hmi.B_720s.20170609_110000_TAI.conf_disambig.fits": "12fec664706e5a545d064c2baa6f193e41c177b81d1c2610275d02d0bf002927",
+    "my work/fits_files/observations/cr2191/hmi.B_720s/hmi.B_720s.20170609_110000_TAI.conv_flag.fits": "4146cbe9eaa3f2cb8ecc6cded02c34395698947844adbae2f43d5780ff3d6d8b",
+    "my work/fits_files/observations/cr2191/hmi.M_720s/20170609_111200_TAI.record.json": "6e8ba0e42b408aeb711541a863441fa3abc5eaf2c3aaebde9bf8f5997f78ec2c",
+    "my work/fits_files/observations/cr2191/hmi.B_720s/20170609_111200_TAI.record.json": "d0e582a08629c930009309f2ac0039ceb3ae8a376fd041d5653b9fa4e9b48522",
+    "my work/fits_files/observations/cr2191/hmi.M_720s/hmi.M_720s.20170609_111200_TAI.magnetogram.fits": "55df4acd663044a1a1e8b2e8ce78054cb13fcf5ac645bb2f6fbec248d26e3b4c",
+    "my work/fits_files/observations/cr2191/hmi.B_720s/hmi.B_720s.20170609_111200_TAI.field.fits": "152a42205c70435cd5355fd5337f030549bfd6375b5bbb2420110f536ddff392",
+    "my work/fits_files/observations/cr2191/hmi.B_720s/hmi.B_720s.20170609_111200_TAI.inclination.fits": "561730ddba7e0a48e305de0432a00e7d83a75636af99e006b7b52aa10fbc5bac",
+    "my work/fits_files/observations/cr2191/hmi.B_720s/hmi.B_720s.20170609_111200_TAI.azimuth.fits": "865ded046e890d4783e57f779a3cb3a5968642a6587722844d1f6cfe1dd8623a",
+    "my work/fits_files/observations/cr2191/hmi.B_720s/hmi.B_720s.20170609_111200_TAI.disambig.fits": "e253b6fae623de38d61deee3b83557aa2875e9f11a9fc777cff54b7a211a427a",
+    "my work/fits_files/observations/cr2191/hmi.B_720s/hmi.B_720s.20170609_111200_TAI.conf_disambig.fits": "1d60346b4d67413bb1d53757a5e9da04b3169429bd40ff28efdf32ada5003dc3",
+    "my work/fits_files/observations/cr2191/hmi.B_720s/hmi.B_720s.20170609_111200_TAI.conv_flag.fits": "ceee0786be3f642ccf80c99a0d047dbb82a2b769c5879c63d2df74b60641665a"
+  },
+  "observations": [
+    {
+      "stamp": "20170609_104800_TAI",
+      "M_T_OBS": "2017.06.09_10:48:08_TAI",
+      "B_T_OBS": "2017.06.09_10:48:08_TAI",
+      "quality_M": "0x00000000",
+      "quality_B": "0x00000000",
+      "observer_lon": "180.130768",
+      "coverage_mu_gt_07": 38536,
+      "rotation_matrix": [
+        [
+          -0.9999999726636924,
+          0.0002338217577588883
+        ],
+        [
+          -0.0002338217577588883,
+          -0.9999999726636924
+        ]
+      ]
+    },
+    {
+      "stamp": "20170609_110000_TAI",
+      "M_T_OBS": "2017.06.09_11:00:08_TAI",
+      "B_T_OBS": "2017.06.09_11:00:08_TAI",
+      "quality_M": "0x00000000",
+      "quality_B": "0x00000000",
+      "observer_lon": "180.020935",
+      "coverage_mu_gt_07": 38547,
+      "rotation_matrix": [
+        [
+          -0.9999999726024438,
+          0.0002340835571396698
+        ],
+        [
+          -0.0002340835571396698,
+          -0.9999999726024438
+        ]
+      ]
+    },
+    {
+      "stamp": "20170609_111200_TAI",
+      "M_T_OBS": "2017.06.09_11:12:08_TAI",
+      "B_T_OBS": "2017.06.09_11:12:08_TAI",
+      "quality_M": "0x00000000",
+      "quality_B": "0x00000000",
+      "observer_lon": "179.911072",
+      "coverage_mu_gt_07": 38526,
+      "rotation_matrix": [
+        [
+          -0.999999972475646,
+          0.00023462460919284912
+        ],
+        [
+          -0.00023462460919284912,
+          -0.999999972475646
+        ]
+      ]
+    }
+  ],
+  "versions": {
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "astropy": "7.2.3",
+    "sunpy": "8.0.1",
+    "matplotlib": "3.11.2"
+  },
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]"
+}
