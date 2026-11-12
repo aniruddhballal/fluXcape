@@ -100,22 +100,9 @@ The full-disk CR2191 observations were removed after the comparison was consolid
 
 This is a specific continuation of the initial-map question in Ananya’s SFT code. It is not yet wired into her complete SFT solver. The module calculates `B_new` when loaded; running it directly prints statistics and accepts a longitude/colatitude sample query. It does not automatically write a reconstructed FITS file.
 
-### Retained accuracy comparison
+### Pre-SFT change justification
 
-The [comparison folder](<my work/pre_sft_reconstruction/pre_sft_reconstruction_accuracy_comparison/>) holds:
-
-| File or group | Purpose |
-| --- | --- |
-| [pre_sft_reconstruction_accuracy_report.md](<my work/pre_sft_reconstruction/pre_sft_reconstruction_accuracy_comparison/pre_sft_reconstruction_accuracy_report.md>) | Methodology, synthetic and observational comparisons, adaptations of Ananya’s reconstruction, numerical findings and limitations. Also records historical paths and the completed cleanup. |
-| `synthetic_and_observational_accuracy_metrics.csv` | 342 metric rows from the primary comparison and noise/evolution checks. |
-| `spatial_averaging_sensitivity_4x4/accuracy_metrics_4x4_spatial_averaging.csv` | 330 rows for the spatial-averaging sensitivity comparison. |
-| `synthetic_{smooth,fine_structure,bipolar}_field_reconstruction_nominal_rotation.png` | Three synthetic-case illustrations; the report links the actual filenames. |
-| `vector_radial_field_reconstruction_and_errors_2017-06-09_1100_TAI.png` | Vector-derived radial-field comparison and error maps. |
-| `los_radial_field_proxy_reconstruction_and_errors_2017-06-09_1100_TAI.png` | Line-of-sight-derived radial proxy comparison and error maps. |
-| `observed_vs_reconstructed_radial_field_scatter_2017-06-09_1100_TAI.png` | Observational scatter comparison. |
-| `observational_rmse_comparison_across_observation_times.png` | RMSE comparison over the three observation times. |
-
-There are **672 retained numerical rows and seven plots**. The report supports the revised reconstruction under its specified ideal synthetic model. Observational improvements over the unchanged synoptic map are small and vary with region and metric. Ananya’s literal global-spline reconstruction produces no finite output on these NaN-containing inputs; finite observational comparisons therefore use explicitly documented adaptations. This validates neither the entire inherited SFT model nor a future MF solver. The full SFT evolution was not run in that comparison, and the cleaned archive does not retain the analysis runner or all raw/intermediate data needed for an immediate rerun.
+The [pre-SFT ablation justification](<my work/pre_sft_reconstruction/pre_sft_ablation_justification.md>) is the single source of truth for the changes relative to Ananya’s implementation. It documents the six logical changes, their physical rationale, stepwise RMSE/MAE/correlation effects, cumulative improvement, validation datasets and masks, invalid-baseline caveats, and execution scope.
 
 ### Magnetofriction planning and study
 

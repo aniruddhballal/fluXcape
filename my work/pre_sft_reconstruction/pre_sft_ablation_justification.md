@@ -3,7 +3,7 @@
 **Study date:** 12 November 2026 (Asia/Kolkata)  
 **Compared implementations:** Ananya's reconstruction in `ananya's research work/SFT/SFT.py` versus my pre-SFT reconstruction, historically `my work/pre-sft/main.py` and currently retained as `my work/pre_sft_reconstruction/reconstruct_synoptic_map.py`.
 
-This is the source of truth for the stepwise ablation. The original implementation files and the earlier accuracy-comparison archive were not modified.
+This is the source of truth for the stepwise ablation. The original implementation files were not modified; the superseded accuracy-comparison archive was removed after its purpose was consolidated here.
 
 ## Executive conclusion
 

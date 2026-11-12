@@ -82,24 +82,11 @@ in degrees, to inspect one remapped sample. It performs reconstruction only;
 it does not run the full SFT simulation or the magnetofrictional model, and it
 does not automatically save a reconstructed FITS file.
 
-The [reconstruction accuracy comparison](pre_sft_reconstruction/pre_sft_reconstruction_accuracy_comparison/)
-contains the retained analysis comparing this implementation with Ananya's
-pre-SFT reconstruction and the unchanged central synoptic map:
-
-- [Detailed report](pre_sft_reconstruction/pre_sft_reconstruction_accuracy_comparison/pre_sft_reconstruction_accuracy_report.md)
-  — methodology, implementation adaptations, synthetic and observational
-  comparisons, findings, and limitations.
-- [Synthetic and observational accuracy metrics](pre_sft_reconstruction/pre_sft_reconstruction_accuracy_comparison/synthetic_and_observational_accuracy_metrics.csv)
-  — 342 numerical rows from the primary comparison and noise/evolution tests.
-- [4×4 spatial-averaging sensitivity metrics](pre_sft_reconstruction/pre_sft_reconstruction_accuracy_comparison/spatial_averaging_sensitivity_4x4/accuracy_metrics_4x4_spatial_averaging.csv)
-  — 330 numerical rows checking sensitivity to observational averaging.
-- Seven comparison plots, linked and explained in the report.
-
-The archive retains **672 numerical rows and seven plots**. Synthetic accuracy
-and observational agreement are distinct: the ideal synthetic tests strongly
-favor this reconstruction, while its observational RMSE advantage over the
-unchanged map is small and does not hold for every subset or metric. Read the
-report for the assumptions and limitations. The comparison did not run full SFT.
+The [pre-SFT ablation justification](pre_sft_reconstruction/pre_sft_ablation_justification.md)
+is the single source of truth for the changes relative to Ananya's
+implementation. It records the physical rationale, stepwise quantitative
+effects, cumulative improvement, validation methodology, masks, limitations,
+and the fact that full SFT evolution was not run.
 
 ## FITS data and the two download scripts
 
