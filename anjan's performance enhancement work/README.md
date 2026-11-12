@@ -29,7 +29,7 @@ The two terms measure departures from force-free and divergence-free conditions.
 
 ## What exists now
 
-The folder contains one observation snapshot, preprocessing scripts and outputs, the reconstruction source, analysis/plotting scripts, and the paper. See the folder guide below for the detailed file inventory.
+The folder retains one original observation snapshot, preprocessing and reconstruction source, analysis/plotting scripts, and the paper. Generated data, plots, caches and the compiled executable have been removed; the regeneration steps below describe their dependencies. See the folder guide below for the detailed file inventory.
 
 The inferred workflow is:
 
@@ -49,7 +49,7 @@ Important properties of the current code:
 - `Main.py` runs one hardcoded observation through several stages in sequence. It does not currently contain a loop over all observation maps. A larger batch workflow may exist elsewhere, but is not established by this folder.
 - Most scripts use fixed filenames, grid settings and output locations. Some perform computation and write files immediately when imported.
 - The reconstruction uses a 300 × 300 × 150 grid and allows 2,000,001 accepted steps, with additional rejected attempts. One float64 volume occupies 108 MB, and the three field components occupy 324 MB before temporary arrays.
-- There are prepared 2D boundary arrays and a saved weight volume. The initial 3D field and reconstructed-field directories referenced by the analysis scripts are absent from this snapshot.
+- Prepared boundary arrays, the weight volume and 3D fields must be generated before reconstruction or downstream analysis. No generated field outputs are retained.
 - Analysis scripts select different hardcoded reconstruction checkpoints. They do not yet expose a consistent way to select a run.
 
 ## Option 1: accelerate the numerical work
@@ -130,7 +130,7 @@ This brief is based on local source inspection and reading the supplied paper. N
 
 # Anjan’s performance enhancement work: folder guide
 
-This guide is based on inspection of the local source and array headers. The simulation has not been run or benchmarked. No source code or data has been changed, and files have not been moved.
+This guide is based on inspection of the source and the originally supplied array headers. The simulation has not been run or benchmarked. Generated artefacts were subsequently removed as documented below; scientific source code and original FITS inputs are unchanged.
 
 ## What the work is about
 
@@ -206,7 +206,7 @@ There is also an obvious triple-Python-loop version at `laplace.py:36`, but **Ma
 
 ### Third candidate: weightfunction.py
 
-Lines 76–79 execute three nested Python loops over all 13.5 million cells. This is a strong candidate for array-based computation or compilation, preserving the existing taper exactly. However, it runs once and `weight_function/W.npy` is already supplied; it may not dominate repeated reconstructions.
+Lines 76–79 execute three nested Python loops over all 13.5 million cells. This is a strong candidate for array-based computation or compilation, preserving the existing taper exactly. However, it is a preparation step whose result can be reused locally; it may not dominate repeated reconstructions.
 
 ### Fourth candidate: fitsdataextraction.py
 
@@ -214,17 +214,43 @@ Repeated pixel-by-pixel list building, large text-file writes followed immediate
 
 `preproc.c` already contains conditional OpenMP directives. There is no supplied build recipe demonstrating whether the executable enables them. Its actual runtime should be measured before prioritising it.
 
-## What is already present?
+## Retained inputs and removed generated files
 
-- Original FITS measurements and large `outputB*.dat` extracts.
-- Interpolated text maps and processed boundary text files.
-- `Preprocessedmagneticfield/*.npy`: three float64 arrays, each **300 × 300**.
-- `Preprocessedmagneticfield_interpolated/*.npy`: three float64 arrays, each **300 × 300**.
-- `weight_function/W.npy`: a float64 **300 × 300 × 150** volume. This generated file is retained locally but excluded from Git because of its size. Run `weightfunction.py` from the observation folder to regenerate it after cloning.
-- A few PNG/GIF/alpha artefacts and Python caches.
-- For each component, `interpolated_B*.dat` and `interpolated_dataB*.dat` are byte-identical copies, verified with SHA-256.
+Retained: **15 Python source files, `preproc.c`, three original FITS component files, the supplied paper and documentation**. The folder-local `.gitignore` prevents generated products from being added again.
 
-The `PFSSmagneticfield`, `PFSSmagneticfield_for_uniform_grid` and `Optimizedmagneticfield` directories referenced by the scripts are **absent in this snapshot**. Consequently, the downstream analysis scripts cannot reproduce their results from existing outputs alone. The small images and alpha file do not establish that the full simulation completed.
+Removed **26 generated files**, totalling 254,567,866 bytes (about 243 MiB):
+
+| Files | Count | Producer or role |
+| --- | --- | --- |
+| `outputBx.dat`, `outputBy.dat`, `outputBz.dat` | 3 | FITS extraction outputs from `fitsdataextraction.py`. |
+| `interpolated_dataB*.dat` | 3 | Resampling outputs from `fitsdataextraction.py`, consumed by preprocessing. |
+| `interpolated_B*.dat` | 3 | Byte-identical duplicates of the corresponding resampling outputs, verified before removal; no separate producer is needed. |
+| `Bpre.dat`, `Bfield_processed.dat` | 2 | Outputs from `preproc.c`. |
+| `Preprocessedmagneticfield/{Bx,By,Bz}.npy` | 3 | Outputs from `plot.py`, consumed by `Main.py`. |
+| `Preprocessedmagneticfield_interpolated/{Bx,By,Bz}.npy` | 3 | Outputs from `Main.py`. |
+| `weight_function/W.npy` | 1 | Output from `weightfunction.py`, consumed by `Main.py`. |
+| `max_alpha.dat` | 1 | Output from `alphaparameter.py`. |
+| `frame_0000.png`, `frame_0001.png`, `alpha_animation.gif` | 3 | Derived visualisation artefacts; their exact frame/animation generator is not supplied. |
+| `preproc` | 1 | Compiled executable; rebuild from retained C source. |
+| `__pycache__/*.pyc` | 3 | Automatically generated Python bytecode caches. |
+
+Of these, 22 were tracked files; the weight volume and three bytecode caches were already ignored. No original FITS input or scientific source file was deleted. Deletion changes the working tree; previously committed copies remain in Git history.
+
+### Regenerate the calculation inputs
+
+With the scientific Python dependencies installed and a C compiler available, run these commands **from the observation folder**:
+
+```bash
+python3 fitsdataextraction.py
+cc -O3 preproc.c -lm -o preproc
+./preproc
+python3 plot.py
+python3 weightfunction.py
+```
+
+These prepare the boundary arrays and weight volume. `plot.py` and `weightfunction.py` also display plots, so an interactive plotting environment is needed as written. The compiler command is a basic build recipe, not a claim about the original executable’s compiler flags; OpenMP is optional and not enabled by this example.
+
+`python3 Main.py` then constructs the initial 3D field and runs the expensive reconstruction. It is **not** a lightweight preparation command. Analysis scripts require its generated outputs and their hardcoded checkpoint selections must match an available run. The correctness questions below remain unresolved; these commands describe dependencies rather than certify the model.
 
 ## Issues to clarify before accelerating the calculation
 

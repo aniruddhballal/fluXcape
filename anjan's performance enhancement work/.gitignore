@@ -1,0 +1,11 @@
+# Generated data and plots within this research folder only.
+*.dat
+*.npy
+*.npz
+*.png
+*.gif
+preproc
+PFSSmagneticfield*/
+Optimizedmagneticfield/
+Preprocessedmagneticfield*/
+weight_function/
