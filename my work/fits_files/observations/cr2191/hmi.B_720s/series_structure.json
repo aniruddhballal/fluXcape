@@ -1,0 +1,1509 @@
+{
+  "url": "http://jsoc.stanford.edu/cgi-bin/ajax/jsoc_info?op=series_struct&ds=hmi.B_720s",
+  "response": {
+    "note": "Full-disk Milne-Eddigton inversion with the magnetic field azimuthal ambiguity resolution applied",
+    "retention": 10000,
+    "stagingretention": 3,
+    "unitsize": 1,
+    "archive": 1,
+    "tapegroup": 6,
+    "primekeys": [
+      "T_REC"
+    ],
+    "primekeysinfo": [
+      {
+        "name": "T_REC",
+        "slotted": 1,
+        "step": "720.0"
+      }
+    ],
+    "dbindex": [
+      "T_REC"
+    ],
+    "keywords": [
+      {
+        "name": "cparms_sg002",
+        "type": "string",
+        "recscope": "variable",
+        "defval": "compress Rice",
+        "units": "none",
+        "note": ""
+      },
+      {
+        "name": "disambig_bzero",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "0",
+        "units": "none",
+        "note": ""
+      },
+      {
+        "name": "disambig_bscale",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "1",
+        "units": "none",
+        "note": ""
+      },
+      {
+        "name": "cparms_sg024",
+        "type": "string",
+        "recscope": "variable",
+        "defval": "compress Rice",
+        "units": "none",
+        "note": ""
+      },
+      {
+        "name": "conf_disambig_bzero",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "0",
+        "units": "none",
+        "note": ""
+      },
+      {
+        "name": "conf_disambig_bscale",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "1",
+        "units": "none",
+        "note": ""
+      },
+      {
+        "name": "cparms_sg025",
+        "type": "string",
+        "recscope": "variable",
+        "defval": "compress Rice",
+        "units": "none",
+        "note": ""
+      },
+      {
+        "name": "info_map_bzero",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "0",
+        "units": "none",
+        "note": ""
+      },
+      {
+        "name": "info_map_bscale",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "1",
+        "units": "none",
+        "note": ""
+      },
+      {
+        "name": "cparms_sg026",
+        "type": "string",
+        "recscope": "variable",
+        "defval": "compress Rice",
+        "units": "none",
+        "note": ""
+      },
+      {
+        "name": "confid_map_bzero",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "0",
+        "units": "none",
+        "note": ""
+      },
+      {
+        "name": "confid_map_bscale",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "1",
+        "units": "none",
+        "note": ""
+      },
+      {
+        "name": "T_OBS",
+        "type": "time",
+        "recscope": "variable",
+        "defval": "-4712.01.01_11:59:28_TAI",
+        "units": "TAI",
+        "note": "Nominal time"
+      },
+      {
+        "name": "T_REC",
+        "type": "time",
+        "recscope": "ts_eq",
+        "defval": "-4712.01.01_11:59:28_TAI",
+        "units": "TAI",
+        "note": "Slot time"
+      },
+      {
+        "name": "T_REC_epoch",
+        "type": "time",
+        "recscope": "constant",
+        "defval": "1993.01.01_00:00:00_TAI",
+        "units": "TAI",
+        "note": "Time of origin"
+      },
+      {
+        "name": "T_REC_step",
+        "type": "float",
+        "recscope": "constant",
+        "defval": "720.0",
+        "units": "seconds",
+        "note": "ts_eq step"
+      },
+      {
+        "name": "T_REC_unit",
+        "type": "string",
+        "recscope": "constant",
+        "defval": "secs",
+        "units": "none",
+        "note": "ts_eq unit"
+      },
+      {
+        "name": "DATE",
+        "type": "time",
+        "recscope": "variable",
+        "defval": "-4712.01.01_11:59:28Z",
+        "units": "ISO",
+        "note": "Date_time of processing to disambiguate of ME VFISV magnetic field azimuth"
+      },
+      {
+        "name": "DATE_S",
+        "type": "time",
+        "recscope": "variable",
+        "defval": "-4712.01.01_11:59:28Z",
+        "units": "ISO",
+        "note": "Date_time of generating Stokes data"
+      },
+      {
+        "name": "DATE_ME",
+        "type": "time",
+        "recscope": "variable",
+        "defval": "-4712.01.01_11:59:28Z",
+        "units": "ISO",
+        "note": "Date_time of generating ME inversion data"
+      },
+      {
+        "name": "DATE__OBS",
+        "type": "time",
+        "recscope": "variable",
+        "defval": "-4712.01.01_11:59:28.00Z",
+        "units": "ISO",
+        "note": "[DATE-OBS] DATE_OBS = T_OBS - EXPTIME/2.0"
+      },
+      {
+        "name": "DATE-OBS",
+        "type": "time",
+        "recscope": "variable",
+        "defval": "-4712.01.01_11:59:28.00Z",
+        "units": "ISO",
+        "note": "[DATE-OBS] DATE_OBS = T_OBS - EXPTIME/2.0"
+      },
+      {
+        "name": "CADENCE",
+        "type": "float",
+        "recscope": "constant",
+        "defval": "720.0",
+        "units": "seconds",
+        "note": "Repetition interval"
+      },
+      {
+        "name": "TELESCOP",
+        "type": "string",
+        "recscope": "constant",
+        "defval": "SDO/HMI",
+        "units": "none",
+        "note": "For HMI: SDO/HMI"
+      },
+      {
+        "name": "INSTRUME",
+        "type": "string",
+        "recscope": "variable",
+        "defval": "",
+        "units": "none",
+        "note": "For HMI: HMI_SIDE1, HMI_FRONT2, or HMI_COMBINED"
+      },
+      {
+        "name": "WAVELNTH",
+        "type": "float",
+        "recscope": "constant",
+        "defval": "6173.0",
+        "units": "Angstrom",
+        "note": "For HMI: 6173.3 Angstroms"
+      },
+      {
+        "name": "CAMERA",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-2147483648",
+        "units": "none",
+        "note": "For HMI: 1 (side camera), 2 (front camera), or 3 (both cameras)"
+      },
+      {
+        "name": "QUALITY",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "0x80000000",
+        "units": "none",
+        "note": "Quality index of data used to generate fd.B_720s (0x00000000) is good quality, (any nonzero value) should be investigated in data documentation"
+      },
+      {
+        "name": "QUAL_ME",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "0x80000000",
+        "units": "none",
+        "note": "ME Quality word"
+      },
+      {
+        "name": "QUAL_S",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "0x80000000",
+        "units": "none",
+        "note": "Level 1p Quality word"
+      },
+      {
+        "name": "QUALLEV1",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "0x80000000",
+        "units": "none",
+        "note": "Logical OR on the bits of the level 1 Quality word"
+      },
+      {
+        "name": "BUNIT",
+        "type": "string",
+        "recscope": "segment",
+        "defval": "",
+        "units": "none",
+        "note": "BUNIT: physical units of each data segment"
+      },
+      {
+        "name": "ORIGIN",
+        "type": "string",
+        "recscope": "constant",
+        "defval": "SDO/JSOC-SDP",
+        "units": "none",
+        "note": "ORIGIN: location where file made"
+      },
+      {
+        "name": "CONTENT",
+        "type": "string",
+        "recscope": "constant",
+        "defval": "HMI observable",
+        "units": "none",
+        "note": "CONTENT"
+      },
+      {
+        "name": "HISTORY",
+        "type": "string",
+        "recscope": "variable",
+        "defval": " ",
+        "units": "none",
+        "note": "History of data"
+      },
+      {
+        "name": "COMMENT",
+        "type": "string",
+        "recscope": "variable",
+        "defval": " ",
+        "units": "none",
+        "note": "Commentary on the data"
+      },
+      {
+        "name": "BLD_VERS",
+        "type": "string",
+        "recscope": "variable",
+        "defval": " ",
+        "units": "none",
+        "note": "JSOC-build version number"
+      },
+      {
+        "name": "CALVER64",
+        "type": "longlong",
+        "recscope": "variable",
+        "defval": "0x0000000000000000",
+        "units": "none",
+        "note": "Calibration Version"
+      },
+      {
+        "name": "HFLID",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-2147483648",
+        "units": "none",
+        "note": "HMI_SEQ_ID_FRAMELIST"
+      },
+      {
+        "name": "HCFTID",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-2147483648",
+        "units": "none",
+        "note": "HMI_SEQ_ID_FOCUS"
+      },
+      {
+        "name": "QLOOK",
+        "type": "int",
+        "recscope": "constant",
+        "defval": "0",
+        "units": "none",
+        "note": "QLOOK: 0=definitive data, 1=quick-look data"
+      },
+      {
+        "name": "CTYPE1",
+        "type": "string",
+        "recscope": "constant",
+        "defval": "HPLN-TAN",
+        "units": "none",
+        "note": "CTYPE1: HPLN-TAN (SOLARX)"
+      },
+      {
+        "name": "CTYPE2",
+        "type": "string",
+        "recscope": "constant",
+        "defval": "HPLT-TAN",
+        "units": "none",
+        "note": "CTYPE2: HPLT-TAN (SOLARY)"
+      },
+      {
+        "name": "CRPIX1",
+        "type": "float",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "pixel",
+        "note": "CRPIX1: location of the Sun center in CCD x direction"
+      },
+      {
+        "name": "CRPIX2",
+        "type": "float",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "pixel",
+        "note": "CRPIX2: location of the Sun center in CCD y direction"
+      },
+      {
+        "name": "CRVAL1",
+        "type": "float",
+        "recscope": "constant",
+        "defval": "0.000000",
+        "units": "arcsec",
+        "note": "CRVAL1: x origin - center of the solar disk"
+      },
+      {
+        "name": "CRVAL2",
+        "type": "float",
+        "recscope": "constant",
+        "defval": "0.000000",
+        "units": "arcsec",
+        "note": "CRVAL2: y origin - center of the solar disk"
+      },
+      {
+        "name": "CDELT1",
+        "type": "float",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "arcsec/pixel",
+        "note": "Image scale in the x direction"
+      },
+      {
+        "name": "CDELT2",
+        "type": "float",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "arcsec/pixel",
+        "note": "Image scale in the y direction"
+      },
+      {
+        "name": "CUNIT1",
+        "type": "string",
+        "recscope": "constant",
+        "defval": "arcsec",
+        "units": "arcsec",
+        "note": "CUNIT1: arcsec"
+      },
+      {
+        "name": "CUNIT2",
+        "type": "string",
+        "recscope": "constant",
+        "defval": "arcsec",
+        "units": "arcsec",
+        "note": "CUNIT2: arcsec"
+      },
+      {
+        "name": "CROTA2",
+        "type": "float",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "deg",
+        "note": "CROTA2: INST_ROT + SAT_ROT"
+      },
+      {
+        "name": "CRDER1",
+        "type": "float",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "arcsec",
+        "note": "CRDER1: estimate of random error in coordinate x"
+      },
+      {
+        "name": "CRDER2",
+        "type": "float",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "arcsec",
+        "note": "CRDER2: estimate of random error in coordinate y"
+      },
+      {
+        "name": "CSYSER1",
+        "type": "float",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "arcsec",
+        "note": "CSYSER1: estimate of systematic error in coordinate x"
+      },
+      {
+        "name": "CSYSER2",
+        "type": "float",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "arcsec",
+        "note": "CSYSER2: estimate of systematic error in coordinate y"
+      },
+      {
+        "name": "WCSNAME",
+        "type": "string",
+        "recscope": "constant",
+        "defval": "Helioprojective-cartesian",
+        "units": "none",
+        "note": "WCS system name"
+      },
+      {
+        "name": "DSUN_OBS",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "meters",
+        "note": "Distance from SDO to Sun center."
+      },
+      {
+        "name": "DSUN_REF",
+        "type": "double",
+        "recscope": "constant",
+        "defval": "149597870691",
+        "units": "meters",
+        "note": "Astronomical Unit"
+      },
+      {
+        "name": "RSUN_REF",
+        "type": "double",
+        "recscope": "constant",
+        "defval": "696000000",
+        "units": "m",
+        "note": "Reference radius of the Sun: 696,000,000.0 m"
+      },
+      {
+        "name": "CRLN_OBS",
+        "type": "float",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "deg",
+        "note": "Carrington longitude of HMI"
+      },
+      {
+        "name": "CRLT_OBS",
+        "type": "float",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "deg",
+        "note": "Carrington latitude of HMI"
+      },
+      {
+        "name": "CAR_ROT",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-2147483648",
+        "units": "none",
+        "note": "Carrington rotation number of CRLN_OBS"
+      },
+      {
+        "name": "OBS_VR",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "m/s",
+        "note": "Velocity of the observer in radial direction. + is away from Sun"
+      },
+      {
+        "name": "OBS_VW",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "m/s",
+        "note": "Velocity of the observer solar-westward. + in rough direction of Earth orbit"
+      },
+      {
+        "name": "OBS_VN",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "m/s",
+        "note": "Velocity of the observer solar-northward (heliographic). + to north"
+      },
+      {
+        "name": "RSUN_OBS",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "arcsec",
+        "note": "Angular radius of Sun. Corresponds to arcsin(RSUN_REF/DSUN_OBS)"
+      },
+      {
+        "name": "AMBCODEV",
+        "type": "string",
+        "recscope": "variable",
+        "defval": "",
+        "units": "none",
+        "note": "Version of Disambig code"
+      },
+      {
+        "name": "AMBDOCU",
+        "type": "string",
+        "recscope": "variable",
+        "defval": "",
+        "units": "none",
+        "note": "Document for Disambig code"
+      },
+      {
+        "name": "AMBGMTRY",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-2147483648",
+        "units": "none",
+        "note": "Flag determining whether to use planar or spherical geometry; 0 for automatic selection; 1 for planar; 2 for spherical."
+      },
+      {
+        "name": "AMBNEROD",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-2147483648",
+        "units": "pixels",
+        "note": "Number of pixels by which to erode map of above threshold pixels"
+      },
+      {
+        "name": "AMBNGROW",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-2147483648",
+        "units": "pixels",
+        "note": "Number of pixels by which to grow eroded map"
+      },
+      {
+        "name": "AMBNPAD",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-2147483648",
+        "units": "pixels",
+        "note": "Padding to use in potential field calculation"
+      },
+      {
+        "name": "AMBNAP",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-2147483648",
+        "units": "pixels",
+        "note": "Width of apodizing window in potential field calculation"
+      },
+      {
+        "name": "AMBNTX",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-2147483648",
+        "units": "none",
+        "note": "Number of tiles to use in x-direction for potential field calculation"
+      },
+      {
+        "name": "AMBNTY",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-2147483648",
+        "units": "none",
+        "note": "Number of tiles to use in y-direction for potential field calculation"
+      },
+      {
+        "name": "AMBBTHR0",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "G",
+        "note": "Transverse field strength threshold at disk center for using simulated annealing"
+      },
+      {
+        "name": "AMBBTHR1",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "G",
+        "note": "Transverse field strength threshold at limb for using simulated annealing"
+      },
+      {
+        "name": "AMBSEED",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-2147483648",
+        "units": "none",
+        "note": "Input random number seed"
+      },
+      {
+        "name": "AMBNEQ",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-2147483648",
+        "units": "none",
+        "note": "Number of reconfigurations attempted at each temperature setting"
+      },
+      {
+        "name": "AMBLMBDA",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "none",
+        "note": "Weighting factor between divergence and vertical current density"
+      },
+      {
+        "name": "AMBTFCT0",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "none",
+        "note": "Input factor to scale initial temperature"
+      },
+      {
+        "name": "AMBTFCTR",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "none",
+        "note": "Input factor to reduce temperature"
+      },
+      {
+        "name": "DOFFSET",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-2147483648",
+        "units": "Gauss",
+        "note": "Field strength offset, a value added to the base threshold value of the magnetic noise mask that determines how the pixel is handled in disambiguation"
+      },
+      {
+        "name": "NOISEMASK",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "1",
+        "units": "none",
+        "note": "The magnetic field noise mask used as a base threshold value (1) indicates the use of a mask dependent upon spacecraft radial velocity (0) is a linear noise mask as a function of center to limb angle "
+      },
+      {
+        "name": "MASKINFO",
+        "type": "string",
+        "recscope": "variable",
+        "defval": " ",
+        "units": "none",
+        "note": "Information of magnetic field noise mask shown; provides name and number of data series used for coefficient lookup table, i.e., hmi.lookup_ChebyCoef_BNoise[2833-2933]"
+      },
+      {
+        "name": "TINTNUM",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-2147483648",
+        "units": "none",
+        "note": "Stokes : number of points used for the temporal interpolation"
+      },
+      {
+        "name": "SINTNUM",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-2147483648",
+        "units": "none",
+        "note": "Stokes : number of points used for the spatial interpolation"
+      },
+      {
+        "name": "DISTCOEF",
+        "type": "string",
+        "recscope": "variable",
+        "defval": "",
+        "units": "none",
+        "note": "Stokes : path to the distortion coefficient table used to produce the data"
+      },
+      {
+        "name": "ROTCOEF",
+        "type": "string",
+        "recscope": "variable",
+        "defval": "",
+        "units": "none",
+        "note": "Stokes : path to the differential-rotation coefficient table used to produce the data"
+      },
+      {
+        "name": "POLCALM",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-2147483648",
+        "units": "none",
+        "note": "Method used by the polarization calibration subroutine"
+      },
+      {
+        "name": "SOURCE",
+        "type": "string",
+        "recscope": "variable",
+        "defval": "hmi.S_720s",
+        "units": "none",
+        "note": "Input Stokes data series"
+      },
+      {
+        "name": "CODEVER0",
+        "type": "string",
+        "recscope": "variable",
+        "defval": "",
+        "units": "none",
+        "note": "Version of the time-averaged IQUV code used to produce the data"
+      },
+      {
+        "name": "CODEVER1",
+        "type": "string",
+        "recscope": "variable",
+        "defval": "",
+        "units": "none",
+        "note": "Version of the gapfilling subroutine used to produce the data"
+      },
+      {
+        "name": "CODEVER2",
+        "type": "string",
+        "recscope": "variable",
+        "defval": "",
+        "units": "none",
+        "note": "Version of the temporal interpolation subroutine used to produce the data"
+      },
+      {
+        "name": "CODEVER3",
+        "type": "string",
+        "recscope": "variable",
+        "defval": "",
+        "units": "none",
+        "note": "Version of the polarization calibration subroutine used to produce the data"
+      },
+      {
+        "name": "CODEVER4",
+        "type": "string",
+        "recscope": "variable",
+        "defval": "vfisv",
+        "units": "none",
+        "note": "Version of VFISV code in the CVS context"
+      },
+      {
+        "name": "CODEVER5",
+        "type": "string",
+        "recscope": "variable",
+        "defval": "disambig",
+        "units": "none",
+        "note": "Version of Disambiguation code in the CVS context"
+      },
+      {
+        "name": "CODEVER6",
+        "type": "string",
+        "recscope": "variable",
+        "defval": "harp",
+        "units": "none",
+        "note": "Version of HARP code in the CVS context"
+      },
+      {
+        "name": "INVCODEV",
+        "type": "string",
+        "recscope": "variable",
+        "defval": "",
+        "units": "none",
+        "note": "Version of VFISV code"
+      },
+      {
+        "name": "INVDOCU",
+        "type": "string",
+        "recscope": "variable",
+        "defval": "",
+        "units": "none",
+        "note": "Document for VFISV code"
+      },
+      {
+        "name": "INVITERA",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-1",
+        "units": "none",
+        "note": "Number of iterations of VFISV"
+      },
+      {
+        "name": "INVLMBDA",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-1",
+        "units": "none",
+        "note": "Number of wavelength points to compute synthetic line in VFISV"
+      },
+      {
+        "name": "INVLMBDF",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-1",
+        "units": "none",
+        "note": "Number of HMI filters"
+      },
+      {
+        "name": "INVTUNEN",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-1",
+        "units": "none",
+        "note": "Number of tuning positions of HMI filters"
+      },
+      {
+        "name": "INVSVDTL",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "none",
+        "note": "SVD tolerance in VFISV"
+      },
+      {
+        "name": "INVCHIST",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "none",
+        "note": "Chi-sqr stopping criteria in VFISV"
+      },
+      {
+        "name": "INVPOLTH",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "none",
+        "note": "Polarization threshold in VFISV"
+      },
+      {
+        "name": "INVPJUMP",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "none",
+        "note": "Percentage jump in VFISV"
+      },
+      {
+        "name": "INVLMBDM",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "mA",
+        "note": "First wavelength position in synthetic profiles, measured with respect to line center (in mA)"
+      },
+      {
+        "name": "INVLMBD0",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "Angstrom",
+        "note": "Central wavelength of HMI spectral line"
+      },
+      {
+        "name": "INVLMBDB",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "mA/Gauss",
+        "note": "Wavelength shift - parameter proportional to Lande factor of spectral line (4.67*1D-13*lambda0^2*geff*1D3)"
+      },
+      {
+        "name": "INVDLTLA",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "mA",
+        "note": "Spectral sampling of synthetic spectral line in VFISV"
+      },
+      {
+        "name": "INVLMBDS",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-1",
+        "units": "none",
+        "note": "Number of wavelength points in subregion where synthetic line is calculated"
+      },
+      {
+        "name": "INVLMBMS",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "mA",
+        "note": "First wavelength position of sub-region where synthetic profiles are calculated, measured with respect to line center (in mA)"
+      },
+      {
+        "name": "INVLYOTW",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "Angstrom",
+        "note": "Lyot filter FWHM in VFISV"
+      },
+      {
+        "name": "INVWNARW",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "mA",
+        "note": "FSR (full spectral range) of the Narrow-Band Michelson"
+      },
+      {
+        "name": "INVWSPAC",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "mA",
+        "note": "Wavelength spacing between the HMI filters"
+      },
+      {
+        "name": "INVINTTH",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "D/S",
+        "note": "Intensity threshold in VFISV"
+      },
+      {
+        "name": "INVNFCTI",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "D/S",
+        "note": "Noise Sigma factor for I"
+      },
+      {
+        "name": "INVNFCTQ",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "D/S",
+        "note": "Noise Sigma factor for Q"
+      },
+      {
+        "name": "INVNFCTU",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "D/S",
+        "note": "Noise Sigma factor for U"
+      },
+      {
+        "name": "INVNFCTV",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "D/S",
+        "note": "Noise Sigma factor for V"
+      },
+      {
+        "name": "INVCONTI",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-1",
+        "units": "none",
+        "note": "Flag for continuum measurement"
+      },
+      {
+        "name": "INVWGHTI",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "none",
+        "note": "Stokes I weight in the inversion"
+      },
+      {
+        "name": "INVWGHTQ",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "none",
+        "note": "Stokes Q weight in the inversion"
+      },
+      {
+        "name": "INVWGHTU",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "none",
+        "note": "Stokes U weight in the inversion"
+      },
+      {
+        "name": "INVWGHTV",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "none",
+        "note": "Stokes V weight in the inversion"
+      },
+      {
+        "name": "INVSTLGT",
+        "type": "string",
+        "recscope": "variable",
+        "defval": "",
+        "units": "none",
+        "note": "Flag for stray light. No means that the stray light is not accounted for."
+      },
+      {
+        "name": "INVFREEP",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "0x00000000",
+        "units": "none",
+        "note": "Flags for 10 free parameters : the order of variables must be found at COMMENT keyword"
+      },
+      {
+        "name": "INVFLPRF",
+        "type": "string",
+        "recscope": "variable",
+        "defval": "",
+        "units": "none",
+        "note": "Flag/Comment on filter-profile"
+      },
+      {
+        "name": "INVPHMAP",
+        "type": "string",
+        "recscope": "variable",
+        "defval": "",
+        "units": "none",
+        "note": "Flag/Comment on phase map"
+      },
+      {
+        "name": "INVVLAVE",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "cm/s",
+        "note": "Average of inverted V_los over processed pixels"
+      },
+      {
+        "name": "INVBLAVE",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "gauss",
+        "note": "Average of inverted B_los over processed pixels"
+      },
+      {
+        "name": "INVBBAVE",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "gauss",
+        "note": "Average of inverted field strength over processed pixels"
+      },
+      {
+        "name": "INVNPRCS",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-1",
+        "units": "none",
+        "note": "Numer of pixels processed"
+      },
+      {
+        "name": "INVNCNVG",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-1",
+        "units": "none",
+        "note": "Numer of pixels at which ME VFISV converged"
+      },
+      {
+        "name": "DATAVALS",
+        "type": "int",
+        "recscope": "segment",
+        "defval": "-2147483648",
+        "units": "none",
+        "note": "Actual number of data values in images (pixels)"
+      },
+      {
+        "name": "MISSVALS",
+        "type": "int",
+        "recscope": "segment",
+        "defval": "-2147483648",
+        "units": "none",
+        "note": "Missing values: TOTVALS - DATAVALS"
+      },
+      {
+        "name": "DATAMIN",
+        "type": "float",
+        "recscope": "segment",
+        "defval": "nan",
+        "units": "none",
+        "note": "Minimum value from pixels within 99% of solar radius"
+      },
+      {
+        "name": "DATAMAX",
+        "type": "float",
+        "recscope": "segment",
+        "defval": "nan",
+        "units": "none",
+        "note": "Maximum value from pixels within 99% of solar radius"
+      },
+      {
+        "name": "DATAMEDN",
+        "type": "float",
+        "recscope": "segment",
+        "defval": "nan",
+        "units": "none",
+        "note": "Median value from pixels within 99% of solar radius"
+      },
+      {
+        "name": "DATAMEAN",
+        "type": "float",
+        "recscope": "segment",
+        "defval": "nan",
+        "units": "none",
+        "note": "Mean value from pixels within 99% of solar radius"
+      },
+      {
+        "name": "DATARMS",
+        "type": "float",
+        "recscope": "segment",
+        "defval": "nan",
+        "units": "none",
+        "note": "Rms deviation from the mean value of pixels within 99% of solar radius"
+      },
+      {
+        "name": "DATASKEW",
+        "type": "float",
+        "recscope": "segment",
+        "defval": "nan",
+        "units": "nones",
+        "note": "Skewness from the mean value of pixels within 99% of solar radius"
+      },
+      {
+        "name": "DATAKURT",
+        "type": "float",
+        "recscope": "segment",
+        "defval": "nan",
+        "units": "none",
+        "note": "Kurtosis of pixels within 99% of solar radius"
+      },
+      {
+        "name": "BKEYS1",
+        "type": "string",
+        "recscope": "variable",
+        "defval": "",
+        "units": "none",
+        "note": "For future use"
+      },
+      {
+        "name": "BKEYS2",
+        "type": "string",
+        "recscope": "variable",
+        "defval": "",
+        "units": "none",
+        "note": "For future use"
+      },
+      {
+        "name": "BKEYS3",
+        "type": "string",
+        "recscope": "variable",
+        "defval": "",
+        "units": "none",
+        "note": "For future use"
+      },
+      {
+        "name": "BKEYI1",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-2147483648",
+        "units": "none",
+        "note": "For future use"
+      },
+      {
+        "name": "BKEYI2",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-2147483648",
+        "units": "none",
+        "note": "For future use"
+      },
+      {
+        "name": "BKEYI3",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-2147483648",
+        "units": "none",
+        "note": "For future use"
+      },
+      {
+        "name": "BKEYD1",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "none",
+        "note": "For future use"
+      },
+      {
+        "name": "BKEYD2",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "none",
+        "note": "For future use"
+      },
+      {
+        "name": "BKEYD3",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "none",
+        "note": "For future use"
+      },
+      {
+        "name": "T_REC_index",
+        "type": "longlong",
+        "recscope": "index",
+        "defval": "0",
+        "units": "none",
+        "note": "Index keyword associated with T_REC"
+      }
+    ],
+    "segments": [
+      {
+        "name": "inclination",
+        "type": "int",
+        "units": null,
+        "protocol": "link via MDATA",
+        "dims": null,
+        "note": "Inclination"
+      },
+      {
+        "name": "azimuth",
+        "type": "int",
+        "units": null,
+        "protocol": "link via MDATA",
+        "dims": null,
+        "note": "Azimuth before disambiguation"
+      },
+      {
+        "name": "disambig",
+        "type": "char",
+        "units": "",
+        "protocol": "fits",
+        "dims": "4096x4096",
+        "note": "Flag for 180 degree change in azimuth"
+      },
+      {
+        "name": "field",
+        "type": "int",
+        "units": null,
+        "protocol": "link via MDATA",
+        "dims": null,
+        "note": "Field Strength"
+      },
+      {
+        "name": "vlos_mag",
+        "type": "int",
+        "units": null,
+        "protocol": "link via MDATA",
+        "dims": null,
+        "note": "LOS Velocity with Field"
+      },
+      {
+        "name": "dop_width",
+        "type": "int",
+        "units": null,
+        "protocol": "link via MDATA",
+        "dims": null,
+        "note": "Doppler Width"
+      },
+      {
+        "name": "eta_0",
+        "type": "int",
+        "units": null,
+        "protocol": "link via MDATA",
+        "dims": null,
+        "note": "Eta_0"
+      },
+      {
+        "name": "damping",
+        "type": "int",
+        "units": null,
+        "protocol": "link via MDATA",
+        "dims": null,
+        "note": "Damping"
+      },
+      {
+        "name": "src_continuum",
+        "type": "int",
+        "units": null,
+        "protocol": "link via MDATA",
+        "dims": null,
+        "note": "Continuum"
+      },
+      {
+        "name": "src_grad",
+        "type": "int",
+        "units": null,
+        "protocol": "link via MDATA",
+        "dims": null,
+        "note": "Gradient"
+      },
+      {
+        "name": "alpha_mag",
+        "type": "int",
+        "units": null,
+        "protocol": "link via MDATA",
+        "dims": null,
+        "note": "Filling Factor with Field"
+      },
+      {
+        "name": "chisq",
+        "type": "int",
+        "units": null,
+        "protocol": "link via MDATA",
+        "dims": null,
+        "note": "Chi square"
+      },
+      {
+        "name": "conv_flag",
+        "type": "int",
+        "units": null,
+        "protocol": "link via MDATA",
+        "dims": null,
+        "note": "Convergence flag and index"
+      },
+      {
+        "name": "inclination_err",
+        "type": "int",
+        "units": null,
+        "protocol": "link via MDATA",
+        "dims": null,
+        "note": "Inclination_Err"
+      },
+      {
+        "name": "azimuth_err",
+        "type": "int",
+        "units": null,
+        "protocol": "link via MDATA",
+        "dims": null,
+        "note": "Azimuth_Err"
+      },
+      {
+        "name": "field_err",
+        "type": "int",
+        "units": null,
+        "protocol": "link via MDATA",
+        "dims": null,
+        "note": "Field_Err"
+      },
+      {
+        "name": "vlos_err",
+        "type": "int",
+        "units": null,
+        "protocol": "link via MDATA",
+        "dims": null,
+        "note": "VLos_Err"
+      },
+      {
+        "name": "alpha_err",
+        "type": "int",
+        "units": null,
+        "protocol": "link via MDATA",
+        "dims": null,
+        "note": " Alpha_Err"
+      },
+      {
+        "name": "field_inclination_err",
+        "type": "int",
+        "units": null,
+        "protocol": "link via MDATA",
+        "dims": null,
+        "note": "Field_Inclination_Err"
+      },
+      {
+        "name": "field_az_err",
+        "type": "int",
+        "units": null,
+        "protocol": "link via MDATA",
+        "dims": null,
+        "note": "Field_azimuth_Err"
+      },
+      {
+        "name": "inclin_azimuth_err",
+        "type": "int",
+        "units": null,
+        "protocol": "link via MDATA",
+        "dims": null,
+        "note": "Inclination_Azimuth_Err"
+      },
+      {
+        "name": "field_alpha_err",
+        "type": "int",
+        "units": null,
+        "protocol": "link via MDATA",
+        "dims": null,
+        "note": "Field_Alpha_Err"
+      },
+      {
+        "name": "inclination_alpha_err",
+        "type": "int",
+        "units": null,
+        "protocol": "link via MDATA",
+        "dims": null,
+        "note": "Inclination_Alpha_Err"
+      },
+      {
+        "name": "azimuth_alpha_err",
+        "type": "int",
+        "units": null,
+        "protocol": "link via MDATA",
+        "dims": null,
+        "note": "Azimuth_Alpha_Err"
+      },
+      {
+        "name": "conf_disambig",
+        "type": "char",
+        "units": "",
+        "protocol": "fits",
+        "dims": "4096x4096",
+        "note": "Confidence index for disambiguation result"
+      },
+      {
+        "name": "info_map",
+        "type": "int",
+        "units": "",
+        "protocol": "fits",
+        "dims": "4096x4096",
+        "note": "Updated quality map"
+      },
+      {
+        "name": "confid_map",
+        "type": "char",
+        "units": "",
+        "protocol": "fits",
+        "dims": "4096x4096",
+        "note": "Updated confidence index"
+      }
+    ],
+    "links": [
+      {
+        "name": "MDATA",
+        "target": "hmi.ME_720s_fd10",
+        "kind": "DYNAMIC",
+        "note": "ME"
+      }
+    ],
+    "Interval": {
+      "FirstRecord": "hmi.B_720s[2010.05.01_00:00:00_TAI]",
+      "FirstRecnum": 422263,
+      "LastRecord": "hmi.B_720s[2026.11.07_16:24:00_TAI]",
+      "LastRecnum": 836464,
+      "MaxRecnum": 836513
+    },
+    "runtime": 0.068,
+    "status": 0
+  }
+}

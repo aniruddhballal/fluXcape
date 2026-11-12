@@ -1,0 +1,780 @@
+{
+  "url": "http://jsoc.stanford.edu/cgi-bin/ajax/jsoc_info?op=series_struct&ds=hmi.M_720s",
+  "response": {
+    "note": "magnetograms with a cadence of 720 seconds.",
+    "retention": 10000,
+    "stagingretention": 3,
+    "unitsize": 32,
+    "archive": 1,
+    "tapegroup": 6,
+    "primekeys": [
+      "T_REC",
+      "CAMERA"
+    ],
+    "primekeysinfo": [
+      {
+        "name": "T_REC",
+        "slotted": 1,
+        "step": "720.0"
+      },
+      {
+        "name": "CAMERA",
+        "slotted": 0
+      }
+    ],
+    "dbindex": [
+      "T_REC",
+      "CAMERA"
+    ],
+    "keywords": [
+      {
+        "name": "cparms_sg000",
+        "type": "string",
+        "recscope": "variable",
+        "defval": "compress Rice",
+        "units": "none",
+        "note": ""
+      },
+      {
+        "name": "magnetogram_bzero",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "0",
+        "units": "none",
+        "note": ""
+      },
+      {
+        "name": "magnetogram_bscale",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "0.1",
+        "units": "none",
+        "note": ""
+      },
+      {
+        "name": "DATE",
+        "type": "time",
+        "recscope": "variable",
+        "defval": "-4712.01.01_11:59:28Z",
+        "units": "ISO",
+        "note": "Date_time of processing; ISO 8601 format UTC"
+      },
+      {
+        "name": "DATE__OBS",
+        "type": "time",
+        "recscope": "variable",
+        "defval": "-4712.01.01_11:59:27.82Z",
+        "units": "ISO",
+        "note": "[DATE-OBS] DATE_OBS = T_OBS - EXPTIME/2.0"
+      },
+      {
+        "name": "DATE-OBS",
+        "type": "time",
+        "recscope": "variable",
+        "defval": "-4712.01.01_11:59:27.82Z",
+        "units": "ISO",
+        "note": "[DATE-OBS] DATE_OBS = T_OBS - EXPTIME/2.0"
+      },
+      {
+        "name": "TELESCOP",
+        "type": "string",
+        "recscope": "constant",
+        "defval": "SDO/HMI",
+        "units": "none",
+        "note": "For HMI: SDO/HMI"
+      },
+      {
+        "name": "INSTRUME",
+        "type": "string",
+        "recscope": "variable",
+        "defval": "",
+        "units": "none",
+        "note": "For HMI: HMI_SIDE1, HMI_FRONT2, or HMI_COMBINED"
+      },
+      {
+        "name": "WAVELNTH",
+        "type": "float",
+        "recscope": "constant",
+        "defval": "6173.0",
+        "units": "Angstrom",
+        "note": "For HMI: 6173.3 Angstroms"
+      },
+      {
+        "name": "CAMERA",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-2147483648",
+        "units": "none",
+        "note": "For HMI: 1 (side camera), 2 (front camera), or 3 (both cameras)"
+      },
+      {
+        "name": "BUNIT",
+        "type": "string",
+        "recscope": "constant",
+        "defval": "Gauss",
+        "units": "none",
+        "note": "BUNIT: physical units of data, Gauss"
+      },
+      {
+        "name": "ORIGIN",
+        "type": "string",
+        "recscope": "constant",
+        "defval": "SDO/JSOC-SDP",
+        "units": "none",
+        "note": "ORIGIN: location where file made"
+      },
+      {
+        "name": "CONTENT",
+        "type": "string",
+        "recscope": "constant",
+        "defval": "MAGNETOGRAM",
+        "units": "none",
+        "note": "CONTENT: MAGNETOGRAM"
+      },
+      {
+        "name": "QUALITY",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "0x80000000",
+        "units": "none",
+        "note": "Level 1.5 Quality word"
+      },
+      {
+        "name": "QUALLEV1",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "0x80000000",
+        "units": "none",
+        "note": "Logical OR on the bits of the level 1 Quality word"
+      },
+      {
+        "name": "HISTORY",
+        "type": "string",
+        "recscope": "variable",
+        "defval": "",
+        "units": "none",
+        "note": "processing history of data"
+      },
+      {
+        "name": "COMMENT",
+        "type": "string",
+        "recscope": "variable",
+        "defval": "",
+        "units": "none",
+        "note": "commentary on the data"
+      },
+      {
+        "name": "BLD_VERS",
+        "type": "string",
+        "recscope": "variable",
+        "defval": "",
+        "units": "none",
+        "note": "Code release build number of program that created this record"
+      },
+      {
+        "name": "HCAMID",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-2147483648",
+        "units": "none",
+        "note": "HMI_SEQ_ID_EXP_PATH"
+      },
+      {
+        "name": "SOURCE",
+        "type": "string",
+        "recscope": "variable",
+        "defval": "",
+        "units": "none",
+        "note": "level 1 filtergrams used to produce the observables"
+      },
+      {
+        "name": "TOTVALS",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-2147483648",
+        "units": "none",
+        "note": "Expected number of data values (pixels)"
+      },
+      {
+        "name": "DATAVALS",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-2147483648",
+        "units": "none",
+        "note": "Actual number of data values in images (pixels)"
+      },
+      {
+        "name": "MISSVALS",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-2147483648",
+        "units": "none",
+        "note": "Missing values: TOTVALS - DATAVALS"
+      },
+      {
+        "name": "SATVALS",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-2147483648",
+        "units": "none",
+        "note": "Saturated values"
+      },
+      {
+        "name": "DATAMIN2",
+        "type": "float",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "Gauss",
+        "note": "Minimum value from all pixels"
+      },
+      {
+        "name": "DATAMAX2",
+        "type": "float",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "Gauss",
+        "note": "Maximum value from all pixels"
+      },
+      {
+        "name": "DATAMED2",
+        "type": "float",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "Gauss",
+        "note": "Median value from all pixels"
+      },
+      {
+        "name": "DATAMEA2",
+        "type": "float",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "Gauss",
+        "note": "Mean value from all pixels"
+      },
+      {
+        "name": "DATARMS2",
+        "type": "float",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "Gauss",
+        "note": "Rms deviation from the mean value of all pixels"
+      },
+      {
+        "name": "DATASKE2",
+        "type": "float",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "Gauss",
+        "note": "Skewness from the mean value of all pixels"
+      },
+      {
+        "name": "DATAKUR2",
+        "type": "float",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "Gauss",
+        "note": "Kurtosis of all pixels"
+      },
+      {
+        "name": "DATAMIN",
+        "type": "float",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "Gauss",
+        "note": "Minimum value from pixels within 99% of solar radius"
+      },
+      {
+        "name": "DATAMAX",
+        "type": "float",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "Gauss",
+        "note": "Maximum value from pixels within 99% of solar radius"
+      },
+      {
+        "name": "DATAMEDN",
+        "type": "float",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "Gauss",
+        "note": "Median value from pixels within 99% of solar radius"
+      },
+      {
+        "name": "DATAMEAN",
+        "type": "float",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "Gauss",
+        "note": "Mean value from pixels within 99% of solar radius"
+      },
+      {
+        "name": "DATARMS",
+        "type": "float",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "Gauss",
+        "note": "Rms deviation from the mean value of pixels within 99% of solar radius"
+      },
+      {
+        "name": "DATASKEW",
+        "type": "float",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "Gauss",
+        "note": "Skewness from the mean value of pixels within 99% of solar radius"
+      },
+      {
+        "name": "DATAKURT",
+        "type": "float",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "Gauss",
+        "note": "Kurtosis of pixels within 99% of solar radius"
+      },
+      {
+        "name": "CTYPE1",
+        "type": "string",
+        "recscope": "constant",
+        "defval": "HPLN-TAN",
+        "units": "none",
+        "note": "CTYPE1: HPLN-TAN (SOLARX)"
+      },
+      {
+        "name": "CTYPE2",
+        "type": "string",
+        "recscope": "constant",
+        "defval": "HPLT-TAN",
+        "units": "none",
+        "note": "CTYPE2: HPLT-TAN (SOLARY)"
+      },
+      {
+        "name": "CRPIX1",
+        "type": "float",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "pixel",
+        "note": "CRPIX1: location of the Sun center in CCD x direction"
+      },
+      {
+        "name": "CRPIX2",
+        "type": "float",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "pixel",
+        "note": "CRPIX2: location of the Sun center in CCD y direction"
+      },
+      {
+        "name": "CRVAL1",
+        "type": "float",
+        "recscope": "constant",
+        "defval": "0.000000",
+        "units": "arcsec",
+        "note": "CRVAL1: x origin - center of the solar disk"
+      },
+      {
+        "name": "CRVAL2",
+        "type": "float",
+        "recscope": "constant",
+        "defval": "0.000000",
+        "units": "arcsec",
+        "note": "CRVAL2: y origin - center of the solar disk"
+      },
+      {
+        "name": "CDELT1",
+        "type": "float",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "arcsec/pixel",
+        "note": "image scale in the x direction"
+      },
+      {
+        "name": "CDELT2",
+        "type": "float",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "arcsec/pixel",
+        "note": "image scale in the y direction"
+      },
+      {
+        "name": "CUNIT1",
+        "type": "string",
+        "recscope": "constant",
+        "defval": "arcsec",
+        "units": "arcsec",
+        "note": "CUNIT1: arcsec"
+      },
+      {
+        "name": "CUNIT2",
+        "type": "string",
+        "recscope": "constant",
+        "defval": "arcsec",
+        "units": "arcsec",
+        "note": "CUNIT2: arcsec"
+      },
+      {
+        "name": "CROTA2",
+        "type": "float",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "deg",
+        "note": "CROTA2: INST_ROT + SAT_ROT"
+      },
+      {
+        "name": "CRDER1",
+        "type": "float",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "arcsec",
+        "note": "CRDER1: estimate of random error in coordinate x"
+      },
+      {
+        "name": "CRDER2",
+        "type": "float",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "arcsec",
+        "note": "CRDER2: estimate of random error in coordinate y"
+      },
+      {
+        "name": "CSYSER1",
+        "type": "float",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "arcsec",
+        "note": "CSYSER1: estimate of systematic error in coordinate x"
+      },
+      {
+        "name": "CSYSER2",
+        "type": "float",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "arcsec",
+        "note": "CSYSER2: estimate of systematic error in coordinate y"
+      },
+      {
+        "name": "WCSNAME",
+        "type": "string",
+        "recscope": "constant",
+        "defval": "Helioprojective-cartesian",
+        "units": "none",
+        "note": "WCS system name"
+      },
+      {
+        "name": "DSUN_OBS",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "m",
+        "note": "Distance from SDO to Sun center."
+      },
+      {
+        "name": "DSUN_REF",
+        "type": "double",
+        "recscope": "constant",
+        "defval": "149597870691",
+        "units": "m",
+        "note": "Astronomical Unit"
+      },
+      {
+        "name": "RSUN_REF",
+        "type": "double",
+        "recscope": "constant",
+        "defval": "696000000",
+        "units": "m",
+        "note": "Reference radius of the Sun: 696,000,000.0 m"
+      },
+      {
+        "name": "CRLN_OBS",
+        "type": "float",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "deg",
+        "note": "Carrington longitude of the observer"
+      },
+      {
+        "name": "CRLT_OBS",
+        "type": "float",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "deg",
+        "note": "Carrington latitude of the observer"
+      },
+      {
+        "name": "CAR_ROT",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-2147483648",
+        "units": "none",
+        "note": "Carrington rotation number of CRLN_OBS"
+      },
+      {
+        "name": "OBS_VR",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "m/s",
+        "note": "velocity of the observer in radial direction. + is away from Sun"
+      },
+      {
+        "name": "OBS_VW",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "m/s",
+        "note": "velocity of the observer solar-westward. + in rough direction of Earth orbit"
+      },
+      {
+        "name": "OBS_VN",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "m/s",
+        "note": "velocity of the observer solar-northward (heliographic). + to north"
+      },
+      {
+        "name": "RSUN_OBS",
+        "type": "double",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "arcsec",
+        "note": "angular radius of Sun. Corresponds to arcsin(RSUN_REF/DSUN_OBS)"
+      },
+      {
+        "name": "T_OBS",
+        "type": "time",
+        "recscope": "variable",
+        "defval": "-4712.01.01_11:59:28_TAI",
+        "units": "TAI",
+        "note": "nominal time"
+      },
+      {
+        "name": "T_REC",
+        "type": "time",
+        "recscope": "ts_eq",
+        "defval": "-4712.01.01_11:59:28_TAI",
+        "units": "TAI",
+        "note": "Slot time"
+      },
+      {
+        "name": "T_REC_epoch",
+        "type": "time",
+        "recscope": "constant",
+        "defval": "1993.01.01_00:00:00_TAI",
+        "units": "TAI",
+        "note": "Time of origin"
+      },
+      {
+        "name": "T_REC_step",
+        "type": "float",
+        "recscope": "constant",
+        "defval": "720.0",
+        "units": "seconds",
+        "note": "ts_eq step"
+      },
+      {
+        "name": "T_REC_unit",
+        "type": "string",
+        "recscope": "constant",
+        "defval": "secs",
+        "units": "none",
+        "note": "ts_eq unit"
+      },
+      {
+        "name": "CADENCE",
+        "type": "float",
+        "recscope": "constant",
+        "defval": "720.0",
+        "units": "seconds",
+        "note": "repetition interval"
+      },
+      {
+        "name": "DATASIGN",
+        "type": "int",
+        "recscope": "constant",
+        "defval": "1",
+        "units": "none",
+        "note": "DATASIGN: sign of observable quantity wrt Sun center"
+      },
+      {
+        "name": "HFLID",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-2147483648",
+        "units": "none",
+        "note": "HMI_SEQ_ID_FRAMELIST"
+      },
+      {
+        "name": "HCFTID",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-2147483648",
+        "units": "none",
+        "note": "HMI_SEQ_ID_FOCUS"
+      },
+      {
+        "name": "QLOOK",
+        "type": "int",
+        "recscope": "constant",
+        "defval": "0",
+        "units": "none",
+        "note": "QLOOK: 0=final data, 1=quick-look data"
+      },
+      {
+        "name": "CAL_FSN",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-2147483648",
+        "units": "none",
+        "note": "FSN of the look-up table used to produce the observables"
+      },
+      {
+        "name": "LUTQUERY",
+        "type": "string",
+        "recscope": "variable",
+        "defval": "",
+        "units": "none",
+        "note": "query used for the look-up tables"
+      },
+      {
+        "name": "TSEL",
+        "type": "float",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "degree Celsius",
+        "note": "temperature keyword for polarization calibration"
+      },
+      {
+        "name": "TFRONT",
+        "type": "float",
+        "recscope": "variable",
+        "defval": "nan",
+        "units": "degree Celsius",
+        "note": "temperature keyword for polarization calibration"
+      },
+      {
+        "name": "TINTNUM",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-2147483648",
+        "units": "none",
+        "note": "number of level-1 filtergrams used to produce the observables. Nominal value is 360."
+      },
+      {
+        "name": "SINTNUM",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-2147483648",
+        "units": "none",
+        "note": "number of points used for the spatial interpolation"
+      },
+      {
+        "name": "DISTCOEF",
+        "type": "string",
+        "recscope": "variable",
+        "defval": "",
+        "units": "none",
+        "note": "path to the distortion coefficient table used to produce the data"
+      },
+      {
+        "name": "ROTCOEF",
+        "type": "string",
+        "recscope": "variable",
+        "defval": "",
+        "units": "none",
+        "note": "path to the differential-rotation coefficient table used to produce the data"
+      },
+      {
+        "name": "ODICOEFF",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-2147483648",
+        "units": "none",
+        "note": "order of the distortion-coefficient polynomials"
+      },
+      {
+        "name": "OROCOEFF",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-2147483648",
+        "units": "none",
+        "note": "order of the differential-rotation polynomials"
+      },
+      {
+        "name": "POLCALM",
+        "type": "int",
+        "recscope": "variable",
+        "defval": "-2147483648",
+        "units": "none",
+        "note": "method used by the polarization calibration subroutine"
+      },
+      {
+        "name": "CODEVER0",
+        "type": "string",
+        "recscope": "variable",
+        "defval": "",
+        "units": "none",
+        "note": "version of the l.o.s. observable code used to produce the data"
+      },
+      {
+        "name": "CODEVER1",
+        "type": "string",
+        "recscope": "variable",
+        "defval": "",
+        "units": "none",
+        "note": "version of the gapfilling subroutine used to produce the data"
+      },
+      {
+        "name": "CODEVER2",
+        "type": "string",
+        "recscope": "variable",
+        "defval": "",
+        "units": "none",
+        "note": "version of the temporal interpolation subroutine used to produce the data"
+      },
+      {
+        "name": "CODEVER3",
+        "type": "string",
+        "recscope": "variable",
+        "defval": "",
+        "units": "none",
+        "note": "version of the polarization calibration subroutine used to produce the data"
+      },
+      {
+        "name": "T_REC_index",
+        "type": "longlong",
+        "recscope": "index",
+        "defval": "0",
+        "units": "none",
+        "note": "Index keyword associated with T_REC"
+      },
+      {
+        "name": "CALVER64",
+        "type": "longlong",
+        "recscope": "variable",
+        "defval": "0x0000000000000000",
+        "units": "none",
+        "note": "Calibration Version"
+      }
+    ],
+    "segments": [
+      {
+        "name": "magnetogram",
+        "type": "int",
+        "units": "Gauss",
+        "protocol": "fits",
+        "dims": "4096x4096",
+        "note": "magnetogram"
+      }
+    ],
+    "links": [],
+    "Interval": {
+      "FirstRecord": "hmi.M_720s[2009.04.13_21:48:00_TAI][1]",
+      "FirstRecnum": 361508,
+      "LastRecord": "hmi.M_720s[2026.11.07_23:12:00_TAI][3]",
+      "LastRecnum": 958452,
+      "MaxRecnum": 958480
+    },
+    "runtime": 0.029,
+    "status": 0
+  }
+}
