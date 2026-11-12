@@ -1,5 +1,14 @@
 # Pre-SFT reconstruction accuracy: synthetic tests and HMI observations
 
+> **Current project paths:** The reconstruction is now
+> `my work/pre_sft_reconstruction/reconstruct_synoptic_map.py`, shared FITS data
+> are in `my work/hmi_fits_data/`, and the observation downloader is
+> `my work/download_cr2191_hmi_observations.py`. The comparison archive is now
+> inside `my work/pre_sft_reconstruction/`. Historical paths and source hashes
+> below describe the files as audited; the reconstruction's only code change
+> during this reorganization is its data-directory path. Scientific findings,
+> numerical tables, and plots are unchanged.
+
 Completed 12 November 2026. All numerical results were calculated anew from original code and FITS/record metadata. No previous audit, experiment, report, or result was consulted. Neither original implementation was edited. The full SFT simulation was never run.
 
 ## Findings

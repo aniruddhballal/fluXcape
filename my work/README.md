@@ -14,15 +14,15 @@ reconstructing a photospheric magnetic-field map before surface flux transport
 | Path | Purpose and current state |
 |---|---|
 | [magnetofriction/](magnetofriction/) | The intended final model: planning files and theory/numerical-method study notes. The solver is not implemented yet. |
-| [pre november/](<pre november/>) | Personal solar-physics exploration from before joining IISc, undertaken out of interest over roughly one week before work began. These are historical learning notes and early research directions. |
-| [pre-sft/](pre-sft/) | The implemented three-map pre-SFT reconstruction and its retained accuracy comparison. |
-| [fits_files/](fits_files/) | Shared FITS data storage. Currently contains 221 low-resolution HMI synoptic maps in `720x360/`. |
+| [pre_iisc_self_study/](<pre_iisc_self_study/>) | Personal solar-physics exploration from before joining IISc, undertaken out of interest over roughly one week before work began. These are historical learning notes and early research directions. |
+| [pre_sft_reconstruction/](pre_sft_reconstruction/) | The implemented three-map pre-SFT reconstruction and its retained accuracy comparison. |
+| [hmi_fits_data/](hmi_fits_data/) | Shared FITS data storage. Currently contains 221 low-resolution HMI synoptic maps in `720x360/`. |
 | [download_synoptic_maps.py](download_synoptic_maps.py) | Checks the JSOC archive and downloads missing HMI radial synoptic maps. |
-| [download_pre_sft_observations.py](download_pre_sft_observations.py) | Downloads the specific full-disk observations used for the CR2191 observational comparison. |
+| [download_cr2191_hmi_observations.py](download_cr2191_hmi_observations.py) | Downloads the specific full-disk observations used for the CR2191 observational comparison. |
 | [requirements.txt](requirements.txt) | Python dependency requirements for the FITS tools and pre-SFT reconstruction. This is a `.txt` file, not a `.tsx` file. |
 
 There are **two Python scripts directly in this folder**: the two downloaders.
-There are additional Python files inside `pre-sft/` and `magnetofriction/`,
+There are additional Python files inside `pre_sft_reconstruction/` and `magnetofriction/`,
 explained below.
 
 ## Magnetofrictional model: the development goal
@@ -31,11 +31,10 @@ explained below.
 planned and developed. Its present files describe intended responsibilities;
 they do not yet form a working model:
 
-- [model_input.py](magnetofriction/model_input.py) contains a prose checklist
+- [model_input_requirements.md](magnetofriction/model_input_requirements.md) contains a prose checklist
   of anticipated inputs: photospheric radial field, coronal initial field,
   computational grid, boundary conditions, friction coefficient, timesteps,
-  and other numerical/physical parameters. Despite the `.py` extension,
-  it is currently planning notes rather than executable Python.
+  and other numerical/physical parameters. It is a Markdown planning document rather than an executable input module.
 - [engine.py](magnetofriction/engine.py) is an empty placeholder for the
   modelling engine.
 - [model_output.py](magnetofriction/model_output.py) is an empty placeholder
@@ -48,14 +47,14 @@ they do not yet form a working model:
 
 ## Personal study before IISc
 
-[pre november/](<pre november/>) preserves the earlier, approximately week-long
+[pre_iisc_self_study/](<pre_iisc_self_study/>) preserves the earlier, approximately week-long
 period of self-directed exploration:
 
-1. [Layers of the Sun](<pre november/1. layers of the sun.md>) — introductory
+1. [Layers of the Sun](<pre_iisc_self_study/1. layers of the sun.md>) — introductory
    notes and analogies about the solar interior and atmosphere.
-2. [Solar-physics research topics](<pre november/2. Solar Physics - Research Topics.md>)
+2. [Solar-physics research topics](<pre_iisc_self_study/2. Solar Physics - Research Topics.md>)
    — candidate questions and possible directions for learning and research.
-3. [Finalised research question](<pre november/3. finalised research question.md>)
+3. [Magnetofriction project and research directions](<pre_iisc_self_study/3. magnetofriction_project_and_research_directions.md>)
    — the recorded direction toward developing a magnetofrictional model,
    with possible subsequent research applications.
 
@@ -64,14 +63,14 @@ status is described in the model-development section above.
 
 ## Pre-SFT reconstruction and accuracy comparison
 
-[pre-sft/main.py](pre-sft/main.py) reconstructs a radial magnetic-field map
+[pre_sft_reconstruction/reconstruct_synoptic_map.py](pre_sft_reconstruction/reconstruct_synoptic_map.py) reconstructs a radial magnetic-field map
 from three neighboring HMI synoptic maps:
 
 - CR2190: previous rotation.
 - CR2191: central rotation being reconstructed.
 - CR2192: next rotation.
 
-It reads those maps from `fits_files/720x360/`, derives the longitude and
+It reads those maps from `hmi_fits_data/720x360/`, derives the longitude and
 latitude grids from the central FITS header, calculates backward longitude
 sampling using a differential-rotation law, and interpolates along longitude
 with cubic splines. Neighboring rotations supply boundary data, and missing
@@ -83,16 +82,16 @@ in degrees, to inspect one remapped sample. It performs reconstruction only;
 it does not run the full SFT simulation or the magnetofrictional model, and it
 does not automatically save a reconstructed FITS file.
 
-The [reconstruction accuracy comparison](pre-sft/pre_sft_reconstruction_accuracy_comparison/)
+The [reconstruction accuracy comparison](pre_sft_reconstruction/pre_sft_reconstruction_accuracy_comparison/)
 contains the retained analysis comparing this implementation with Ananya's
 pre-SFT reconstruction and the unchanged central synoptic map:
 
-- [Detailed report](pre-sft/pre_sft_reconstruction_accuracy_comparison/pre_sft_reconstruction_accuracy_report.md)
+- [Detailed report](pre_sft_reconstruction/pre_sft_reconstruction_accuracy_comparison/pre_sft_reconstruction_accuracy_report.md)
   — methodology, implementation adaptations, synthetic and observational
   comparisons, findings, and limitations.
-- [Synthetic and observational accuracy metrics](pre-sft/pre_sft_reconstruction_accuracy_comparison/synthetic_and_observational_accuracy_metrics.csv)
+- [Synthetic and observational accuracy metrics](pre_sft_reconstruction/pre_sft_reconstruction_accuracy_comparison/synthetic_and_observational_accuracy_metrics.csv)
   — 342 numerical rows from the primary comparison and noise/evolution tests.
-- [4×4 spatial-averaging sensitivity metrics](pre-sft/pre_sft_reconstruction_accuracy_comparison/spatial_averaging_sensitivity_4x4/accuracy_metrics_4x4_spatial_averaging.csv)
+- [4×4 spatial-averaging sensitivity metrics](pre_sft_reconstruction/pre_sft_reconstruction_accuracy_comparison/spatial_averaging_sensitivity_4x4/accuracy_metrics_4x4_spatial_averaging.csv)
   — 330 numerical rows checking sensitivity to observational averaging.
 - Seven comparison plots, linked and explained in the report.
 
@@ -104,9 +103,9 @@ report for the assumptions and limitations. The comparison did not run full SFT.
 
 ## FITS data and the two download scripts
 
-[fits_files/](fits_files/) stores shared data rather than model code or project
+[hmi_fits_data/](hmi_fits_data/) stores shared data rather than model code or project
 documentation. Its `.gitattributes` file marks FITS files as binary so Git
-preserves their bytes. The CR2190–2192 maps needed by `pre-sft/main.py` remain
+preserves their bytes. The CR2190–2192 maps needed by `pre_sft_reconstruction/reconstruct_synoptic_map.py` remain
 in `720x360/`.
 
 ### Synoptic-map downloader
@@ -117,8 +116,8 @@ It offers two resolutions:
 
 | Menu choice | JSOC series | Destination |
 |---|---|---|
-| `1` | `hmi.mrsynop_small_720s` | `fits_files/720x360/` |
-| `2` | `hmi.synoptic_mr_720s` | `fits_files/3600x1440/` |
+| `1` | `hmi.mrsynop_small_720s` | `hmi_fits_data/720x360/` |
+| `2` | `hmi.synoptic_mr_720s` | `hmi_fits_data/3600x1440/` |
 
 It lists missing rotations, estimates download volume, and asks before
 retrieving missing maps. Existing filenames are skipped. Downloaded image
@@ -127,14 +126,14 @@ shape, rotation, and FITS checksums are verified.
 
 ### CR2191 observation downloader
 
-[download_pre_sft_observations.py](download_pre_sft_observations.py) retrieves
+[download_cr2191_hmi_observations.py](download_cr2191_hmi_observations.py) retrieves
 specific full-disk records at **2017-06-09 10:48, 11:00, and 11:12 TAI**:
 
 - `hmi.M_720s`: LOS magnetograms.
 - `hmi.B_720s`: vector-field strength, inclination, azimuth, disambiguation,
   confidence, error/covariance, and processing-status segments.
 
-It writes to `fits_files/observations/cr2191/`. Raw FITS segments are preserved
+It writes to `hmi_fits_data/observations/cr2191/`. Raw FITS segments are preserved
 unchanged; separate JSON records provide WCS and other metadata. The script
 checks record quality, image shape, finite data, and available FITS checksums,
 then records SHA-256 hashes and acquisition results in a manifest. It uses
@@ -172,10 +171,10 @@ Choose the task to run:
 python "my work/download_synoptic_maps.py"
 
 # Download the fixed CR2191 full-disk observation set.
-python "my work/download_pre_sft_observations.py"
+python "my work/download_cr2191_hmi_observations.py"
 
 # Reconstruct CR2191 and inspect a user-selected sample.
-python "my work/pre-sft/main.py"
+python "my work/pre_sft_reconstruction/reconstruct_synoptic_map.py"
 ```
 
 Use `python3` instead of `python` where that is the interpreter command in your

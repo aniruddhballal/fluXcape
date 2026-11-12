@@ -8,7 +8,7 @@ import numpy as np
 from scipy.interpolate import CubicSpline
 
 
-DATA_DIR = Path(__file__).resolve().parent.parent / "fits_files" / "720x360"
+DATA_DIR = Path(__file__).resolve().parent.parent / "hmi_fits_data" / "720x360"
 
 PREVIOUS_PATH = DATA_DIR / "hmi.Synoptic_Mr_small.2190.fits"
 CURRENT_PATH = DATA_DIR / "hmi.Synoptic_Mr_small.2191.fits"

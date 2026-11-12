@@ -13,7 +13,7 @@ from astropy.io import fits
 
 
 JSOC = "http://jsoc.stanford.edu"
-FOLDER = Path(__file__).resolve().parent / "fits_files"
+FOLDER = Path(__file__).resolve().parent / "hmi_fits_data"
 SERIES = {
     "1": ("hmi.mrsynop_small_720s", "720x360", "hmi.Synoptic_Mr_small", (360, 720)),
     "2": ("hmi.synoptic_mr_720s", "3600x1440", "hmi.Synoptic_Mr", (1440, 3600)),

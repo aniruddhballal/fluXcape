@@ -18,7 +18,7 @@ from astropy.io import fits
 import numpy as np
 
 
-ROOT = Path(__file__).resolve().parent / "fits_files" / "observations" / "cr2191"
+ROOT = Path(__file__).resolve().parent / "hmi_fits_data" / "observations" / "cr2191"
 BASE = "http://jsoc.stanford.edu"
 TIMES = ["2017.06.09_10:48:00_TAI", "2017.06.09_11:00:00_TAI",
          "2017.06.09_11:12:00_TAI"]
