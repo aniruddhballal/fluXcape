@@ -5,6 +5,7 @@ from math import cos, radians
 
 from astropy.io import fits
 import numpy as np
+from scipy.interpolate import CubicSpline
 
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "fits_files" / "720x360"
@@ -95,48 +96,74 @@ def calculate_phi_src(phi_dest, theta):
 
 
 
-def current_map_value(phi, theta):
-    """Return b(phi, theta) from CR2191 before any remapping.
+class LongitudeSpline:
+    """Cubic interpolation within valid spans, preserving missing-data gaps."""
 
-    The FITS map stores latitude, while the calculation uses colatitude, so
-    theta is converted with latitude = 90 - theta.  The nearest grid cell is
-    returned because the map is discrete.
+    def __init__(self, longitudes, values):
+        finite = np.isfinite(values)
+        edges = np.diff(np.r_[False, finite, False].astype(int))
+        self.segments = [
+            CubicSpline(longitudes[start:stop], values[start:stop], extrapolate=False)
+            for start, stop in zip(np.flatnonzero(edges == 1), np.flatnonzero(edges == -1))
+            if stop - start >= 4
+        ]
+
+    def __call__(self, longitude):
+        longitude = np.asarray(longitude, dtype=float)
+        result = np.full(longitude.shape, np.nan)
+        for spline in self.segments:
+            inside = (longitude >= spline.x[0]) & (longitude <= spline.x[-1])
+            result[inside] = spline(longitude[inside])
+        return result
+
+
+def build_source_splines():
+    """Build longitude splines across Next CR, Current CR, and Previous CR.
+
+    Sorting also reorders the field columns, since the WCS longitude grid
+    may wrap within the array. Neighboring rotations provide boundary data
+    rather than assuming that a single observed map is periodic.
     """
-    target_latitude = 90.0 - theta
-    longitude_distance = np.abs((LONGITUDES - phi + 180.0) % 360.0 - 180.0)
-    longitude_index = np.argmin(longitude_distance)
-    latitude_index = np.argmin(np.abs(LATITUDES - target_latitude))
+    order = np.argsort(LONGITUDES)
+    longitudes = LONGITUDES[order]
+    extended_longitudes = np.concatenate(
+        (longitudes - 360.0, longitudes, longitudes + 360.0)
+    )
+    extended_field = np.concatenate(
+        (B_next[:, order], B_curr[:, order], B_prev[:, order]), axis=1
+    )
+    return [
+        LongitudeSpline(extended_longitudes, row)
+        for row in extended_field
+    ]
 
-    return B_curr[latitude_index, longitude_index]
+
+SOURCE_SPLINES = build_source_splines()
 
 
-def nearest_longitude_index(phi):
-    """Return the index of the closest supported longitude grid cell."""
-    distance = np.abs((LONGITUDES - phi + 180.0) % 360.0 - 180.0)
-    return int(np.argmin(distance))
+def source_map_value(phi_src, theta):
+    """Sample the source spline at unwrapped longitude and nearest colatitude.
+
+    Negative longitudes sample Next CR; longitudes >= 360 sample Previous
+    CR. Longitude is interpolated; latitude is unchanged by the remapping.
+    """
+    latitude_index = np.argmin(np.abs(COLATITUDES - theta))
+    return float(SOURCE_SPLINES[latitude_index](phi_src))
+
+
+def current_map_value(phi, theta):
+    """Sample CR2191 with cubic longitude interpolation at nearest colatitude."""
+    return source_map_value(phi % 360.0, theta)
 
 
 def reconstruct_b_new():
-    """Reconstruct the central map using nearest-neighbor backward sampling."""
-    B_new = np.empty_like(B_curr)
+    """Reconstruct the central map using cubic-spline backward sampling."""
+    B_new = np.empty(B_curr.shape, dtype=float)
 
     for latitude_index, theta in enumerate(COLATITUDES):
-        for longitude_index, phi_dest in enumerate(LONGITUDES):
-            phi_src = calculate_phi_src(phi_dest, theta)
-
-            if phi_src < 0.0:
-                source_map = B_next
-                phi_src %= 360.0
-            elif phi_src >= 360.0:
-                source_map = B_prev
-                phi_src %= 360.0
-            else:
-                source_map = B_curr
-
-            source_longitude_index = nearest_longitude_index(phi_src)
-            B_new[latitude_index, longitude_index] = source_map[
-                latitude_index, source_longitude_index
-            ]
+        # Keep source longitudes unwrapped so the spline selects the correct CR.
+        phi_src = calculate_phi_src(LONGITUDES, theta)
+        B_new[latitude_index] = SOURCE_SPLINES[latitude_index](phi_src)
 
     return B_new
 
@@ -181,7 +208,7 @@ if __name__ == "__main__":
     delta_t = calculate_delta_t(phi_dest, theta)
     rotation_rate = omega(theta)
     phi_src = calculate_phi_src(phi_dest, theta)
-    remapped_value = current_map_value(phi_src, theta)
+    remapped_value = source_map_value(phi_src, theta)
     print(f"b(phi_dest, theta) before remapping: {current_value} G")
     print(f"delta t: {delta_t} days")
     print(f"omega(theta): {rotation_rate} degrees/day")
