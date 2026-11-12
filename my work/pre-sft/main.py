@@ -125,10 +125,10 @@ def reconstruct_b_new():
             phi_src = calculate_phi_src(phi_dest, theta)
 
             if phi_src < 0.0:
-                source_map = B_prev
-                phi_src %= 360.0
-            elif phi_src > 360.0:
                 source_map = B_next
+                phi_src %= 360.0
+            elif phi_src >= 360.0:
+                source_map = B_prev
                 phi_src %= 360.0
             else:
                 source_map = B_curr
