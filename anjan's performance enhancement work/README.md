@@ -1,0 +1,248 @@
+# Task brief: performance enhancement and reusable magnetic-field workflows
+
+## What needs to be achieved
+
+Make Anjan’s magnetic-field reconstruction work quicker to run and easier to reuse. The confirmed starting point is `Main.py` in the supplied observation folder. The possible outcomes are:
+
+1. Accelerate its expensive calculations, using parallel execution where practical.
+2. Provide an automated pipeline that saves reusable results, supports selected observations and operations, and avoids unnecessary reruns.
+3. Optionally provide a UI for selecting an observation, requesting a supported operation, and viewing its results.
+
+These are complementary options, not a requirement to build all three immediately. No particular hardware, speedup, UI framework, or deployment arrangement has been agreed. This document defines the work; it does not implement it.
+
+## Scientific context and terminology
+
+The supplied inputs are three components of a solar surface magnetic-field map. The scripts prepare this two-dimensional boundary, construct an initial three-dimensional potential field, and iteratively reconstruct a nonlinear force-free magnetic field above the surface. Other scripts calculate quantities or produce plots from the result.
+
+The supplied paper, [Wheatland, Sturrock & Roumeliotis (2000), *An Optimization Approach to Reconstructing Force-Free Fields*](Wheatland_2000_ApJ_540_1150.pdf), describes the scientific optimisation method. Its Section 2, equation (5), defines an objective:
+
+```text
+L = integral over the volume of
+    [ |curl(B) × B|² / |B|² + |div(B)|² ]
+```
+
+The two terms measure departures from force-free and divergence-free conditions. Equations (7)–(11) describe an evolution that reduces this objective while holding the boundary fixed. The evolution variable is a numerical relaxation parameter, not an observation timestamp.
+
+`Main.py` labels its loop WSR optimisation and uses a weighted objective, adding a spatial weight `w` and associated derivative terms. The supplied paper explains the underlying unweighted method; it does not by itself establish the provenance or correctness of every weighted term in this implementation.
+
+**Scientific optimisation** means reconstructing the field by reducing `L`. **Performance enhancement** means reducing the implementation’s runtime, memory use, disk use, or repeated work while preserving scientifically acceptable results. The task concerns the latter.
+
+## What exists now
+
+The folder contains one observation snapshot, preprocessing scripts and outputs, the reconstruction source, analysis/plotting scripts, and the paper. See the folder guide below for the detailed file inventory.
+
+The inferred workflow is:
+
+```text
+Selected observation: Bp, Bt, Br FITS files
+  → extract and resample the surface maps
+  → preprocess and package the boundary
+  → construct the initial potential field
+  → prepare the reconstruction box and weights
+  → reconstruct the 3D field
+  → selected analysis or visualisation
+  → saved result for later retrieval
+```
+
+Important properties of the current code:
+
+- `Main.py` runs one hardcoded observation through several stages in sequence. It does not currently contain a loop over all observation maps. A larger batch workflow may exist elsewhere, but is not established by this folder.
+- Most scripts use fixed filenames, grid settings and output locations. Some perform computation and write files immediately when imported.
+- The reconstruction uses a 300 × 300 × 150 grid and allows 2,000,001 accepted steps, with additional rejected attempts. One float64 volume occupies 108 MB, and the three field components occupy 324 MB before temporary arrays.
+- There are prepared 2D boundary arrays and a saved weight volume. The initial 3D field and reconstructed-field directories referenced by the analysis scripts are absent from this snapshot.
+- Analysis scripts select different hardcoded reconstruction checkpoints. They do not yet expose a consistent way to select a run.
+
+## Option 1: accelerate the numerical work
+
+“Complete parallelisation” should be investigated, not promised. Both the reconstruction and the initial Jacobi solver depend on previous iterates. Their successive iterations cannot simply be submitted as independent jobs without changing the algorithm.
+
+There are still useful opportunities:
+
+| Opportunity | Practical interpretation |
+| --- | --- |
+| Work within an iteration | Derivatives, pointwise field operations and reductions may benefit from compiled parallel kernels or a GPU, subject to profiling and available hardware. Spatial derivatives require neighbouring cells; chunking needs boundary handling. |
+| Separate observations | Independent observations can run concurrently if memory and storage permit. Each needs isolated outputs. |
+| Independent analyses | Analyses of a completed field can run independently when resources permit. |
+| Avoid repeated work | Precompute the unchanged weight gradients, reuse buffers and intermediates where valid, and reduce unnecessary copies and file I/O. These improvements do not require parallelism. |
+| Initial potential-field solve | Profile the vectorised Jacobi solver actually called by `Main.py`; consider buffer reuse or a more efficient solver after validating the boundary formulation. |
+
+NumPy array syntax already expresses much of the work in compiled operations. It is not evidence that the entire script runs in parallel, nor that wrapping operations in Python threads will speed it up. Establish the execution environment and measure before choosing a backend. Limit concurrent runs by measured memory use; more workers can increase memory pressure and make the workflow slower.
+
+Required outcome for this option: a reproducible before/after benchmark, peak memory and output-volume measurements, and numerical comparisons. A reduced grid is suitable for development; useful speed claims also need a representative workload. No speedup target is set yet.
+
+## Option 2: automate stages and reuse results
+
+This is useful even if numerical parallelisation delivers limited gains. Refactor the existing workflow into callable stages with explicit inputs, settings and outputs, then expose a small command-line runner. A UI can use the same runner later.
+
+The runner should allow a user to:
+
+- Select one observation and a supported operation.
+- Run only the missing dependencies for that operation. For example, unsigned flux uses the original Br map and does not require a 3D reconstruction; a field-line comparison requires saved initial and reconstructed fields.
+- Reuse valid completed outputs, or explicitly request a rerun.
+- Precompute selected observations and products in a batch before users request them.
+- Retrieve a completed result without starting the calculation again.
+
+Use one result location per observation and run configuration. Record input identities or hashes, relevant parameters, code version, stage status, and output paths in a small manifest. Reuse a result only when its inputs and settings match; a file’s existence alone is insufficient. Downstream stages must use the selected run or checkpoint rather than a hardcoded directory.
+
+Changing a plot’s appearance should reuse the field. Changing reconstruction settings should recompute the reconstruction and its dependent products, while retaining compatible preparation outputs. Weight volumes can be shared when grid and taper settings match. Independent requests for the same calculation should not launch duplicate jobs.
+
+Precomputation trades computation at request time for computation and storage beforehand. Compute a selected set of useful products, rather than every possible combination. Keep a bounded checkpoint policy: the current interval could produce about 3.24 TB of field arrays at the configured maximum, excluding histories and figures. Restarting from a checkpoint requires solver state and settings as well as the field arrays; existing snapshots should not automatically be treated as complete restart records.
+
+Required outcome for this option: requesting the same observation, operation and settings twice reuses the valid result on the second request; changing a relevant setting recomputes the affected stages; separate observations and configurations do not overwrite each other.
+
+## Option 3: a small UI over the pipeline
+
+Build this after the runner and result format are reliable. The initial UI should offer:
+
+1. Choose an available observation, with enough metadata or a preview to identify it.
+2. Choose a compatible operation from the existing workflow: view the surface map, calculate unsigned flux, reconstruct the field, analyse energy or alpha, or visualise saved fields.
+3. Display whether a matching result is available, missing, running or failed.
+4. Show an existing result immediately, or submit the necessary calculation and display its status.
+5. View or download the resulting figures and numerical outputs.
+
+“Any operation on any data” is too broad for the initial scope. Offer supported operations for recognised inputs and explain missing dependencies. Long calculations should run separately from the interactive UI. Arbitrary uploads, arbitrary code execution, accounts, cloud hosting and a general scientific workflow editor are not implied by this task.
+
+## Validation needed before performance comparisons
+
+First establish a reproducible baseline and distinguish existing numerical issues from changes made for speed. In particular:
+
+- Check the rejected-step logic: `Main.py` restores the magnetic field after rejection but leaves divergence from the rejected trial available for the next attempt.
+- Confirm the intended potential-field boundary formulation: measured Bz is assigned directly to scalar potential Phi before the field is obtained by differentiating Phi.
+- Check division by zero or weak-field values, array orientation, coordinate units and energy normalisation.
+- Verify that the weighted evolution matches the intended scientific formulation. The supplied paper is a starting reference, not proof that this implementation is correct.
+
+Record correctness fixes separately so any changed result is explainable. Compare field values, boundary preservation, objective behaviour, divergence and force-free diagnostics, and selected downstream quantities using agreed tolerances. The paper’s Section 3 uses a known Low–Lou solution and reports force-free and divergence diagnostics; that is a useful validation direction, not a benchmark dataset already supplied here. A falling `L` alone does not establish scientific accuracy.
+
+## Suggested order and scope decisions
+
+Start by making a small case reproducible and profiling the stages. Then separate the stages and implement result reuse. Accelerate the measured bottlenecks using the available hardware. Add the UI if interactive access is still part of the chosen deliverable. Performance and pipeline work can share the same refactoring without committing to a large application.
+
+The decisions still needed before implementation are:
+
+- Whether the first deliverable is runtime improvement, a reusable runner, or both; whether the UI is included initially.
+- What “map” means in use: an observation snapshot, a component, or a selected region. The working interpretation here is one observation containing the three required components; region selection is not assumed.
+- Target machine resources, representative input sizes and the current runtime.
+- Which analyses matter first, and the numerical tolerances and stopping criteria Anjan considers acceptable.
+
+This brief is based on local source inspection and reading the supplied paper. No simulation, benchmark, pipeline implementation or UI build was performed while preparing it.
+
+---
+
+# Anjan’s performance enhancement work: folder guide
+
+This guide is based on inspection of the local source and array headers. The simulation has not been run or benchmarked. No source code or data has been changed, and files have not been moved.
+
+## What the work is about
+
+The scripts implement a solar magnetic-field reconstruction workflow: take a measured, two-dimensional surface magnetic field, prepare it, construct an initial three-dimensional field, then iteratively adjust that field and analyse the result.
+
+The observation folder is `hmi.sharp_cea_720s.4698.20141022_000000_TAI`: the filename identifies SHARP patch 4698 and a snapshot at 2014-10-22 00:00:00 TAI. Bx, By and Bz are the three magnetic-field components.
+
+“Optimisation” has two meanings here:
+
+- **The scientific algorithm:** adjust the magnetic field to reduce a mathematical objective measuring departures from force-free and divergence-free conditions.
+- **Software performance:** make that calculation use less time, memory and disk space.
+
+The performance enhancement task targets `Main.py`, as confirmed by the user. Mathematical optimisation describes the reconstruction algorithm; performance enhancement describes making its implementation faster and more memory efficient.
+
+## The parts
+
+All source filenames below are inside the observation folder.
+
+| Part | Files | What they do |
+| --- | --- | --- |
+| 1. Input observation | Three `.Bp.fits`, `.Bt.fits`, `.Br.fits` files; `HMIdataplot.py` | Supply measured field components; the plotting script displays Br. |
+| 2. Extract and resample | `fitsdataextraction.py` | Converts Bp to Bx, negative Bt to By, and Br to Bz; writes coordinate/value text files and uses cubic interpolation to make 300 × 300 maps. |
+| 3. Prepare the surface boundary | `preproc.c`, compiled `preproc` | Iteratively balances force, torque, fidelity to the input and smoothing terms. Reads `interpolated_dataB*.dat`; writes `Bpre.dat` and `Bfield_processed.dat`. The source credits an adaptation of Wiegelmann’s code by X. Sun. |
+| 4. Package the boundary | `plot.py` | Reads the processed text file, reshapes/transposes components, saves `Preprocessedmagneticfield/*.npy`, and compares original and processed maps. Despite its name, it is a data preparation step as well as a plot. |
+| 5. Build an initial 3D field | `Main.py` lines 12–94; `laplace.py` | Solves a Cartesian Laplace equation for a scalar potential, differentiates it to form a field, rescales it and interpolates it onto a smaller box. The code calls these outputs PFSS. |
+| 6. Prepare weights and boundary | `weightfunction.py`; `Main.py` lines 96–175 | Creates a weight that tapers near the sides/top, and interpolates the observed boundary onto the smaller box. |
+| 7. Iteratively reconstruct the field | `Main.py` lines 177–362; `vectormath.py` | Applies the observed bottom boundary, computes curls/divergence, adjusts the 3D field, accepts steps when the objective decreases, and periodically saves results. The loop is labelled WSR optimisation. |
+| 8. Analyse results | `Freeenergy.py`, `Freeenergyintegrated.py`, `alphaparameter.py`, `alphaparameter1.py`, `unsignedfluxfromfitsfile.py` | Compare model and potential-field energy; calculate alpha from B·curl(B)/\|B\|² and averages with height; calculate unsigned flux from the original Br FITS file. |
+| 9. Visualise results | `plot_dual_fieldlines.py`, `plotCurrent.py` | Compare initial and optimised field lines; generate component and curl-based plots through height slices. |
+| Shared helper | `changeresolution.py` | Interpolates saved 3D fields onto a requested box for analysis. |
+| Reference | `Wheatland_2000_ApJ_540_1150.pdf` | A supplied paper, separate from the executable workflow; its contents were not reviewed for this guide. |
+
+## Data flow and likely execution order
+
+```text
+FITS observations
+  → fitsdataextraction.py → interpolated_dataB*.dat
+  → preproc.c / preproc → Bfield_processed.dat
+  → plot.py → Preprocessedmagneticfield/*.npy
+                                      │
+weightfunction.py → weight_function/W.npy
+                                      │
+                                      ▼
+Main.py + laplace.py + vectormath.py
+  → initial potential-field arrays
+  → interpolated boundary and initial field
+  → Optimizedmagneticfield/step_*/{Bx,By,Bz,L_values}.npy
+  → energy / alpha / field-line / slice analysis
+```
+
+This order is inferred from reads and writes, rather than a supplied run script. Scripts use paths relative to the current working directory, so they expect execution from the observation folder. The saved C executable’s build options and correspondence to the source have not been verified.
+
+## Which files probably need performance work?
+
+### First candidate: Main.py, especially the loop starting at line 231
+
+This is the strongest candidate from static inspection, not a measured bottleneck:
+
+- Grid: 300 × 300 × 150 = **13.5 million points**.
+- One float64 volume occupies **108 MB**; the three field components alone occupy **324 MB**. Many additional volumes coexist during each step, so working memory can reach several GB.
+- Configured for **2,000,001 accepted steps**, with extra attempts when steps are rejected.
+- Numerous full-volume gradients, products, copies and intermediate arrays are created on each attempt.
+- The gradient of the unchanged weight `w` is recalculated inside every attempt (lines 276–278). This is a clear opportunity to move invariant work outside the loop.
+- Saves three complete field volumes every 200 accepted steps. At the configured maximum that means 10,000 periodic checkpoints: **about 3.24 TB for field arrays alone**, excluding histories, figures, initial/final saves and other outputs. This is a configured upper estimate, not existing disk usage.
+
+Start with a small, reproducible case and measure individual stages before choosing an implementation strategy. Candidate changes include reusing buffers/intermediates, precomputing invariants, avoiding duplicate derivative work, a justified convergence stop, and a more selective checkpoint policy. Validate numerical results when changing arithmetic or derivatives.
+
+### Second candidate: laplace.py
+
+`Main.py:34` calls `solve_pfss_cartesian_vectorized`, defined at `laplace.py:85`. It performs up to 100,000 Jacobi iterations, copying a full 3D array each time and creating more full-volume temporaries.
+
+There is also an obvious triple-Python-loop version at `laplace.py:36`, but **Main.py does not call that version**. Accelerating that unused implementation would not accelerate the current main workflow. More efficient solvers or buffer reuse merit investigation once boundary conditions and numerical equivalence are established.
+
+### Third candidate: weightfunction.py
+
+Lines 76–79 execute three nested Python loops over all 13.5 million cells. This is a strong candidate for array-based computation or compilation, preserving the existing taper exactly. However, it runs once and `weight_function/W.npy` is already supplied; it may not dominate repeated reconstructions.
+
+### Fourth candidate: fitsdataextraction.py
+
+Repeated pixel-by-pixel list building, large text-file writes followed immediately by reads, and three scattered cubic interpolations are plausible preparation bottlenecks. The input is gridded, so an appropriate grid interpolation method and direct in-memory processing merit investigation. Changing the interpolation method changes numerical results and must be checked.
+
+`preproc.c` already contains conditional OpenMP directives. There is no supplied build recipe demonstrating whether the executable enables them. Its actual runtime should be measured before prioritising it.
+
+## What is already present?
+
+- Original FITS measurements and large `outputB*.dat` extracts.
+- Interpolated text maps and processed boundary text files.
+- `Preprocessedmagneticfield/*.npy`: three float64 arrays, each **300 × 300**.
+- `Preprocessedmagneticfield_interpolated/*.npy`: three float64 arrays, each **300 × 300**.
+- `weight_function/W.npy`: a float64 **300 × 300 × 150** volume. This generated file is retained locally but excluded from Git because of its size. Run `weightfunction.py` from the observation folder to regenerate it after cloning.
+- A few PNG/GIF/alpha artefacts and Python caches.
+- For each component, `interpolated_B*.dat` and `interpolated_dataB*.dat` are byte-identical copies, verified with SHA-256.
+
+The `PFSSmagneticfield`, `PFSSmagneticfield_for_uniform_grid` and `Optimizedmagneticfield` directories referenced by the scripts are **absent in this snapshot**. Consequently, the downstream analysis scripts cannot reproduce their results from existing outputs alone. The small images and alpha file do not establish that the full simulation completed.
+
+## Issues to clarify before accelerating the calculation
+
+These are source-level findings or questions, not a validation of the scientific implementation:
+
+1. **Rejected-step state:** Main.py computes `divB` for a trial field, then restores only Bx/By/Bz when rejecting that trial (lines 313 and 346–349). The next attempt uses that trial’s divergence with the restored field. Divergence should be restored or recomputed consistently.
+2. **Potential-field boundary:** Main.py assigns measured Bz directly to the bottom of scalar potential Phi (line 31), then obtains Bz as −∂Phi/∂z. Confirm that this is the intended boundary formulation before treating the output as the reference field.
+3. **Zero-field handling:** Main.py divides repeatedly by \|B\|² without a mask or lower bound. Check weak/zero-field cells and nonfinite values.
+4. **Coordinate and unit conventions:** Several “non-uniform” grids actually use `linspace` and have uniform spacing along each axis. Domain values appear tied to image-coordinate ranges; physical length conversion and energy factors need to be established before interpreting energy outputs in physical units. `Freeenergy.py` uses simple sums; `Freeenergyintegrated.py` integrates B², but neither alone establishes a fully calibrated physical energy.
+5. **Array orientation:** Extraction, C preprocessing and NumPy packaging use different flattening/indexing conventions. Check them with a deliberately asymmetric test map; a square 300 × 300 shape alone cannot reveal an axis swap.
+6. **Run selection:** Analysis scripts hardcode different checkpoints, including 2000, 6000 and 8600. In `Freeenergyintegrated.py`, the input is `step_8600` but the destination is named `step_7104_uniform`. Make checkpoint selection explicit before comparing outputs.
+7. **Reproducibility:** No dependency manifest, build recipe or workflow runner is supplied in this folder. Visible imports include NumPy, SciPy, Matplotlib, Astropy and PyVista; some alpha scripts select TkAgg. Many scripts do substantial work or write outputs immediately when imported.
+
+## Where to start reading
+
+1. `plot.py`: understand what a processed 2D boundary looks like.
+2. `Main.py`: read it in three sections—initial field (12–94), boundary preparation (96–175), reconstruction (177–362).
+3. `vectormath.py`: understand the repeated derivative operations.
+4. `laplace.py:85`: inspect the initial-field solver actually used.
+
+The best initial performance investigation is **Main.py together with vectormath.py and the active solver in laplace.py**. The user has confirmed `Main.py` as the target; a runtime profile is still needed to measure its bottlenecks.
