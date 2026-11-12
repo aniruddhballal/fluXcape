@@ -58,17 +58,17 @@ MAP_PATHS = {
 }
 
 
-def calculate_delta_t(phi, theta):
+def calculate_delta_t(phi_dest, theta):
     """Calculate delta t = t_ref - t_obs in days.
 
     Parameters
     ----------
-    phi : float
-        Input longitude in degrees.
+    phi_dest : float
+        Destination longitude at t_ref in degrees.
     theta : float
         Colatitude in degrees.
     """
-    return (phi - 180.0) / (OMEGA_0 + omega(theta))
+    return (phi_dest - 180.0) / (OMEGA_0 + omega(theta))
 
 
 def omega(theta):
@@ -88,10 +88,10 @@ def omega(theta):
     return 0.18 - 2.3 * cos_theta**2 - 1.62 * cos_theta**4
 
 
-def phi_prime(phi, theta):
-    """Return the longitude phi prime after differential rotation."""
-    delta_t = calculate_delta_t(phi, theta)
-    return phi - omega(theta) * delta_t
+def calculate_phi_src(phi_dest, theta):
+    """Return the source longitude at t_obs for a destination pixel at t_ref."""
+    delta_t = calculate_delta_t(phi_dest, theta)
+    return phi_dest - omega(theta) * delta_t
 
 
 
@@ -121,19 +121,19 @@ def reconstruct_b_new():
     B_new = np.empty_like(B_curr)
 
     for latitude_index, theta in enumerate(COLATITUDES):
-        for longitude_index, phi in enumerate(LONGITUDES):
-            source_longitude = phi_prime(phi, theta)
+        for longitude_index, phi_dest in enumerate(LONGITUDES):
+            phi_src = calculate_phi_src(phi_dest, theta)
 
-            if source_longitude < 0.0:
+            if phi_src < 0.0:
                 source_map = B_prev
-                source_longitude %= 360.0
-            elif source_longitude > 360.0:
+                phi_src %= 360.0
+            elif phi_src > 360.0:
                 source_map = B_next
-                source_longitude %= 360.0
+                phi_src %= 360.0
             else:
                 source_map = B_curr
 
-            source_longitude_index = nearest_longitude_index(source_longitude)
+            source_longitude_index = nearest_longitude_index(phi_src)
             B_new[latitude_index, longitude_index] = source_map[
                 latitude_index, source_longitude_index
             ]
@@ -175,15 +175,15 @@ if __name__ == "__main__":
     print_field_statistics("B_old (original CR2191)", B_old)
     print_field_statistics("B (reconstructed)", B)
 
-    phi = float(input("Enter phi (longitude in degrees): "))
+    phi_dest = float(input("Enter phi_dest (destination longitude in degrees): "))
     theta = float(input("Enter theta (colatitude in degrees): "))
-    current_value = current_map_value(phi, theta)
-    delta_t = calculate_delta_t(phi, theta)
+    current_value = current_map_value(phi_dest, theta)
+    delta_t = calculate_delta_t(phi_dest, theta)
     rotation_rate = omega(theta)
-    rotated_phi = phi_prime(phi, theta)
-    remapped_value = current_map_value(rotated_phi, theta)
-    print(f"b(phi, theta) before remapping: {current_value} G")
+    phi_src = calculate_phi_src(phi_dest, theta)
+    remapped_value = current_map_value(phi_src, theta)
+    print(f"b(phi_dest, theta) before remapping: {current_value} G")
     print(f"delta t: {delta_t} days")
     print(f"omega(theta): {rotation_rate} degrees/day")
-    print(f"phi prime: {rotated_phi} degrees")
-    print(f"b(phi prime, theta): {remapped_value} G")
+    print(f"phi_src: {phi_src} degrees")
+    print(f"b(phi_src, theta): {remapped_value} G")
