@@ -34,13 +34,13 @@ For each stage:
 4. Repeat with identical inputs, scientific settings and hardware; repeat trials and compare medians.
 5. Check numerical output equivalence before accepting the improvement. Record any scientific correction separately.
 
-Reuse saved preparation outputs while studying a downstream stage; do not rerun the earlier stages for every trial. Stages 6 and 7 currently share Main.py and will need instrumentation or separation when we reach them. A compilation-only measurement script is available in [step_1_compile/](step_1_compile/); other stage testing is future work.
+Reuse saved preparation outputs while studying a downstream stage; do not rerun the earlier stages for every trial. Stages 6 and 7 currently share Main.py and will need instrumentation or separation when we reach them. A compilation-only measurement script is available in [step_1_compile/](step_1_compile/); An extraction-only baseline tool is available in [step_2_extract/](step_2_extract/); remaining stage testing is future work.
 
 For overall statistics, sum comparable completed stage times to estimate serial runtime reduction. **Never add peak RAM:** report per-stage peaks and their maximum. Splitting processes changes memory lifetimes and adds save/load overhead, so this is an estimate rather than an exact measurement of the original monolithic workflow. Compare storage separately without double-counting reused inputs.
 
 A bounded WSR trial can measure a fixed workload or cost per iteration, not total convergence time. Match actual accepted-step counts and account for rejected attempts, checkpoint writes and early termination. Keep grid, tolerances and stopping conditions consistent. Finish with an integration check; a full end-to-end benchmark is optional confirmation when practical.
 
-The earlier five-minute experiment stopped during extraction and never reached Main.py. Its testing scripts/report have been removed. The compilation-only script is now available in step_1_compile/; testing for other stages will be designed when work on each begins.
+The earlier five-minute experiment stopped during extraction and never reached Main.py. Its testing scripts/report have been removed. The compilation-only script is now available in step_1_compile/; step 2 now also has an isolated extraction measurement script; remaining tests will be designed when work on each begins.
 
 ## Scientific context and terminology
 

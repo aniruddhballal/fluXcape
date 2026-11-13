@@ -7,7 +7,7 @@ Append results here as each stage is improved. The methodology and project conte
 | Step | Work | Files | Status |
 | --- | --- | --- | --- |
 | 1 | Compile preprocessor | `preproc.c` and C compiler | Original baseline measured on Linux; no candidate yet |
-| 2 | Extract and resample FITS data | `fitsdataextraction.py` | Not started |
+| 2 | Extract and resample FITS data | `fitsdataextraction.py` | Source reviewed; baseline tool ready; scientific dependencies needed |
 | 3 | Preprocess surface field | Compiled `preproc` executable | Not started |
 | 4 | Package bottom-boundary arrays | `plot.py` | Not started |
 | 5 | Generate spatial weights | `weightfunction.py` | Not started |
@@ -77,3 +77,7 @@ Copy this section below for each experiment. Retain unsuccessful or mixed result
 - **Next:** measure on the target machine if needed; prioritise expensive execution stages rather than spending substantial effort accelerating this one-time build.
 
 The earlier 300-second end-to-end attempt stopped during extraction and is not a completed stage timing or a before/after comparison.
+
+## Step 2 preparation — 2026-11-13
+
+[step_2_extract/](step_2_extract/) contains the original-stage description and extraction-only measurement script. The original scientific source is unchanged. Lightweight fixture smoke checks covered isolated output/report generation and timeout cleanup. Scientific execution is pending: the current system Python lacks NumPy, SciPy, Matplotlib and Astropy. No runtime, RAM baseline or speedup is claimed yet.
