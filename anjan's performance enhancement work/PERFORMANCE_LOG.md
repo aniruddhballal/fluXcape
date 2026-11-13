@@ -15,7 +15,7 @@ Original behaviour is the reference; preserve the existing mathematics and physi
 | 3 | Preprocess surface field | Compiled `preproc` executable | Original baseline measured (one trial); no candidate yet |
 | 4 | Package bottom-boundary arrays | `plot.py` | Original baseline measured (one trial); no candidate yet |
 | 5 | Generate spatial weights | `weightfunction.py` | Original baseline measured (one trial); no candidate yet |
-| 6 | Initial potential-field solve and grid/boundary preparation | First part of `Main.py`, `laplace.py` | Not started |
+| 6 | Initial potential-field solve and grid/boundary preparation | First part of `Main.py`, `laplace.py` | 600-second partial baseline; no outputs yet |
 | 7 | WSR reconstruction | Remaining `Main.py`, `vectormath.py` | Not started |
 
 ## Results summary
@@ -116,3 +116,12 @@ The earlier 300-second end-to-end attempt stopped during extraction and is not a
 - **Scope:** weight calculation, saving and original contour/layout work included; Agg disables interactive window display/wait. Source copying and output hashing excluded.
 - **Baseline provenance:** original source hash verified unchanged; output hash and environment in report. No candidate equivalence check is due yet.
 - **Evidence:** [full report](step_5_weights/weights_20261113_163255_483855.md); raw measurements/log/output in the ignored run directory.
+
+### Step 6 — time-limited original baseline — 2026-11-13
+
+- **Status:** partial; stopped at the requested 600-second execution limit during the initial Laplace solve. No WSR or earlier steps ran.
+- **Input:** saved step 4 boundary arrays, run 20261113_160555_320989. Main.py, laplace.py and vectormath.py copied unchanged; exact Main.py prefix ends before line 154.
+- **Measured elapsed time:** 600.045567 s; not a completed stage runtime. **Peak sampled process-tree RSS:** 638.625000 MiB (100-ms psutil sampling). **Sampled cumulative CPU:** 603.64 s. GNU time final counters are unavailable after process-group termination.
+- **Last logged iteration:** 4350 (zero-based solver label); max update/error 0.0157, versus stopping tolerance 0.001 (15.7 times the threshold). Progress prints every 50 iterations, so this is the last reported label, not the exact iteration reached at termination.
+- **Generated field outputs:** none; the solve had not returned to the output-writing code. No unfinished potential checkpoint exists. Step 7 needs a completed compatible set of step 6 outputs before it can run.
+- **Evidence:** [partial run report](step_6_potential/potential_20261113_164206_525807.md); original progress log and sampled counters in its ignored run directory. No extrapolated completion time or speedup is claimed.
