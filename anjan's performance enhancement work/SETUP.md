@@ -68,7 +68,7 @@ They must contain the expected component maps in FITS HDU 1. The filenames and o
 
 The current approach is documented in [README.md](README.md): measure and improve one of the seven stages at a time using fixed inputs, rather than require a full end-to-end baseline first. The old end-to-end testing scripts and report were removed. A focused compilation-only tool is now available: see [step_1_compile/README.md](step_1_compile/README.md). It does not run the remaining workflow. For the next stage, see [step_2_extract/README.md](step_2_extract/README.md) for the extraction-only measurement command and dependencies.
 
-When implementing each stage's tests, compare original/candidate runtime, peak RAM, storage and numerical outputs with matching settings. Sum comparable stage times for an approximate serial total; use the maximum memory peak rather than their sum. Main.py still combines stages 6 and 7; instrumentation or separation is future work.
+When implementing each stage's tests, compare original/candidate runtime, peak RAM, storage and numerical outputs with matching settings. Sum comparable stage times for an approximate serial total; use the maximum memory peak rather than their sum. Main.py still contains stages 6 and 7 together; the step 6 measurement script now executes its unchanged initial-field prefix separately. Step 7 measurement is future work.
 
 ## Run individual stages
 
@@ -119,3 +119,7 @@ See [step_4_package/README.md](step_4_package/README.md). Supply saved step 2 an
 ## Step 5 baseline
 
 See [step_5_weights/README.md](step_5_weights/README.md). The measurement runs only weightfunction.py, using its hardcoded grid/taper settings and no input data files.
+
+## Step 6 baseline
+
+See [step_6_potential/README.md](step_6_potential/README.md). Supply the saved step 4 run directory. The runner executes only the Main.py prefix before reconstruction setup with a default 600-second cap. Step 5 and WSR do not run.
