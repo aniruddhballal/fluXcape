@@ -13,7 +13,7 @@ Original behaviour is the reference; preserve the existing mathematics and physi
 | 1 | Compile preprocessor | `preproc.c` and C compiler | Original baseline measured on Linux; no candidate yet |
 | 2 | Extract and resample FITS data | `fitsdataextraction.py` | Source reviewed; baseline tool ready; scientific dependencies needed |
 | 3 | Preprocess surface field | Compiled `preproc` executable | Original baseline measured (one trial); no candidate yet |
-| 4 | Package bottom-boundary arrays | `plot.py` | Not started |
+| 4 | Package bottom-boundary arrays | `plot.py` | Original baseline measured (one trial); no candidate yet |
 | 5 | Generate spatial weights | `weightfunction.py` | Not started |
 | 6 | Initial potential-field solve and grid/boundary preparation | First part of `Main.py`, `laplace.py` | Not started |
 | 7 | WSR reconstruction | Remaining `Main.py`, `vectormath.py` | Not started |
@@ -27,7 +27,7 @@ Use seconds for runtime, MiB for sampled peak RAM and generated storage. Report 
 | 1 | | | | | | | |
 | 2 | | | | | | | |
 | 3 | 2.54995 (one trial) | | | 15.921875 | | Original outputs recorded | [Baseline](step_3_preprocess/preprocess_20261113_154914_817499.md) |
-| 4 | | | | | | | |
+| 4 | 1.165231 (one trial) | | | 212.480469 | | Original arrays recorded | [Baseline](step_4_package/package_20261113_160555_320989.md) |
 | 5 | | | | | | | |
 | 6 | | | | | | | |
 | 7 | | | | | | | |
@@ -96,3 +96,13 @@ The earlier 300-second end-to-end attempt stopped during extraction and is not a
 - **Validation:** expected 90,000 points, finite field values and preserved output coordinates. Bpre.dat and Bfield_processed.dat use transposed axis orders; after alignment their differences are consistent with text rounding (max 0.0005000000001 G). The existing output conventions are retained as baseline behaviour, not a blocker or a proposed scientific correction.
 - **Limitations:** iteration count and objective history are not printed at the original verbosity. One trial is not a repeated median baseline.
 - **Evidence:** [full baseline report](step_3_preprocess/preprocess_20261113_154914_817499.md), logs and raw measurements under its ignored run directory.
+
+### Step 4 — original boundary packaging baseline — 2026-11-13
+
+- **Status:** one completed original trial; no optimisation or candidate comparison.
+- **Scope:** plot.py only, using saved step 2 interpolated maps and step 3 Bfield_processed.dat. No prior or subsequent stages ran.
+- **Wall time:** 1.165231 s. **CPU time:** 3.05 s. **Peak RSS:** 212.480469 MiB (GNU time).
+- **Outputs:** three 300×300 NumPy component arrays, 2,160,384 bytes (2.060303 MiB). Copied inputs excluded.
+- **Plotting:** contour construction and layout included; Agg disables interactive display/wait. No plot files are saved by the original script.
+- **Baseline checks:** all three arrays are finite and exactly match the reshape/transpose operations in unchanged plot.py; source/input hashes recorded. No candidate equivalence check is needed yet.
+- **Evidence:** [full report](step_4_package/package_20261113_160555_320989.md); logs and measurements in its ignored run directory.
