@@ -109,3 +109,5 @@ Some individual scripts open plot windows. Analysis scripts hardcode different r
 ## Step 3 baseline
 
 See [step_3_preprocess/README.md](step_3_preprocess/README.md). Supply an existing step 1 executable and the saved step 2 output directory; compilation and extraction are not repeated.
+
+Performance scope: preserve existing mathematics, physics and output behaviour. Baseline runs establish measurements; output-equivalence checks apply once a candidate change exists. See [README.md](README.md#scope-for-this-performance-task).

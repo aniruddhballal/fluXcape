@@ -10,6 +10,14 @@ Make Anjan’s magnetic-field reconstruction work quicker to run and easier to r
 
 These are complementary options, not a requirement to build all three immediately. No particular hardware, speedup, UI framework, or deployment arrangement has been agreed. This document defines the work; it does not implement it.
 
+## Scope for this performance task
+
+The existing implementation is the behavioural reference. Preserve its mathematics, physics, numerical settings, conventions and output behaviour while improving runtime, RAM or storage efficiency. Scientific review and correction of inherited algorithms are outside this task unless the user explicitly requests them.
+
+For unchanged baseline runs, report timings, memory, generated files and execution success. No candidate equivalence test is due until a candidate exists. Do not repeatedly present inherited scientific questions, existing compiler warnings or existing output conventions as baseline caveats or prerequisites for performance work. Keep historical observations in their reports without treating them as new blockers.
+
+Flag execution failures, missing prerequisites, measurement problems that affect a reported result, and output differences introduced by our changes. Once an optimisation exists, compare it against the original with fixed inputs/settings, including numerical values, layouts and finite/NaN behaviour. Output equivalence checks protect the existing behaviour; they are not a scientific validation project. Do not claim a speedup from an incomplete or unmatched workload.
+
 ## Current approach: improve and measure one stage at a time
 
 Record completed experiments, before/after measurements and validation in [PERFORMANCE_LOG.md](PERFORMANCE_LOG.md). It contains the seven-stage tracker and an entry template to append to as work progresses.
@@ -32,7 +40,7 @@ For each stage:
 2. Measure original runtime, peak RAM and generated storage.
 3. Improve a separate candidate implementation.
 4. Repeat with identical inputs, scientific settings and hardware; repeat trials and compare medians.
-5. Check numerical output equivalence before accepting the improvement. Record any scientific correction separately.
+5. Check numerical output equivalence before accepting the improvement. Do not bundle scientific corrections into performance changes.
 
 Reuse saved preparation outputs while studying a downstream stage; do not rerun the earlier stages for every trial. Stages 6 and 7 currently share Main.py and will need instrumentation or separation when we reach them. A compilation-only measurement script is available in [step_1_compile/](step_1_compile/); An extraction-only baseline tool is available in [step_2_extract/](step_2_extract/); Step 3 execution measurement is available in [step_3_preprocess/](step_3_preprocess/); later stage testing is future work.
 
@@ -57,7 +65,7 @@ The two terms measure departures from force-free and divergence-free conditions.
 
 `Main.py` labels its loop WSR optimisation and uses a weighted objective, adding a spatial weight `w` and associated derivative terms. The supplied paper explains the underlying unweighted method; it does not by itself establish the provenance or correctness of every weighted term in this implementation.
 
-**Scientific optimisation** means reconstructing the field by reducing `L`. **Performance enhancement** means reducing the implementation’s runtime, memory use, disk use, or repeated work while preserving scientifically acceptable results. The task concerns the latter.
+**Scientific optimisation** means reconstructing the field by reducing `L`. **Performance enhancement** means reducing the implementation’s runtime, memory use, disk use, or repeated work while preserving the original implementation’s output behaviour. The task concerns the latter.
 
 ## What exists now
 
@@ -96,7 +104,7 @@ There are still useful opportunities:
 | Separate observations | Independent observations can run concurrently if memory and storage permit. Each needs isolated outputs. |
 | Independent analyses | Analyses of a completed field can run independently when resources permit. |
 | Avoid repeated work | Precompute the unchanged weight gradients, reuse buffers and intermediates where valid, and reduce unnecessary copies and file I/O. These improvements do not require parallelism. |
-| Initial potential-field solve | Profile the vectorised Jacobi solver actually called by `Main.py`; consider buffer reuse or a more efficient solver after validating the boundary formulation. |
+| Initial potential-field solve | Profile the vectorised Jacobi solver actually called by `Main.py`; consider buffer reuse or a more efficient solver while preserving the existing boundary formulation and checking output equivalence. |
 
 NumPy array syntax already expresses much of the work in compiled operations. It is not evidence that the entire script runs in parallel, nor that wrapping operations in Python threads will speed it up. Establish the execution environment and measure before choosing a backend. Limit concurrent runs by measured memory use; more workers can increase memory pressure and make the workflow slower.
 
@@ -134,16 +142,9 @@ Build this after the runner and result format are reliable. The initial UI shoul
 
 “Any operation on any data” is too broad for the initial scope. Offer supported operations for recognised inputs and explain missing dependencies. Long calculations should run separately from the interactive UI. Arbitrary uploads, arbitrary code execution, accounts, cloud hosting and a general scientific workflow editor are not implied by this task.
 
-## Validation needed before performance comparisons
+## Output equivalence when a candidate exists
 
-First establish a reproducible baseline and distinguish existing numerical issues from changes made for speed. In particular:
-
-- Check the rejected-step logic: `Main.py` restores the magnetic field after rejection but leaves divergence from the rejected trial available for the next attempt.
-- Confirm the intended potential-field boundary formulation: measured Bz is assigned directly to scalar potential Phi before the field is obtained by differentiating Phi.
-- Check division by zero or weak-field values, array orientation, coordinate units and energy normalisation.
-- Verify that the weighted evolution matches the intended scientific formulation. The supplied paper is a starting reference, not proof that this implementation is correct.
-
-Record correctness fixes separately so any changed result is explainable. Compare field values, boundary preservation, objective behaviour, divergence and force-free diagnostics, and selected downstream quantities using agreed tolerances. The paper’s Section 3 uses a known Low–Lou solution and reports force-free and divergence diagnostics; that is a useful validation direction, not a benchmark dataset already supplied here. A falling `L` alone does not establish scientific accuracy.
+Measure the unchanged original first. After implementing a candidate, compare its outputs and actual workload with that reference using the same inputs, settings and hardware. Record differences and justified tolerances; retain existing conventions rather than silently correcting them. Scientific boundary formulations, physical accuracy and algorithm changes are not prerequisites for this performance task.
 
 ## Suggested order and scope decisions
 
@@ -282,19 +283,11 @@ python3 weightfunction.py
 
 These prepare the boundary arrays and weight volume. `plot.py` and `weightfunction.py` also display plots, so an interactive plotting environment is needed as written. The compiler command is a basic build recipe, not a claim about the original executable’s compiler flags; OpenMP is optional and not enabled by this example.
 
-`python3 Main.py` then constructs the initial 3D field and runs the expensive reconstruction. It is **not** a lightweight preparation command. Analysis scripts require its generated outputs and their hardcoded checkpoint selections must match an available run. The correctness questions below remain unresolved; these commands describe dependencies rather than certify the model.
+`python3 Main.py` then constructs the initial 3D field and runs the expensive reconstruction. It is **not** a lightweight preparation command. Analysis scripts require its generated outputs and their hardcoded checkpoint selections must match an available run. These commands describe dependencies for the existing implementation.
 
-## Issues to clarify before accelerating the calculation
+## Practical benchmarking constraints
 
-These are source-level findings or questions, not a validation of the scientific implementation:
-
-1. **Rejected-step state:** Main.py computes `divB` for a trial field, then restores only Bx/By/Bz when rejecting that trial (lines 313 and 346–349). The next attempt uses that trial’s divergence with the restored field. Divergence should be restored or recomputed consistently.
-2. **Potential-field boundary:** Main.py assigns measured Bz directly to the bottom of scalar potential Phi (line 31), then obtains Bz as −∂Phi/∂z. Confirm that this is the intended boundary formulation before treating the output as the reference field.
-3. **Zero-field handling:** Main.py divides repeatedly by \|B\|² without a mask or lower bound. Check weak/zero-field cells and nonfinite values.
-4. **Coordinate and unit conventions:** Several “non-uniform” grids actually use `linspace` and have uniform spacing along each axis. Domain values appear tied to image-coordinate ranges; physical length conversion and energy factors need to be established before interpreting energy outputs in physical units. `Freeenergy.py` uses simple sums; `Freeenergyintegrated.py` integrates B², but neither alone establishes a fully calibrated physical energy.
-5. **Array orientation:** Extraction, C preprocessing and NumPy packaging use different flattening/indexing conventions. Check them with a deliberately asymmetric test map; a square 300 × 300 shape alone cannot reveal an axis swap.
-6. **Run selection:** Analysis scripts hardcode different checkpoints, including 2000, 6000 and 8600. In `Freeenergyintegrated.py`, the input is `step_8600` but the destination is named `step_7104_uniform`. Make checkpoint selection explicit before comparing outputs.
-7. **Reproducibility:** No dependency manifest, build recipe or workflow runner is supplied in this folder. Visible imports include NumPy, SciPy, Matplotlib, Astropy and PyVista; some alpha scripts select TkAgg. Many scripts do substantial work or write outputs immediately when imported.
+Use fixed input files and matching checkpoint selections. Preserve array orientation, precision, component signs, numerical parameters and stopping behaviour when testing a candidate. Source scripts may execute immediately on import; use isolated runs. Dependencies and build commands are documented in requirements.txt and SETUP.md. Existing scientific choices are kept as supplied, not audited as part of the performance work.
 
 ## Where to start reading
 

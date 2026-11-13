@@ -2,6 +2,10 @@
 
 Append results here as each stage is improved. The methodology and project context are in [README.md](README.md). No stage has a completed before/after comparison yet; blank values mean unmeasured, not zero.
 
+## Reporting scope
+
+Original behaviour is the reference; preserve the existing mathematics and physics. Before any candidate exists, report the baseline measurements and execution outcome without demanding output-equivalence testing or scientific validation. After a change, check equivalence to the original. Flag execution failures, relevant measurement issues and regressions caused by our changes; do not elevate inherited warnings or conventions into performance blockers. See README.md for the full scope.
+
 ## Seven-stage tracker
 
 | Step | Work | Files | Status |
@@ -22,7 +26,7 @@ Use seconds for runtime, MiB for sampled peak RAM and generated storage. Report 
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 1 | | | | | | | |
 | 2 | | | | | | | |
-| 3 | 2.54995 (one trial) | | | 15.921875 | | Structural checks only; axis-order caveat | [Baseline](step_3_preprocess/preprocess_20261113_154914_817499.md) |
+| 3 | 2.54995 (one trial) | | | 15.921875 | | Original outputs recorded | [Baseline](step_3_preprocess/preprocess_20261113_154914_817499.md) |
 | 4 | | | | | | | |
 | 5 | | | | | | | |
 | 6 | | | | | | | |
@@ -54,7 +58,7 @@ Copy this section below for each experiment. Retain unsuccessful or mixed result
 | Generated scientific output (MiB) | | | |
 | Monitoring/log storage (MiB), if applicable | | | |
 
-- **Numerical validation:** reference outputs, shapes, finite/NaN masks, maximum/relative differences, tolerances and relevant physical diagnostics. Explain any scientific changes separately; lower runtime alone is not sufficient.
+- **Candidate equivalence (only after a change):** compare with original outputs, including shapes, layout, finite/NaN masks and numerical differences/tolerances. For an unchanged baseline, write “not applicable; no candidate yet.” Preserve the existing scientific behaviour.
 - **Decision:** accept/reject/defer, with tradeoffs and limitations.
 - **Evidence:** paths to retained reports/results or commit references; do not commit large generated data.
 - **Next action:** remaining checks or the next experiment.
@@ -89,6 +93,6 @@ The earlier 300-second end-to-end attempt stopped during extraction and is not a
 - **Scope:** execution only; compilation, extraction, copying and hashing excluded. GNU time on the local Linux host.
 - **Wall time:** 2.549950 s. **CPU time:** 2.53 s. **Peak RSS:** 15.921875 MiB.
 - **Generated scientific outputs:** two files, 8,631,434 bytes (8.231577 MiB); copied input files excluded.
-- **Validation:** expected 90,000 points, finite field values and preserved output coordinates. Bpre.dat and Bfield_processed.dat use transposed axis orders; after alignment their differences are consistent with text rounding (max 0.0005000000001 G). This is structural validation, not proof of scientific correctness/convergence. Existing source indexing should be investigated separately from performance changes.
+- **Validation:** expected 90,000 points, finite field values and preserved output coordinates. Bpre.dat and Bfield_processed.dat use transposed axis orders; after alignment their differences are consistent with text rounding (max 0.0005000000001 G). The existing output conventions are retained as baseline behaviour, not a blocker or a proposed scientific correction.
 - **Limitations:** iteration count and objective history are not printed at the original verbosity. One trial is not a repeated median baseline.
 - **Evidence:** [full baseline report](step_3_preprocess/preprocess_20261113_154914_817499.md), logs and raw measurements under its ignored run directory.
