@@ -115,3 +115,7 @@ Performance scope: preserve existing mathematics, physics and output behaviour. 
 ## Step 4 baseline
 
 See [step_4_package/README.md](step_4_package/README.md). Supply saved step 2 and step 3 run directories. Only plot.py executes; Agg disables GUI waiting while retaining plot construction.
+
+## Step 5 baseline
+
+See [step_5_weights/README.md](step_5_weights/README.md). The measurement runs only weightfunction.py, using its hardcoded grid/taper settings and no input data files.
