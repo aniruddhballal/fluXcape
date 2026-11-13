@@ -10,6 +10,36 @@ Make Anjan’s magnetic-field reconstruction work quicker to run and easier to r
 
 These are complementary options, not a requirement to build all three immediately. No particular hardware, speedup, UI framework, or deployment arrangement has been agreed. This document defines the work; it does not implement it.
 
+## Current approach: improve and measure one stage at a time
+
+Work on one stage at a time, ideally one per day where practical, rather than wait for the entire original workflow to finish. Some stages may take longer; seven stages are not a promise of seven days.
+
+| Stage | Existing file | Work |
+| --- | --- | --- |
+| 1 | `preproc.c` and a C compiler | Compile the preprocessor. |
+| 2 | `fitsdataextraction.py` | Extract and resample the three FITS maps. |
+| 3 | Compiled `preproc` executable | Preprocess the extracted surface field. |
+| 4 | `plot.py` | Package the bottom boundary into component arrays. |
+| 5 | `weightfunction.py` | Generate the 3D taper weights. |
+| 6 | First part of `Main.py`, using `laplace.py` | Solve the initial potential field and prepare the field/boundary grids. |
+| 7 | Remaining `Main.py`, using `vectormath.py` | Perform WSR reconstruction. |
+
+For each stage:
+
+1. Preserve the original source and a fixed set of required inputs.
+2. Measure original runtime, peak RAM and generated storage.
+3. Improve a separate candidate implementation.
+4. Repeat with identical inputs, scientific settings and hardware; repeat trials and compare medians.
+5. Check numerical output equivalence before accepting the improvement. Record any scientific correction separately.
+
+Reuse saved preparation outputs while studying a downstream stage; do not rerun the earlier stages for every trial. Stages 6 and 7 currently share Main.py and will need instrumentation or separation when we reach them. No stage separation or benchmark automation is implemented as part of this plan.
+
+For overall statistics, sum comparable completed stage times to estimate serial runtime reduction. **Never add peak RAM:** report per-stage peaks and their maximum. Splitting processes changes memory lifetimes and adds save/load overhead, so this is an estimate rather than an exact measurement of the original monolithic workflow. Compare storage separately without double-counting reused inputs.
+
+A bounded WSR trial can measure a fixed workload or cost per iteration, not total convergence time. Match actual accepted-step counts and account for rejected attempts, checkpoint writes and early termination. Keep grid, tolerances and stopping conditions consistent. Finish with an integration check; a full end-to-end benchmark is optional confirmation when practical.
+
+The earlier five-minute experiment stopped during extraction and never reached Main.py. Its testing scripts/report have been removed. The stagewise approach is documented here only; a new testing implementation can be designed when work on a particular stage begins.
+
 ## Scientific context and terminology
 
 The supplied inputs are three components of a solar surface magnetic-field map. The scripts prepare this two-dimensional boundary, construct an initial three-dimensional potential field, and iteratively reconstruct a nonlinear force-free magnetic field above the surface. Other scripts calculate quantities or produce plots from the result.
@@ -115,7 +145,7 @@ Record correctness fixes separately so any changed result is explainable. Compar
 
 ## Suggested order and scope decisions
 
-Start by making a small case reproducible and profiling the stages. Then separate the stages and implement result reuse. Accelerate the measured bottlenecks using the available hardware. Add the UI if interactive access is still part of the chosen deliverable. Performance and pipeline work can share the same refactoring without committing to a large application.
+Start with independent stage benchmarks and fixed fixtures as described above. Improve and validate each stage before moving to the next; do not wait for the original full reconstruction to finish. Build result reuse on the stage interfaces, then consider a UI once the numerical workflow is reliable.
 
 The decisions still needed before implementation are:
 
@@ -124,13 +154,13 @@ The decisions still needed before implementation are:
 - Target machine resources, representative input sizes and the current runtime.
 - Which analyses matter first, and the numerical tolerances and stopping criteria Anjan considers acceptable.
 
-This brief is based on local source inspection and reading the supplied paper. No simulation, benchmark, pipeline implementation or UI build was performed while preparing it.
+The original brief was based on local source inspection and the supplied paper. The stagewise performance approach is documented; numerical optimisations, benchmark tooling and the UI are still pending.
 
 ---
 
 # Anjan’s performance enhancement work: folder guide
 
-This guide is based on inspection of the source and the originally supplied array headers. The simulation has not been run or benchmarked. Generated artefacts were subsequently removed as documented below; scientific source code and original FITS inputs are unchanged.
+This guide is based on inspection of the source and the originally supplied array headers. A historical partial workflow benchmark exists; a completed full reconstruction baseline has not been established. Generated artefacts were subsequently removed as documented below; scientific source code and original FITS inputs are unchanged.
 
 ## What the work is about
 

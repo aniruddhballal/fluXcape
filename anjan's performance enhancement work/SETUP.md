@@ -4,10 +4,10 @@ Commands below use Windows PowerShell from the **repository root**, with your Py
 
 ## Python packages
 
-Use Python 3.12 (the interpreter used during initial inspection). Install the reconstruction and baseline dependencies:
+Use Python 3.12 (the interpreter used during initial inspection). Install the reconstruction dependencies:
 
 ```powershell
-python -m pip install "numpy>=2.0" scipy matplotlib astropy psutil
+python -m pip install "numpy>=2.0" scipy matplotlib astropy
 ```
 
 NumPy 2.0 or later is needed for the existing calls to `np.trapezoid`. These are dependency requirements, not a fully tested version lock; the baseline report records the installed versions.
@@ -23,12 +23,12 @@ Those scripts explicitly select Matplotlib's TkAgg backend, so they also need Tc
 Check the core environment:
 
 ```powershell
-python -c "import numpy, scipy, matplotlib, astropy, psutil; assert hasattr(numpy, 'trapezoid'); print('Core dependencies OK')"
+python -c "import numpy, scipy, matplotlib, astropy; assert hasattr(numpy, 'trapezoid'); print('Core dependencies OK')"
 ```
 
 ## C compiler (required for preprocessing)
 
-`preproc.c` is a required surface-boundary preparation stage. A C compiler is needed even if no optimisation of that stage is planned. The baseline runner expects GCC or a GCC-compatible Clang command; Microsoft `cl.exe` uses different flags and is not supported by this runner.
+`preproc.c` is a required surface-boundary preparation stage. A C compiler is needed even if no optimisation of that stage is planned. The example commands use GCC; Clang or Microsoft C compilers require appropriate compiler-specific commands.
 
 Check availability:
 
@@ -52,13 +52,13 @@ $env:Path = "C:\msys64\ucrt64\bin;$env:Path"
 gcc --version
 ```
 
-Repeat that PATH command in new sessions, or add this directory to your Windows user PATH. Adjust it if MSYS2 is installed elsewhere. Supplying `--compiler` locates the executable, but PATH may still be needed for its companion tools and runtime DLLs.
+Repeat that PATH command in new sessions, or add this directory to your Windows user PATH. Adjust it if MSYS2 is installed elsewhere. PATH must also make the compiler’s companion tools and runtime DLLs available.
 
-The baseline compiles with `-O3` and without OpenMP. OpenMP is not a prerequisite for the current baseline; enabling it would be a separate performance experiment.
+The build example uses `-O3` without OpenMP. Enabling OpenMP would be a separate performance experiment.
 
 ## Observation inputs
 
-Place these three original inputs in `hmi.sharp_cea_720s.4698.20141022_000000_TAI/` inside this folder, or pass their containing directory to the runner with `--input-dir`:
+Place these three original inputs in `hmi.sharp_cea_720s.4698.20141022_000000_TAI/` inside this folder:
 
 ```text
 hmi.sharp_cea_720s.4698.20141022_000000_TAI.Bp.fits
@@ -68,33 +68,11 @@ hmi.sharp_cea_720s.4698.20141022_000000_TAI.Br.fits
 
 They must contain the expected component maps in FITS HDU 1. The filenames and observation are hardcoded in the original extraction script. Synoptic radial-field maps in `my work/hmi_fits_data/` are a different product and cannot replace these three components.
 
-## Run the baseline logger
+## Planned performance work
 
-From the repo root, first check prerequisites:
+The current approach is documented in [README.md](README.md): measure and improve one of the seven stages at a time using fixed inputs, rather than require a full end-to-end baseline first. Benchmark scripts and their old report have been removed. There is no benchmark command to run at present.
 
-```powershell
-python ".\anjan's performance enhancement work\run_baseline.py" --check-only
-```
-
-Then run the full workflow:
-
-```powershell
-python ".\anjan's performance enhancement work\run_baseline.py"
-```
-
-Optional explicit locations:
-
-```powershell
-python ".\anjan's performance enhancement work\run_baseline.py" --input-dir "D:\path\to\SHARP_inputs" --compiler "C:\msys64\ucrt64\bin\gcc.exe"
-```
-
-For a bounded initial measurement, add `--max-seconds 600`. A bounded or interrupted run is a **partial measurement**, not a full runtime baseline. Ctrl+C stops the run and preserves its report and generated outputs.
-
-Each invocation writes a new `baseline_<timestamp>.md` beside the runner. Actual execution also creates an isolated `baseline_run_<timestamp>/` with copied sources/inputs, stage logs, sampled `metrics.csv`, and calculated products. Originals are not overwritten. Preflight-only runs create a report without calculating fields. The runner does not install packages or download data.
-
-Measured scope: compilation, FITS extraction, C preprocessing, boundary packaging, weight generation, then `Main.py` (initial potential field plus reconstruction). Optional energy/alpha/visualisation analyses are excluded. Initial-field and reconstruction timings are currently combined under the Main stage. Python, package versions, source/input hashes, CPU time, sampled RAM, process I/O, and storage usage are recorded. This logger records a baseline; it does not yet automate comparisons between runs.
-
-The unchanged settings use a 300 × 300 × 150 grid and permit 2,000,001 accepted reconstruction steps. Working memory can reach multiple GB; the maximum checkpoint configuration can produce roughly **3.24 TB** of field arrays. Choose a time limit for an exploratory run if completion time/storage is unknown. Exact peak RAM and total runtime have not yet been established.
+When implementing each stage's tests, compare original/candidate runtime, peak RAM, storage and numerical outputs with matching settings. Sum comparable stage times for an approximate serial total; use the maximum memory peak rather than their sum. Main.py still combines stages 6 and 7; instrumentation or separation is future work.
 
 ## Run individual stages
 
@@ -129,6 +107,5 @@ python Main.py
 | `plotCurrent.py` | NumPy, Matplotlib | Selected reconstructed checkpoint; `vectormath.py` |
 | `plot_dual_fieldlines.py` | NumPy, SciPy, Matplotlib | Saved potential field and selected reconstructed checkpoint |
 | `laplace.py`, `vectormath.py`, `changeresolution.py` | NumPy; SciPy additionally for `changeresolution.py` | Helper modules; not independent workflow stages |
-| `run_baseline.py` | Core reconstruction packages plus psutil | Original sources, all three FITS files, GCC-compatible compiler |
 
-Some individual scripts open plot windows. Analysis scripts hardcode different run/checkpoint paths; installing packages alone does not make missing generated results available. Inspect their selected paths before running them. When analysing an isolated baseline, its generated fields live in the baseline run directory, not the original observation directory. Do not import scripts casually: several execute calculations and write files on import.
+Some individual scripts open plot windows. Analysis scripts hardcode different run/checkpoint paths; installing packages alone does not make missing generated results available. Inspect their selected paths before running them. Do not import scripts casually: several execute calculations and write files on import.
