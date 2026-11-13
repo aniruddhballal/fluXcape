@@ -111,3 +111,7 @@ Some individual scripts open plot windows. Analysis scripts hardcode different r
 See [step_3_preprocess/README.md](step_3_preprocess/README.md). Supply an existing step 1 executable and the saved step 2 output directory; compilation and extraction are not repeated.
 
 Performance scope: preserve existing mathematics, physics and output behaviour. Baseline runs establish measurements; output-equivalence checks apply once a candidate change exists. See [README.md](README.md#scope-for-this-performance-task).
+
+## Step 4 baseline
+
+See [step_4_package/README.md](step_4_package/README.md). Supply saved step 2 and step 3 run directories. Only plot.py executes; Agg disables GUI waiting while retaining plot construction.
