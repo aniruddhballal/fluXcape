@@ -12,6 +12,8 @@ These are complementary options, not a requirement to build all three immediatel
 
 ## Current approach: improve and measure one stage at a time
 
+Record completed experiments, before/after measurements and validation in [PERFORMANCE_LOG.md](PERFORMANCE_LOG.md). It contains the seven-stage tracker and an entry template to append to as work progresses.
+
 Work on one stage at a time, ideally one per day where practical, rather than wait for the entire original workflow to finish. Some stages may take longer; seven stages are not a promise of seven days.
 
 | Stage | Existing file | Work |
