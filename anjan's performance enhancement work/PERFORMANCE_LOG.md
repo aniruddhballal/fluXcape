@@ -14,7 +14,7 @@ Original behaviour is the reference; preserve the existing mathematics and physi
 | 2 | Extract and resample FITS data | `fitsdataextraction.py` | Source reviewed; baseline tool ready; scientific dependencies needed |
 | 3 | Preprocess surface field | Compiled `preproc` executable | Original baseline measured (one trial); no candidate yet |
 | 4 | Package bottom-boundary arrays | `plot.py` | Original baseline measured (one trial); no candidate yet |
-| 5 | Generate spatial weights | `weightfunction.py` | Not started |
+| 5 | Generate spatial weights | `weightfunction.py` | Original baseline measured (one trial); no candidate yet |
 | 6 | Initial potential-field solve and grid/boundary preparation | First part of `Main.py`, `laplace.py` | Not started |
 | 7 | WSR reconstruction | Remaining `Main.py`, `vectormath.py` | Not started |
 
@@ -28,7 +28,7 @@ Use seconds for runtime, MiB for sampled peak RAM and generated storage. Report 
 | 2 | | | | | | | |
 | 3 | 2.54995 (one trial) | | | 15.921875 | | Original outputs recorded | [Baseline](step_3_preprocess/preprocess_20261113_154914_817499.md) |
 | 4 | 1.165231 (one trial) | | | 212.480469 | | Original arrays recorded | [Baseline](step_4_package/package_20261113_160555_320989.md) |
-| 5 | | | | | | | |
+| 5 | 23.271376 (one trial) | | | 193.046875 | | Original weights recorded | [Baseline](step_5_weights/weights_20261113_163255_483855.md) |
 | 6 | | | | | | | |
 | 7 | | | | | | | |
 
@@ -106,3 +106,13 @@ The earlier 300-second end-to-end attempt stopped during extraction and is not a
 - **Plotting:** contour construction and layout included; Agg disables interactive display/wait. No plot files are saved by the original script.
 - **Baseline checks:** all three arrays are finite and exactly match the reshape/transpose operations in unchanged plot.py; source/input hashes recorded. No candidate equivalence check is needed yet.
 - **Evidence:** [full report](step_4_package/package_20261113_160555_320989.md); logs and measurements in its ignored run directory.
+
+### Step 5 — original weight generation baseline — 2026-11-13
+
+- **Status:** one successful original trial; no candidate or performance changes yet.
+- **Processor:** unchanged weightfunction.py. No data-file inputs; grid/taper settings are in source. No earlier or later stages ran.
+- **Wall time:** 23.271376 s. **CPU time:** 25.18 s. **Peak RSS:** 193.046875 MiB (GNU time).
+- **Output:** weight_function/W.npy, 108,000,128 bytes (102.996948 MiB), float64 shape 300×300×150 (13.5 million weights). All values finite; observed range 0.0–1.0.
+- **Scope:** weight calculation, saving and original contour/layout work included; Agg disables interactive window display/wait. Source copying and output hashing excluded.
+- **Baseline provenance:** original source hash verified unchanged; output hash and environment in report. No candidate equivalence check is due yet.
+- **Evidence:** [full report](step_5_weights/weights_20261113_163255_483855.md); raw measurements/log/output in the ignored run directory.
