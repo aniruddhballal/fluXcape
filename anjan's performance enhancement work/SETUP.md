@@ -70,7 +70,7 @@ They must contain the expected component maps in FITS HDU 1. The filenames and o
 
 ## Planned performance work
 
-The current approach is documented in [README.md](README.md): measure and improve one of the seven stages at a time using fixed inputs, rather than require a full end-to-end baseline first. Benchmark scripts and their old report have been removed. There is no benchmark command to run at present.
+The current approach is documented in [README.md](README.md): measure and improve one of the seven stages at a time using fixed inputs, rather than require a full end-to-end baseline first. The old end-to-end testing scripts and report were removed. A focused compilation-only tool is now available: see [step_1_compile/README.md](step_1_compile/README.md). It does not run the remaining workflow.
 
 When implementing each stage's tests, compare original/candidate runtime, peak RAM, storage and numerical outputs with matching settings. Sum comparable stage times for an approximate serial total; use the maximum memory peak rather than their sum. Main.py still combines stages 6 and 7; instrumentation or separation is future work.
 
