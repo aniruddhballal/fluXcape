@@ -7,16 +7,12 @@ Commands below use Windows PowerShell from the **repository root**, with your Py
 Use Python 3.12 (the interpreter used during initial inspection). Install the reconstruction dependencies:
 
 ```powershell
-python -m pip install "numpy>=2.0" scipy matplotlib astropy
+python -m pip install -r "anjan's performance enhancement work/requirements.txt"
 ```
 
 NumPy 2.0 or later is needed for the existing calls to `np.trapezoid`. These are dependency requirements, not a fully tested version lock; the baseline report records the installed versions.
 
-For the alpha analysis scripts, also install PyVista (which brings VTK):
-
-```powershell
-python -m pip install pyvista
-```
+The requirements file also includes psutil for measurement tools and PyVista (which brings VTK) for the optional alpha-analysis scripts. It covers this folder, not Ananya's separate SFT/PFSS dependencies. It is not a version lock; record installed versions with each benchmark.
 
 Those scripts explicitly select Matplotlib's TkAgg backend, so they also need Tcl/Tk and a graphical desktop. Test Tk with `python -m tkinter`; it should open a small window. If unavailable, enable Tcl/Tk in your Python installation rather than installing a package named `tkinter` with pip. PyVista visualisation needs a working graphics environment.
 

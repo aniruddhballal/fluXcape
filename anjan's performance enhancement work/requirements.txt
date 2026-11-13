@@ -1,0 +1,9 @@
+# Core reconstruction and stage measurement tools (not a version lock).
+numpy>=2.0
+scipy
+matplotlib
+astropy
+psutil
+
+# Required by the optional alpha-analysis scripts (includes VTK).
+pyvista
