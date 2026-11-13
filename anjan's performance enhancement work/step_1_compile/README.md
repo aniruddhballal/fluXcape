@@ -22,3 +22,4 @@ Each invocation creates a timestamped `compile_*.md` report here. Ignored `runs/
 
 GNU time's RSS is the largest individual process peak across the compilation tree, not simultaneous total RAM. The psutil fallback measures sampled simultaneous process-tree RSS, may double-count shared memory and miss short-lived processes. Compare results using the same backend. CPU timing can be coarse for short builds. The three consecutive trials are not controlled cold-cache builds.
 
+An initial Linux/GCC measurement is retained in [the timestamped report](compile_20261113_113407_004146.md) and summarised in [PERFORMANCE_LOG.md](../PERFORMANCE_LOG.md). It is not a measurement of your Windows machine or of preprocessing runtime.

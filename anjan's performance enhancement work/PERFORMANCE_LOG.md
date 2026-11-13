@@ -6,7 +6,7 @@ Append results here as each stage is improved. The methodology and project conte
 
 | Step | Work | Files | Status |
 | --- | --- | --- | --- |
-| 1 | Compile preprocessor | `preproc.c` and C compiler | Not started |
+| 1 | Compile preprocessor | `preproc.c` and C compiler | Original baseline measured on Linux; no candidate yet |
 | 2 | Extract and resample FITS data | `fitsdataextraction.py` | Not started |
 | 3 | Preprocess surface field | Compiled `preproc` executable | Not started |
 | 4 | Package bottom-boundary arrays | `plot.py` | Not started |
@@ -61,4 +61,19 @@ Copy this section below for each experiment. Retain unsuccessful or mixed result
 
 ## Completed experiments
 
-None recorded yet. The earlier 300-second end-to-end attempt stopped during extraction and is not a completed stage timing or a before/after comparison.
+### Step 1 — original compilation baseline — 2026-11-13
+
+- **Status:** baseline measured; no performance change or candidate comparison.
+- **Command:** `python3 "anjan's performance enhancement work/step_1_compile/measure_compile.py"`.
+- **Environment:** local Linux host, GCC 13.3.0, `-O3`, no OpenMP. Full platform and source hash are in the report; this is not the earlier Windows host.
+- **Scope:** three consecutive compilations, GNU time backend; source copying/hash/report overhead excluded. Source unchanged; executable was not run.
+- **Median wall time:** 0.142465 s (range 0.139224–0.189277 s).
+- **Median CPU time:** 0.13 s.
+- **Maximum recorded RSS:** 42.49 MiB, largest individual process peak across compilation tree, not simultaneous tree total.
+- **Executable size:** 28,912 bytes in each trial.
+- **Build outcome:** all three succeeded. Warnings flag unchecked `fscanf` return values at preproc.c lines 350 and 361; not fixed in this experiment.
+- **Validation:** successful compilation and unchanged source hash; executable behaviour/numerical results remain for step 3.
+- **Evidence:** [full report](step_1_compile/compile_20261113_113407_004146.md); raw logs and measurements remain locally under the ignored runs directory.
+- **Next:** measure on the target machine if needed; prioritise expensive execution stages rather than spending substantial effort accelerating this one-time build.
+
+The earlier 300-second end-to-end attempt stopped during extraction and is not a completed stage timing or a before/after comparison.
