@@ -105,3 +105,7 @@ python Main.py
 | `laplace.py`, `vectormath.py`, `changeresolution.py` | NumPy; SciPy additionally for `changeresolution.py` | Helper modules; not independent workflow stages |
 
 Some individual scripts open plot windows. Analysis scripts hardcode different run/checkpoint paths; installing packages alone does not make missing generated results available. Inspect their selected paths before running them. Do not import scripts casually: several execute calculations and write files on import.
+
+## Step 3 baseline
+
+See [step_3_preprocess/README.md](step_3_preprocess/README.md). Supply an existing step 1 executable and the saved step 2 output directory; compilation and extraction are not repeated.
