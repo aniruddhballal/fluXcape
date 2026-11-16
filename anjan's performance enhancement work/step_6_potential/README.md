@@ -20,4 +20,24 @@ The original grid remains 300×300×150; Laplace tolerance 1e-3 and limit 100,00
 
 Reports are `potential_<timestamp>.md`. Raw measurements.json, potential.log, copied files and generated arrays remain in the run directory. The log captures the solver's existing iteration progress. Output size excludes copied inputs and monitoring files. Copying/hash time is outside measured execution. GNU time reports largest individual process RSS on completion. A separate 100-ms psutil sample records tree RSS and CPU counters, including partial runs; shared pages can be double-counted and short-lived activity/peaks can be missed. These are distinctly named metrics in the report.
 
+## Timestamped convergence data
+
+New runs also write `convergence.csv` in their run directory. It records iteration labels **0, 50, 100, ...** at the solver's existing progress-print location:
+
+| Column | Meaning |
+| --- | --- |
+| `timestamp` | Local timestamp including timezone offset. |
+| `solver_elapsed_seconds` | Monotonic elapsed time since entry into the solver, including solver setup; excludes preceding script imports/setup. |
+| `iteration` | Original zero-based iteration label. Label 0 is recorded after the first update, not before any work. |
+| `max_change` | Full-precision maximum change between successive potential arrays (the existing logged error). |
+| `interval_seconds` | Wall time since the previous logged entry; blank on the first row. |
+| `iterations_since_previous` | Number of iteration updates between entries, normally 50; blank on the first row. |
+| `mean_seconds_per_iteration` | Interval time divided by the iteration count; a block average, not individual iteration timings. Blank on the first row. |
+
+Each row is written and closed immediately so it remains available while running and after interruption. Monitor with `tail -f "PATH_TO_RUN/convergence.csv"`, or open the CSV later to plot error against time/iteration. If convergence occurs between scheduled entries, the normal potential.log records the stopping message; the CSV contains only the scheduled entries. A killed run may end after the last logged label.
+
+Only the isolated laplace.py copy receives logging instrumentation; an unmodified copy remains as laplace_original.py and the observation-folder source stays unchanged. AST checks verify the original solver statements are retained, and a small 101-iteration test produced bit-identical solver output with CSV rows at 0/50/100. Measurement provenance records helper and instrumented-source hashes. CSV timestamps, formatting and writes introduce some logging overhead; this has not been measured separately. Use matching logging settings for comparisons.
+
+Already-running processes and historical runs are unchanged; start a new run to collect the CSV. This change does not start another solve automatically.
+
 A timeout is recorded as partial, not a completed runtime; no outputs may exist if the initial solve has not finished. Progress is diagnostic and is not extrapolated into a guaranteed completion time. Use the same workload, backend and settings when later comparing a candidate. The existing implementation is the reference; no scientific changes are made.

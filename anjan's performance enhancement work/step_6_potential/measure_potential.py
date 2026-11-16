@@ -14,6 +14,7 @@ import signal
 import subprocess
 import sys
 import time
+from progress_log import instrument_solver
 
 ROOT = Path(__file__).resolve().parent
 
@@ -73,6 +74,10 @@ def main():
     assert not any(isinstance(n, ast.While) for n in ast.walk(ast.parse(prefix)))
     stage_script = run / '_step6.py'
     stage_script.write_text(prefix)
+    # Instrument only the isolated solver copy; retain original provenance.
+    shutil.copy2(run / 'laplace.py', run / 'laplace_original.py')
+    (run / 'laplace.py').write_text(instrument_solver((run / 'laplace.py').read_text()), encoding='utf-8')
+    shutil.copy2(ROOT / 'progress_log.py', run / '_step6_progress.py')
     command = [sys.executable, '-u', '-B', str(stage_script)]
     state = {'label': args.label, 'status': 'running', 'started': datetime.now().astimezone().isoformat(),
              'platform': platform.platform(), 'processor': platform.processor(), 'logical_cpus': os.cpu_count(),
@@ -80,6 +85,9 @@ def main():
              'command': command, 'copied_files': copied, 'run_directory': str(run),
              'max_seconds': args.max_seconds, 'main_stop_before_line': tree.body[start_node].lineno,
              'executed_prefix_sha256': digest(stage_script), 'backend': 'GNU time' if linux else 'sampled psutil',
+             'progress_csv': str(run / 'convergence.csv'),
+             'instrumented_solver_sha256': digest(run / 'laplace.py'),
+             'progress_helper_sha256': digest(run / '_step6_progress.py'),
              'thread_environment': {k: os.environ[k] for k in ('OMP_NUM_THREADS','OPENBLAS_NUM_THREADS','MKL_NUM_THREADS') if k in os.environ}}
     report = ROOT / f'potential_{stamp}.md'
     metrics_path = run / 'time.txt'
@@ -161,7 +169,11 @@ def main():
             'largest individual process RSS on successful runs. Independently sampled process-tree '
             'RSS and cumulative CPU counters (100 ms) are retained even on timeout; sampling may miss '
             'peaks or brief processes and double-count shared pages. Wall time includes launch, '
-            'monitoring and termination. Agg disables GUI waiting. Output hashes record provenance.\n\n```json\n'
+            'monitoring and termination. Agg disables GUI waiting. Output hashes record provenance. '
+            'convergence.csv records timestamps, solver elapsed time, iteration and full-precision '
+            'maximum change at labels 0, 50, 100, etc. Interval timing is a per-block average, '
+            'not individual iteration timing. Only the isolated solver copy is instrumented; '
+            'the original arithmetic and stopping rules are preserved. CSV logging overhead is included.\n\n```json\n'
             + json.dumps(state, indent=2) + '\n```\n', encoding='utf-8')
         print(f'{state["status"]}: {report}', flush=True)
     return 0 if state['status'] == 'completed' else 1
