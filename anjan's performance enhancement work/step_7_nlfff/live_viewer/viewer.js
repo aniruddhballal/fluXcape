@@ -63,7 +63,9 @@ function chart(id, points, log, height) {
     overlay.addEventListener('pointermove',event=>{
       const rect=svg.getBoundingClientRect();const position=((event.clientX-rect.left)*width/rect.width-left)/plotW*maxX;
       let nearest=points[0];for(const r of points)if(Math.abs(getX(r)-position)<Math.abs(getX(nearest)-position))nearest=r;
-      $('hover').textContent=`Attempt ${nearest.attempt} · accepted ${nearest.iteration} · L ${nearest.change.toExponential(6)} · next dt ${nearest.dt.toExponential(3)} · ${nearest.event}`;
+      $(id==='dtChart'?'dtHover':'hover').textContent=id==='dtChart'
+        ? `Attempt ${nearest.attempt} · next dt ${nearest.dt.toExponential(6)} · ${nearest.event}`
+        : `Attempt ${nearest.attempt} · accepted ${nearest.iteration} · L ${nearest.change.toExponential(6)} · ${nearest.event}`;
     });svg.append(overlay);
   }
 }
@@ -82,6 +84,7 @@ function render(){
     $('event').textContent=last.event==='finished'?'Code finished normally':`Latest event: ${last.event}`;
   }
   chart('errorChart',rows.map(r=>({...r,value:r.change})),true,320);
+  chart('dtChart',rows.filter(r=>Number.isFinite(r.dt)&&r.dt>0).map(r=>({...r,value:r.dt})),true,320);
   chart('speedChart',rows.filter(r=>r.speed!==null&&Number.isFinite(r.speed)).map(r=>({...r,value:r.speed})),false,260);
 }
 async function refresh(){
