@@ -77,3 +77,19 @@ The CSV contains timestamp, elapsed_seconds, event, attempts, accepted_steps, re
 Instrumentation affects only the isolated script: _step7_original.py preserves the uninstrumented suffix, and AST checks verify that removing logging statements restores the original statements exactly. Original Main.py and helper source files stay unchanged. Logging overhead is included in measured runtime and has not been benchmarked separately.
 
 A tiny real-equation fixture produced identical field and L-history arrays with and without logging. A stand-in decision-loop test covered accepted/rejected counts. Firefox checks covered charts, dt and counters, axis switching, automatic CSV updates and compact layout. These tests did not start a real observation reconstruction.
+
+## Preserve restart data from an already-running run
+
+`preserve_restart.py` can package a complete accepted-step restart snapshot using existing periodic field checkpoints and the new CSV. It does not edit, stop, attach to, or change the live solver. From this folder:
+
+```bash
+python preserve_restart.py --run-dir runs/RUN_ID --watch
+```
+
+Without `--watch` it packages the latest complete periodic checkpoint once. With `--watch` it checks every five seconds, captures newer complete periodic checkpoints and stops when the original worker stops. Use only one watcher per run. Snapshots are saved atomically under the ignored run's `restart_checkpoints/step_N/`; `latest.json` points to the newest complete package. Each package currently occupies roughly 0.8 GiB, including copied fields and fixed references.
+
+Packages contain the accepted field, original step-0 boundary reference, weight volume, coordinates, L and relaxation-time histories, next adaptive timestep, accepted step/attempt/rejection counts, source/settings and file hashes. At an accepted checkpoint, divB is recomputed from the saved accepted field with the run's copied original helper and saved as an array. This reconstructs the state at that accepted checkpoint, not the later state of an in-progress rejected trial. Only complete periodic accepted checkpoints are selected; partial writes are skipped and retried.
+
+The initial four-hour run already writes the CSV information needed to recover dt and time history. That is why useful restart data can be preserved without injecting new code into its live process. Unsaved attempts after the selected checkpoint must be repeated; the preservation cannot recover the exact state at an arbitrary timeout instant. Identical continuation requires the same numerical environment and copied equations. An isolated tiny test verified that continuing one step from a preserved checkpoint exactly matches uninterrupted fields, L, dt and time history.
+
+This tool preserves restart **data**. A user-facing resume runner still needs to be implemented and tested before using it for tomorrow's reconstruction. No real observation was restarted during this preservation work.

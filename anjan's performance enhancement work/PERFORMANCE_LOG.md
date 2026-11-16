@@ -129,3 +129,9 @@ The earlier 300-second end-to-end attempt stopped during extraction and is not a
 ## Step 7 preparation — 2026-11-16
 
 [step_7_nlfff/](step_7_nlfff/) contains the isolated measurement runner and usage guide. Preflight passed with the completed step 6 arrays and step 5 weight volume. AST checks preserve the original reconstruction statements. A tiny synthetic tooling test exercised initial/final saves and reporting; the real observation has not been reconstructed and no step 7 performance result is claimed.
+
+## Restart-data preservation — 2026-11-16
+
+A read-only companion watcher was started for the four-hour WSR run 20261116_121943_573055. It packages complete periodic accepted checkpoints plus CSV state under that run's ignored restart_checkpoints directory. Step 3400 was packaged first; latest.json identifies the latest preserved state. Source/run data are not altered. Tiny-fixture continuation matched uninterrupted fields, L, dt and time history exactly. The resume command remains future work; no full observation has been resumed yet.
+
+Restart package step_3600 was subsequently captured and all 19 file hashes verified. Its accepted-step count is 3600, total attempts 3652 (52 rejected), source elapsed time 14,227.598990 s (about 3 h 57 min), next dt 8.005451725555968e-05 and L 707,992,979.2977588. The companion watcher remains responsible for later completed checkpoints until the worker stops.
