@@ -13,3 +13,12 @@ The page polls every two seconds with caching disabled. It displays accepted ste
 All attempt events are shown. `next_dt` is after the original accepted +1% / rejected halving update, not the dt just used. Wall-clock elapsed is distinct from the numerical relaxation_time column. The first attempt interval includes initial checkpoint writing; periodic checkpoint overhead appears in the next interval. A finished event marks normal code exit; a stale CSV alone cannot distinguish computation, checkpoint writing or a stopped process. A timeout does not generate a normal finished event.
 
 No packages, internet connection or uploaded data are needed. The server binds to localhost and exposes only viewer assets, selected CSV and its path metadata. It does not write the CSV or run the reconstruction. Ctrl+C stops only the viewer. Existing text logs and numerical checkpoint files remain unchanged. Older step 7 runs have no CSV; start a new measurement with the updated script.
+
+## Zoom
+
+- Drag a rectangle over any plot to zoom into both axes. A mostly horizontal or vertical drag zooms only that axis.
+- Use the mouse wheel over a plot to zoom in/out around the pointer.
+- Double-click the plot or click its **Reset zoom** button to restore the full view.
+- Each plot has an independent zoom. Live CSV refreshes preserve it; changing the shared X-axis selector resets all plots because the axis units change.
+
+Curves are clipped to the selected region; all CSV data remain available. Zooming only changes the browser display, never the running solver or its output files. Firefox tests covered rectangle/wheel zoom, reset, independent plots, live-update persistence and the compact desktop layout.

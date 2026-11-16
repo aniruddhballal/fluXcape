@@ -1,7 +1,8 @@
 'use strict';
 const $ = id => document.getElementById(id);
 const NS = 'http://www.w3.org/2000/svg';
-let rows = [], busy = false, lastText = '';
+let rows = [], busy = false, lastText = '', dragging = false;
+const zoomViews = new Map();
 function parseCSV(text) {
   // Only accept complete lines: the writer may be appending the last row.
   const lines = text.split(/\r?\n/); lines.pop();
@@ -30,11 +31,11 @@ function chart(id, points, log, height) {
   const svg=$(id);svg.replaceChildren();
   const width=svg.clientWidth || 1000; height=svg.clientHeight || height;
   svg.setAttribute('viewBox',`0 0 ${width} ${height}`);
-  const left=62,right=18,top=24,bottom=38,plotW=width-left-right,plotH=height-top-bottom;
+  const left=70,right=18,top=24,bottom=38,plotW=width-left-right,plotH=height-top-bottom;
   if (!points.length) {svg.append(element('text',{x:width/2,y:height/2,'text-anchor':'middle'},'Waiting for logged data'));return;}
   const isTime=$('axis').value==='time';
   const getX=r=>isTime?r.elapsed/60:r.attempt;
-  let maxX=Math.max(...points.map(getX),1);
+  const maxX=Math.max(...points.map(getX),1);
   let low,high;
   if(log){
     const positives=points.map(r=>r.value).filter(v=>v>0);
@@ -43,33 +44,94 @@ function chart(id, points, log, height) {
     const lo=Math.log10(min),hi=Math.log10(max),pad=Math.max((hi-lo)*.1,.00001);
     low=lo-pad;high=hi+pad;
     if(points.some(r=>r.value===0))low=Math.min(low,lo-1);
-  }
-  else {low=0;high=Math.max(...points.map(r=>r.value),.001)*1.15;}
-  const x=r=>left+getX(r)/maxX*plotW;
-  const y=value=>top+plotH-(log?(Math.log10(Math.max(value,10**low))-low)/(high-low):(value-low)/(high-low))*plotH;
+  } else {low=0;high=Math.max(...points.map(r=>r.value),.001)*1.15;}
+  const full={x0:0,x1:maxX,y0:low,y1:high};
+  const view=zoomViews.get(id) || full;
+  const {x0,x1,y0,y1}=view;
+  svg.dataset.zoomed=String(zoomViews.has(id));
+  svg.dataset.xMin=x0;svg.dataset.xMax=x1;svg.dataset.yMin=y0;svg.dataset.yMax=y1;
+  const reset=document.querySelector(`[data-reset="${id}"]`);if(reset)reset.disabled=!zoomViews.has(id);
+  const x=r=>left+(getX(r)-x0)/(x1-x0)*plotW;
+  const transform=value=>log?Math.log10(Math.max(value,10**full.y0)):value;
+  const y=value=>top+plotH-(transform(value)-y0)/(y1-y0)*plotH;
+  const precision=Math.min(8,Math.max(2,Math.ceil(-Math.log10(y1-y0))+2));
   for(let i=0;i<=5;i++){
     const xx=left+plotW*i/5, yy=top+plotH*i/5;
     svg.append(element('line',{x1:xx,x2:xx,y1:top,y2:top+plotH,class:'grid'}));
-    svg.append(element('text',{x:xx,y:height-24,'text-anchor':'middle'},(maxX*i/5).toLocaleString(undefined,{maximumFractionDigits:isTime?1:0})));
+    svg.append(element('text',{x:xx,y:height-24,'text-anchor':'middle'},(x0+(x1-x0)*i/5).toLocaleString(undefined,{maximumFractionDigits:isTime?3:2})));
     svg.append(element('line',{x1:left,x2:width-right,y1:yy,y2:yy,class:'grid'}));
-    const value=log?10**(high-(high-low)*i/5):high*(1-i/5);
-    svg.append(element('text',{x:left-10,y:yy+4,'text-anchor':'end'},log?value.toExponential(1):value.toFixed(3)));
+    const transformed=y1-(y1-y0)*i/5;
+    const value=log?10**transformed:transformed;
+    svg.append(element('text',{x:left-10,y:yy+4,'text-anchor':'end'},log?value.toExponential(precision):Number(value.toPrecision(6)).toString()));
   }
-  svg.append(element('path',{d:points.map((r,i)=>(i?'L':'M')+x(r).toFixed(2)+','+y(r.value).toFixed(2)).join(' '),class:'line'}));
-  const latest=points[points.length-1];svg.append(element('circle',{cx:x(latest),cy:y(latest.value),r:3,fill:'#18765e'}));
+  const defs=element('defs'),clip=element('clipPath',{id:`clip-${id}`});
+  clip.append(element('rect',{x:left,y:top,width:plotW,height:plotH}));defs.append(clip);svg.append(defs);
+  const curve=element('g',{'clip-path':`url(#clip-${id})`});
+  curve.append(element('path',{d:points.map((r,i)=>(i?'L':'M')+x(r).toFixed(2)+','+y(r.value).toFixed(2)).join(' '),class:'line'}));
+  const latest=points[points.length-1];curve.append(element('circle',{cx:x(latest),cy:y(latest.value),r:3,fill:'#18765e'}));svg.append(curve);
   svg.append(element('text',{x:left+plotW/2,y:height-5,'text-anchor':'middle'},isTime?'Wall-clock elapsed (minutes)':'Attempt'));
-  if(log){
-    const overlay=element('rect',{x:left,y:top,width:plotW,height:plotH,fill:'transparent'});
-    overlay.addEventListener('pointermove',event=>{
-      const rect=svg.getBoundingClientRect();const position=((event.clientX-rect.left)*width/rect.width-left)/plotW*maxX;
-      let nearest=points[0];for(const r of points)if(Math.abs(getX(r)-position)<Math.abs(getX(nearest)-position))nearest=r;
+  const selection=element('rect',{class:'zoom-selection',visibility:'hidden','pointer-events':'none'});
+  svg.append(selection);
+  const overlay=element('rect',{x:left,y:top,width:plotW,height:plotH,fill:'transparent',class:'zoom-overlay'});
+  const position=event=>{
+    const rect=svg.getBoundingClientRect();
+    return {x:Math.max(left,Math.min(left+plotW,(event.clientX-rect.left)*width/rect.width)),
+            y:Math.max(top,Math.min(top+plotH,(event.clientY-rect.top)*height/rect.height))};
+  };
+  const dataX=px=>x0+(px-left)/plotW*(x1-x0);
+  const dataY=py=>y1-(py-top)/plotH*(y1-y0);
+  function setView(next){
+    if(next.x1-next.x0 <= Math.max(1,Math.abs(next.x1))*1e-12 || next.y1-next.y0 <= Math.max(1,Math.abs(next.y1))*1e-12)return;
+    zoomViews.set(id,next);render();
+  }
+  let anchor=null;
+  overlay.addEventListener('pointerdown',event=>{
+    if(event.button!==0)return;
+    event.preventDefault();anchor=position(event);dragging=true;
+    try{overlay.setPointerCapture(event.pointerId);}catch(_){}
+    selection.setAttribute('visibility','visible');
+    for(const [key,value] of Object.entries({x:anchor.x,y:anchor.y,width:0,height:0}))selection.setAttribute(key,value);
+  });
+  overlay.addEventListener('pointermove',event=>{
+    const pos=position(event);
+    if(anchor){
+      for(const [key,value] of Object.entries({x:Math.min(pos.x,anchor.x),y:Math.min(pos.y,anchor.y),width:Math.abs(pos.x-anchor.x),height:Math.abs(pos.y-anchor.y)}))selection.setAttribute(key,value);
+      return;
+    }
+    if(log){
+      const target=dataX(pos.x);let nearest=points[0];
+      for(const r of points)if(Math.abs(getX(r)-target)<Math.abs(getX(nearest)-target))nearest=r;
       $(id==='dtChart'?'dtHover':'hover').textContent=id==='dtChart'
         ? `Attempt ${nearest.attempt} · next dt ${nearest.dt.toExponential(6)} · ${nearest.event}`
         : `Attempt ${nearest.attempt} · accepted ${nearest.iteration} · L ${nearest.change.toExponential(6)} · ${nearest.event}`;
-    });svg.append(overlay);
-  }
+    }
+  });
+  overlay.addEventListener('pointerup',event=>{
+    if(!anchor)return;
+    const pos=position(event),dx=Math.abs(pos.x-anchor.x),dy=Math.abs(pos.y-anchor.y);
+    const next={x0:dx>8?dataX(Math.min(pos.x,anchor.x)):x0,x1:dx>8?dataX(Math.max(pos.x,anchor.x)):x1,
+                y0:dy>8?dataY(Math.max(pos.y,anchor.y)):y0,y1:dy>8?dataY(Math.min(pos.y,anchor.y)):y1};
+    anchor=null;dragging=false;
+    if(dx>8||dy>8)setView(next);else render();
+  });
+  overlay.addEventListener('pointercancel',()=>{anchor=null;dragging=false;render();});
+  overlay.addEventListener('dblclick',()=>{zoomViews.delete(id);render();});
+  overlay.addEventListener('wheel',event=>{
+    event.preventDefault();if(dragging)return;
+    const pos=position(event),cx=dataX(pos.x),cy=dataY(pos.y);
+    const factor=Math.exp(Math.max(-300,Math.min(300,event.deltaY))*.002);
+    const fit=(center,a,b,min,max)=>{
+      const span=Math.min((b-a)*factor,max-min);
+      const fraction=(center-a)/(b-a);
+      const start=Math.max(min,Math.min(max-span,center-span*fraction));return [start,start+span];
+    };
+    const [a,b]=fit(cx,x0,x1,full.x0,full.x1),[c,d]=fit(cy,y0,y1,full.y0,full.y1);
+    setView({x0:a,x1:b,y0:c,y1:d});
+  },{passive:false});
+  svg.append(overlay);
 }
 function render(){
+  if(dragging)return;
   if(rows.length){
     const last=rows[rows.length-1];
     $('iteration').textContent=last.iteration.toLocaleString();
@@ -103,6 +165,7 @@ async function refresh(){
   finally{busy=false;}
 }
 window.addEventListener('resize',render);
-$('axis').addEventListener('change',render);$('refresh').addEventListener('click',refresh);
+$('axis').addEventListener('change',()=>{zoomViews.clear();dragging=false;render();});
+document.querySelectorAll('[data-reset]').forEach(button=>button.addEventListener('click',()=>{zoomViews.delete(button.dataset.reset);dragging=false;render();}));$('refresh').addEventListener('click',refresh);
 fetch('/info',{cache:'no-store'}).then(r=>r.json()).then(info=>{$('source').textContent=info.csv;$('source').title=info.csv;}).catch(()=>{$('source').textContent='Local convergence.csv';});
 render();refresh();setInterval(refresh,2000);
