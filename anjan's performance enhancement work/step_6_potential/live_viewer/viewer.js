@@ -24,7 +24,9 @@ function element(tag, attributes={}, content='') {
 }
 function chart(id, points, log, height) {
   const svg=$(id);svg.replaceChildren();
-  const left=75,right=25,top=30,bottom=45,width=1000,plotW=width-left-right,plotH=height-top-bottom;
+  const width=svg.clientWidth || 1000; height=svg.clientHeight || height;
+  svg.setAttribute('viewBox',`0 0 ${width} ${height}`);
+  const left=62,right=18,top=24,bottom=38,plotW=width-left-right,plotH=height-top-bottom;
   if (!points.length) {svg.append(element('text',{x:width/2,y:height/2,'text-anchor':'middle'},'Waiting for logged data'));return;}
   const isTime=$('axis').value==='time';
   const getX=r=>isTime?r.elapsed/60:r.iteration;
@@ -49,7 +51,7 @@ function chart(id, points, log, height) {
   if(log){
     const overlay=element('rect',{x:left,y:top,width:plotW,height:plotH,fill:'transparent'});
     overlay.addEventListener('pointermove',event=>{
-      const rect=svg.getBoundingClientRect();const position=((event.clientX-rect.left)*1000/rect.width-left)/plotW*maxX;
+      const rect=svg.getBoundingClientRect();const position=((event.clientX-rect.left)*width/rect.width-left)/plotW*maxX;
       let nearest=points[0];for(const r of points)if(Math.abs(getX(r)-position)<Math.abs(getX(nearest)-position))nearest=r;
       $('hover').textContent=`Iteration ${nearest.iteration.toLocaleString()} · max change ${nearest.change.toExponential(6)} · ${(nearest.elapsed/60).toFixed(2)} min · ${nearest.timestamp}`;
     });svg.append(overlay);
@@ -75,6 +77,7 @@ async function refresh(){
   }catch(error){$('status').textContent='Refresh failed';$('status').classList.add('error');$('checked').textContent=error.message+' · retrying';}
   finally{busy=false;}
 }
+window.addEventListener('resize',render);
 $('axis').addEventListener('change',render);$('refresh').addEventListener('click',refresh);
-fetch('/info',{cache:'no-store'}).then(r=>r.json()).then(info=>{$('source').textContent=info.csv;}).catch(()=>{$('source').textContent='Local convergence.csv';});
+fetch('/info',{cache:'no-store'}).then(r=>r.json()).then(info=>{$('source').textContent=info.csv;$('source').title=info.csv;}).catch(()=>{$('source').textContent='Local convergence.csv';});
 render();refresh();setInterval(refresh,2000);
