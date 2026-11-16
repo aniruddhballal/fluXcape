@@ -16,7 +16,7 @@ Original behaviour is the reference; preserve the existing mathematics and physi
 | 4 | Package bottom-boundary arrays | `plot.py` | Original baseline measured (one trial); no candidate yet |
 | 5 | Generate spatial weights | `weightfunction.py` | Original baseline measured (one trial); no candidate yet |
 | 6 | Initial potential-field solve and grid/boundary preparation | First part of `Main.py`, `laplace.py` | 600-second partial baseline; no outputs yet |
-| 7 | WSR reconstruction | Remaining `Main.py`, `vectormath.py` | Not started |
+| 7 | WSR reconstruction | Remaining `Main.py`, `vectormath.py` | Measurement files ready; preflight passed; real run not started |
 
 ## Results summary
 
@@ -125,3 +125,7 @@ The earlier 300-second end-to-end attempt stopped during extraction and is not a
 - **Last logged iteration:** 4350 (zero-based solver label); max update/error 0.0157, versus stopping tolerance 0.001 (15.7 times the threshold). Progress prints every 50 iterations, so this is the last reported label, not the exact iteration reached at termination.
 - **Generated field outputs:** none; the solve had not returned to the output-writing code. No unfinished potential checkpoint exists. Step 7 needs a completed compatible set of step 6 outputs before it can run.
 - **Evidence:** [partial run report](step_6_potential/potential_20261113_164206_525807.md); original progress log and sampled counters in its ignored run directory. No extrapolated completion time or speedup is claimed.
+
+## Step 7 preparation — 2026-11-16
+
+[step_7_nlfff/](step_7_nlfff/) contains the isolated measurement runner and usage guide. Preflight passed with the completed step 6 arrays and step 5 weight volume. AST checks preserve the original reconstruction statements. A tiny synthetic tooling test exercised initial/final saves and reporting; the real observation has not been reconstructed and no step 7 performance result is claimed.

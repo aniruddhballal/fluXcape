@@ -123,3 +123,7 @@ See [step_5_weights/README.md](step_5_weights/README.md). The measurement runs o
 ## Step 6 baseline
 
 See [step_6_potential/README.md](step_6_potential/README.md). Supply the saved step 4 run directory. The runner executes only the Main.py prefix before reconstruction setup with a default 600-second cap. Step 5 and WSR do not run.
+
+## Step 7 baseline
+
+See [step_7_nlfff/README.md](step_7_nlfff/README.md). Supply the completed step 6 run and saved step 5 run. The runner executes only the original WSR reconstruction suffix and defaults to a 600-second cap. Preflight is available with --check-only; no real reconstruction has been started while preparing these files.
