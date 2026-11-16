@@ -14,6 +14,7 @@ import signal
 import subprocess
 import sys
 import time
+from progress_log import instrument_wsr
 
 ROOT = Path(__file__).resolve().parent
 
@@ -84,14 +85,19 @@ def main():
         copied.append({'name': str(relative), 'bytes': target.stat().st_size, 'sha256': digest(target)})
     script, first_line = extract_wsr((run / 'Main.py').read_text())
     stage_script = run / '_step7.py'
-    stage_script.write_text(script)
+    (run / '_step7_original.py').write_text(script)
+    stage_script.write_text(instrument_wsr(script), encoding='utf-8')
+    shutil.copy2(ROOT / 'progress_log.py', run / '_wsr_progress.py')
     command = [sys.executable, '-u', '-B', str(stage_script)]
     state = {'label': args.label, 'status': 'running', 'started': datetime.now().astimezone().isoformat(),
              'platform': platform.platform(), 'processor': platform.processor(), 'logical_cpus': os.cpu_count(),
              'python': sys.version, 'versions': {p: importlib.metadata.version(p) for p in packages},
              'command': command, 'copied_files': copied, 'run_directory': str(run),
              'max_seconds': args.max_seconds, 'main_start_line': first_line,
-             'executed_wsr_sha256': digest(stage_script), 'backend': 'GNU time' if linux else 'sampled psutil',
+             'original_wsr_sha256': digest(run / '_step7_original.py'),
+             'executed_wsr_sha256': digest(stage_script),
+             'progress_helper_sha256': digest(run / '_wsr_progress.py'),
+             'progress_csv': str(run / 'convergence.csv'), 'backend': 'GNU time' if linux else 'sampled psutil',
              'thread_environment': {k: os.environ[k] for k in ('OMP_NUM_THREADS','OPENBLAS_NUM_THREADS','MKL_NUM_THREADS') if k in os.environ}}
     report = ROOT / f'nlfff_{stamp}.md'
     metrics_path = run / 'time.txt'
@@ -179,7 +185,10 @@ def main():
             'tree RSS and CPU counters (100 ms) remain available on interruption; shared memory '
             'can be double-counted and short-lived activity missed. A timeout is partial, not '
             'completed runtime. Output size counts generated checkpoints/plots only. '
-            'On timeout a last checkpoint may be incomplete; output existence is not a restart guarantee.\n\n```json\n'
+            'On timeout a last checkpoint may be incomplete; output existence is not a restart guarantee. '
+            'Logging-only instrumentation records full-precision L, accepted/rejected attempts, next dt, '
+            'numerical relaxation time and elapsed wall time in convergence.csv. Its overhead is included; '
+            'the original arithmetic, acceptance conditions and stopping rules are unchanged.\n\n```json\n'
             + json.dumps(state, indent=2) + '\n```\n', encoding='utf-8')
         print(f'{state["status"]}: {report}', flush=True)
     return 0 if state['status'] == 'completed' else 1
