@@ -22,3 +22,7 @@ No packages, internet connection or uploaded data are needed. The server binds t
 - Each plot has an independent zoom. Live CSV refreshes preserve it; changing the shared X-axis selector resets all plots because the axis units change.
 
 Curves are clipped to the selected region; all CSV data remain available. Zooming only changes the browser display, never the running solver or its output files. Firefox tests covered rectangle/wheel zoom, reset, independent plots, live-update persistence and the compact desktop layout.
+
+## Fullscreen
+
+Each graph has a **Fullscreen** button. The selected panel fills the screen while zoom controls and live updates keep working. Use **Exit fullscreen** or the browser's Escape key to return. Existing zoom is preserved on entry/exit. Firefox checks covered all three panels, live refresh in fullscreen and restoration of the compact layout. No solver process or CSV changes are involved.

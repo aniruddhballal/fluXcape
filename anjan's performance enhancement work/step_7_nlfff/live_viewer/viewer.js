@@ -164,6 +164,23 @@ async function refresh(){
   }catch(error){$('status').textContent='Refresh failed';$('status').classList.add('error');$('checked').textContent=error.message+' · retrying';}
   finally{busy=false;}
 }
+document.querySelectorAll('[data-fullscreen]').forEach(button=>button.addEventListener('click',async()=>{
+  const panel=$(button.dataset.fullscreen).closest('.panel');
+  try{
+    if(document.fullscreenElement===panel)await document.exitFullscreen();
+    else await panel.requestFullscreen();
+  }catch(error){$('checked').textContent='Could not open fullscreen: '+error.message;}
+}));
+document.addEventListener('fullscreenchange',()=>{
+  dragging=false;
+  document.querySelectorAll('[data-fullscreen]').forEach(button=>{
+    const active=document.fullscreenElement===$(button.dataset.fullscreen).closest('.panel');
+    button.textContent=active?'Exit fullscreen':'Fullscreen';
+    button.setAttribute('aria-pressed',String(active));
+    button.setAttribute('aria-label',(active?'Exit fullscreen':'Fullscreen')+' graph');
+  });
+  requestAnimationFrame(render);
+});
 window.addEventListener('resize',render);
 $('axis').addEventListener('change',()=>{zoomViews.clear();dragging=false;render();});
 document.querySelectorAll('[data-reset]').forEach(button=>button.addEventListener('click',()=>{zoomViews.delete(button.dataset.reset);dragging=false;render();}));$('refresh').addEventListener('click',refresh);
