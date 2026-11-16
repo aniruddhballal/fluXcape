@@ -41,3 +41,7 @@ Only the isolated laplace.py copy receives logging instrumentation; an unmodifie
 Already-running processes and historical runs are unchanged; start a new run to collect the CSV. This change does not start another solve automatically.
 
 A timeout is recorded as partial, not a completed runtime; no outputs may exist if the initial solve has not finished. Progress is diagnostic and is not extrapolated into a guaranteed completion time. Use the same workload, backend and settings when later comparing a candidate. The existing implementation is the reference; no scientific changes are made.
+
+## Live HTML charts
+
+A local viewer is available in [live_viewer/](live_viewer/). From this step's directory, run `python live_viewer/serve.py` in a second terminal, then open **http://127.0.0.1:8765/** in Firefox. It selects the newest CSV at startup and refreshes every two seconds. Pass `--csv runs/RUN_ID/convergence.csv` to select a particular run. The viewer only reads data and does not affect or restart the solver.
