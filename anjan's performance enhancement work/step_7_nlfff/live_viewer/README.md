@@ -26,3 +26,7 @@ Curves are clipped to the selected region; all CSV data remain available. Zoomin
 ## Fullscreen
 
 Each graph has a **Fullscreen** button. The selected panel fills the screen while zoom controls and live updates keep working. Use **Exit fullscreen** or the browser's Escape key to return. Existing zoom is preserved on entry/exit. Firefox checks covered all three panels, live refresh in fullscreen and restoration of the compact layout. No solver process or CSV changes are involved.
+
+## Moving hover marker
+
+Move over any graph to see a highlighted dot snap to the nearest visible logged point, with a vertical guide and value bubble. The bubble shows the graph's value, attempt/accepted-step counts, elapsed minutes and event. It follows the curve's recorded samples rather than inventing interpolated values. Markers work in zoomed/fullscreen views, hide during drag selection or on pointer leave, and are restored during live redraws while the pointer remains over the graph. No data or solver settings are changed.

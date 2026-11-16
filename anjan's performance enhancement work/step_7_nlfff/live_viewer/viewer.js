@@ -3,6 +3,7 @@ const $ = id => document.getElementById(id);
 const NS = 'http://www.w3.org/2000/svg';
 let rows = [], busy = false, lastText = '', dragging = false;
 const zoomViews = new Map();
+const hoverPositions = new Map();
 function parseCSV(text) {
   // Only accept complete lines: the writer may be appending the last row.
   const lines = text.split(/\r?\n/); lines.pop();
@@ -78,6 +79,42 @@ function chart(id, points, log, height) {
     return {x:Math.max(left,Math.min(left+plotW,(event.clientX-rect.left)*width/rect.width)),
             y:Math.max(top,Math.min(top+plotH,(event.clientY-rect.top)*height/rect.height))};
   };
+  const hover=element('g',{class:'hover-point',visibility:'hidden','pointer-events':'none'});
+  const guide=element('line',{y1:top,y2:top+plotH,class:'hover-guide'});
+  const halo=element('circle',{r:10,class:'hover-halo'});
+  const dot=element('circle',{r:5,class:'hover-dot'});
+  const bubble=element('g',{class:'hover-tooltip'});
+  const box=element('rect',{rx:6,height:66});
+  const labels=[0,1,2].map(i=>element('text',{x:10,y:18+i*17}));
+  bubble.append(box,...labels);hover.append(guide,halo,dot,bubble);
+  function showHover(pos){
+    const visible=points.filter(r=>x(r)>=left && x(r)<=left+plotW && y(r.value)>=top && y(r.value)<=top+plotH);
+    if(!visible.length){hover.setAttribute('visibility','hidden');return;}
+    let nearest=visible[0];
+    for(const r of visible){
+      const dx=Math.abs(x(r)-pos.x),best=Math.abs(x(nearest)-pos.x);
+      if(dx<best || (Math.abs(dx-best)<1e-8 && Math.abs(y(r.value)-pos.y)<Math.abs(y(nearest.value)-pos.y)))nearest=r;
+    }
+    const px=x(nearest),py=y(nearest.value);
+    guide.setAttribute('x1',px);guide.setAttribute('x2',px);
+    for(const circle of [halo,dot]){circle.setAttribute('cx',px);circle.setAttribute('cy',py);}
+    const metric=id==='dtChart'?`Next dt: ${nearest.dt.toExponential(6)}`:
+      id==='speedChart'?`Time / attempt: ${nearest.speed.toFixed(6)} s`:`L: ${nearest.change.toExponential(6)}`;
+    labels[0].textContent=metric;
+    labels[1].textContent=`Attempt ${nearest.attempt.toLocaleString()} · accepted ${nearest.iteration.toLocaleString()}`;
+    labels[2].textContent=`${(nearest.elapsed/60).toFixed(3)} min · ${nearest.event}`;
+    hover.setAttribute('visibility','visible');
+    const boxW=Math.min(plotW-8,Math.max(...labels.map(t=>t.getComputedTextLength()))+20);
+    box.setAttribute('width',boxW);
+    let bx=px+14;if(bx+boxW>left+plotW)bx=px-boxW-14;
+    bx=Math.max(left+4,Math.min(left+plotW-boxW-4,bx));
+    let by=py-78;if(by<top)by=py+14;
+    by=Math.max(top+2,Math.min(top+plotH-68,by));
+    bubble.setAttribute('transform',`translate(${bx},${by})`);
+    const detail=id==='dtChart'?'dtHover':id==='errorChart'?'hover':null;
+    if(detail)$(detail).textContent=`${metric} · attempt ${nearest.attempt} · ${nearest.timestamp}`;
+    dot.dataset.attempt=nearest.attempt;dot.dataset.value=nearest.value;
+  }
   const dataX=px=>x0+(px-left)/plotW*(x1-x0);
   const dataY=py=>y1-(py-top)/plotH*(y1-y0);
   function setView(next){
@@ -88,6 +125,7 @@ function chart(id, points, log, height) {
   overlay.addEventListener('pointerdown',event=>{
     if(event.button!==0)return;
     event.preventDefault();anchor=position(event);dragging=true;
+    hoverPositions.delete(id);hover.setAttribute('visibility','hidden');
     try{overlay.setPointerCapture(event.pointerId);}catch(_){}
     selection.setAttribute('visibility','visible');
     for(const [key,value] of Object.entries({x:anchor.x,y:anchor.y,width:0,height:0}))selection.setAttribute(key,value);
@@ -98,14 +136,10 @@ function chart(id, points, log, height) {
       for(const [key,value] of Object.entries({x:Math.min(pos.x,anchor.x),y:Math.min(pos.y,anchor.y),width:Math.abs(pos.x-anchor.x),height:Math.abs(pos.y-anchor.y)}))selection.setAttribute(key,value);
       return;
     }
-    if(log){
-      const target=dataX(pos.x);let nearest=points[0];
-      for(const r of points)if(Math.abs(getX(r)-target)<Math.abs(getX(nearest)-target))nearest=r;
-      $(id==='dtChart'?'dtHover':'hover').textContent=id==='dtChart'
-        ? `Attempt ${nearest.attempt} · next dt ${nearest.dt.toExponential(6)} · ${nearest.event}`
-        : `Attempt ${nearest.attempt} · accepted ${nearest.iteration} · L ${nearest.change.toExponential(6)} · ${nearest.event}`;
-    }
+    hoverPositions.set(id,{x:(pos.x-left)/plotW,y:(pos.y-top)/plotH});
+    showHover(pos);
   });
+  overlay.addEventListener('pointerleave',()=>{hoverPositions.delete(id);hover.setAttribute('visibility','hidden');});
   overlay.addEventListener('pointerup',event=>{
     if(!anchor)return;
     const pos=position(event),dx=Math.abs(pos.x-anchor.x),dy=Math.abs(pos.y-anchor.y);
@@ -128,7 +162,9 @@ function chart(id, points, log, height) {
     const [a,b]=fit(cx,x0,x1,full.x0,full.x1),[c,d]=fit(cy,y0,y1,full.y0,full.y1);
     setView({x0:a,x1:b,y0:c,y1:d});
   },{passive:false});
-  svg.append(overlay);
+  svg.append(overlay,hover);
+  const remembered=hoverPositions.get(id);
+  if(remembered)showHover({x:left+remembered.x*plotW,y:top+remembered.y*plotH});
 }
 function render(){
   if(dragging)return;
