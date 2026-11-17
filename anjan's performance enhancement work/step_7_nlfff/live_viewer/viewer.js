@@ -179,6 +179,12 @@ function render(){
     const timed=rows.filter(r=>r.speed!==null&&Number.isFinite(r.speed));
     $('speed').textContent=timed.length?timed[timed.length-1].speed.toFixed(3)+' s':'—';
     $('dt').textContent=Number.isFinite(last.dt)?last.dt.toExponential(3):'—';
+    const initial=rows.find(r=>r.event==='initial'&&Number.isFinite(r.dt)&&r.dt>0);
+    const ratio=initial&&Number.isFinite(last.dt)?last.dt/initial.dt:null;
+    $('dtFraction').textContent=ratio!==null?`${(ratio*100).toFixed(3)}% × initial dt`:'— × initial dt';
+    $('dtFloor').textContent=ratio!==null?`${(ratio*1000).toFixed(3)} × final dt`:'— × final dt';
+    $('dtFraction').title=initial?`Starting dt: ${initial.dt.toExponential(6)}`:'';
+    $('dtFloor').title=initial?`Stopping threshold: starting dt / 1000 = ${(initial.dt/1000).toExponential(6)}; checked after rejection`:'';
     const minDt=rows.reduce((minimum,r)=>Number.isFinite(r.dt)&&r.dt>0?Math.min(minimum,r.dt):minimum,Infinity);
     $('minDt').textContent=`Lowest recorded dt: ${Number.isFinite(minDt)?minDt.toExponential(6):'—'}`;
     $('event').textContent=last.event==='finished'?'Code finished normally':`Latest event: ${last.event}`;
