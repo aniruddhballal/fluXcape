@@ -163,10 +163,19 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--run-dir', type=Path, required=True)
     parser.add_argument('--watch', action='store_true', help='Keep capturing new periodic checkpoints until this run stops')
+    parser.add_argument('--worker-pid', type=int, help='Runner-managed worker PID; avoids a startup race when watching')
     args = parser.parse_args()
     run = args.run_dir.resolve()
     while True:
-        active = is_active(run) if args.watch else False
+        if args.watch and args.worker_pid:
+            import psutil
+            try:
+                worker = psutil.Process(args.worker_pid)
+                active = worker.is_running() and worker.status() != psutil.STATUS_ZOMBIE
+            except psutil.Error:
+                active = False
+        else:
+            active = is_active(run) if args.watch else False
         try:
             final = save_latest(run)
         except (OSError, ValueError) as exc:

@@ -127,6 +127,8 @@ def main():
     metrics_path = run / 'time.txt'
     launch = ['/usr/bin/time', '-f', 'METRICS %U %S %M', '-o', str(metrics_path), *command] if linux else command
     proc = None
+    watcher = None
+    preservation_log = None
     peak = 0
     seen = {}
     start = time.perf_counter()
@@ -138,11 +140,21 @@ def main():
             proc = subprocess.Popen(launch, cwd=run, stdout=log, stderr=subprocess.STDOUT,
                                     start_new_session=os.name != 'nt',
                                     env=dict(os.environ, MPLBACKEND='Agg', PYTHONDONTWRITEBYTECODE='1'))
+            preservation_log = (run / 'restart_preservation.log').open('wb')
+            watcher = subprocess.Popen(
+                [sys.executable, '-u', str(ROOT / 'preserve_restart.py'),
+                 '--run-dir', str(run), '--watch', '--worker-pid', str(proc.pid)],
+                stdout=preservation_log, stderr=subprocess.STDOUT,
+                start_new_session=os.name != 'nt')
+            state['restart_preservation'] = 'automatic'
+            print('Automatic restart preservation enabled: every 200 accepted steps. Ctrl+C stops the run; resume from the latest complete package.', flush=True)
             peak = 0
             seen = {}
             import psutil
             root_process = psutil.Process(proc.pid)
             while proc.poll() is None:
+                if watcher.poll() is not None:
+                    raise RuntimeError('Restart preservation stopped unexpectedly; see restart_preservation.log')
                 if args.max_seconds and time.perf_counter()-start >= args.max_seconds:
                     raise TimeoutError('Step 7 time limit reached')
                 try:
@@ -185,6 +197,24 @@ def main():
                 except psutil.Error:
                     pass
             proc.wait()
+        # The watcher makes a final capture after the worker exits, including on timeout/Ctrl+C.
+        if watcher is not None:
+            while watcher.poll() is None:
+                try:
+                    watcher.wait(timeout=1)
+                except subprocess.TimeoutExpired:
+                    continue
+                except KeyboardInterrupt:
+                    print('Finishing restart preservation; please wait.', flush=True)
+            state['restart_preservation_return_code'] = watcher.returncode
+            latest = run / 'restart_checkpoints/latest.json'
+            if latest.is_file():
+                state['latest_restart_checkpoint'] = json.loads(latest.read_text())
+                print(f'Resume checkpoint: {state["latest_restart_checkpoint"]["state"]}', flush=True)
+            if watcher.returncode:
+                print('Restart preservation failed; check restart_preservation.log.', flush=True)
+        if preservation_log is not None:
+            preservation_log.close()
         state['peak_sampled_tree_rss_bytes'] = peak if proc is not None else 0
         state['sampled_cpu_seconds'] = sum(seen.values()) if proc is not None else 0
         state['wall_seconds'] = time.perf_counter()-start
@@ -211,7 +241,10 @@ def main():
             'tree RSS and CPU counters (100 ms) remain available on interruption; shared memory '
             'can be double-counted and short-lived activity missed. A timeout is partial, not '
             'completed runtime. Output size counts generated checkpoints/plots only. '
-            'On timeout a last checkpoint may be incomplete; output existence is not a restart guarantee. '
+            'Restart preservation runs automatically in a companion process, including a final capture on stopping; '
+            'only complete periodic checkpoints are published atomically under restart_checkpoints. '
+            'Its resources are separate from solver CPU/RAM counters. Wall time includes final preservation cleanup. '
+            'On timeout a last checkpoint may be incomplete; use the latest complete restart package. '
             'Resume runs restore preserved state and retain the original loop and total accepted-step budget. '
             'Their wall/CPU measurements cover this invocation only; CSV elapsed time continues from '
             'the checkpoint offset and retains its prior history. The time limit restarts for this invocation. '

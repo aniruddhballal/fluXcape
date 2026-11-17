@@ -25,7 +25,7 @@ class ResumeTests(unittest.TestCase):
             root = Path(directory)
             tooling = root / 'tooling'
             tooling.mkdir()
-            for name in ('progress_log.py','restart_state.py'):
+            for name in ('progress_log.py','restart_state.py','preserve_restart.py'):
                 shutil.copy2(HERE / name, tooling / name)
             source = root / 'source'
             source.mkdir()
@@ -44,12 +44,14 @@ class ResumeTests(unittest.TestCase):
                     np.save(path,array)
             (weights / 'weight_function').mkdir(parents=True)
             np.save(weights / 'weight_function/W.npy',np.ones((4,4,4)))
-            def run(args):
+            def run(args, expected=0):
                 before = set((tooling / 'runs').glob('*'))
                 with patch.object(runner,'ROOT',tooling), patch.object(sys,'argv',['measure',*args]), contextlib.redirect_stdout(io.StringIO()):
-                    self.assertEqual(runner.main(),0)
+                    self.assertEqual(runner.main(),expected)
                 return (set((tooling / 'runs').glob('*')) - before).pop()
             original = run(['--source-dir',str(source),'--input-dir',str(inputs),'--weights-dir',str(weights)])
+            self.assertEqual(json.loads((original/'restart_checkpoints/latest.json').read_text())['step'],4)
+            self.assertEqual(json.loads((original/'measurements.json').read_text())['restart_preservation_return_code'],0)
             reference = original / 'Optimizedmagneticfield/step_4'
             for step in (3,4):
                 (original / f'Optimizedmagneticfield/step_{step}').rename(original / f'hidden_{step}')
@@ -85,6 +87,16 @@ class ResumeTests(unittest.TestCase):
                 f.write(b'corrupt')
             with self.assertRaises(ValueError):
                 read_checkpoint(second_bundle)
+            # A time-capped worker must still finish preservation before the runner returns.
+            (source / 'Main.py').write_text(code.replace('num_steps = 4', 'num_steps = 100000'))
+            limited = run(['--source-dir',str(source),'--input-dir',str(inputs),
+                           '--weights-dir',str(weights),'--max-seconds','3'], expected=1)
+            measurement = json.loads((limited/'measurements.json').read_text())
+            self.assertIn('TimeoutError',measurement['error'])
+            self.assertEqual(measurement['restart_preservation_return_code'],0)
+            latest = json.loads((limited/'restart_checkpoints/latest.json').read_text())
+            _, restored = read_checkpoint(limited/'restart_checkpoints'/latest['checkpoint'])
+            self.assertEqual(restored['step'],latest['step'])
 
 
 if __name__ == '__main__':

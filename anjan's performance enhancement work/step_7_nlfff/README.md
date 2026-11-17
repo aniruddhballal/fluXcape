@@ -78,7 +78,13 @@ Instrumentation affects only the isolated script: _step7_original.py preserves t
 
 A tiny real-equation fixture produced identical field and L-history arrays with and without logging. A stand-in decision-loop test covered accepted/rejected counts. Firefox checks covered charts, dt and counters, axis switching, automatic CSV updates and compact layout. These tests did not start a real observation reconstruction.
 
-## Preserve restart data from an already-running run
+## Automatic restart preservation
+
+Every fresh or resumed `measure_nlfff.py` run automatically starts its restart-preservation companion. No second command is needed. Keep using this runner for WSR runs rather than launching Main.py or the isolated worker directly. Complete restart packages are captured every **200 accepted steps** (not attempts); the runner also waits for a final capture on timeout or Ctrl+C. Resume from the latest complete package, repeating any unsaved steps. An abrupt shutdown can interrupt the newest write, so use the preceding fully published package. Before the first complete checkpoint, a fresh run has no saved progress to restore.
+
+The runner prints the latest restart state path when stopping. See `restart_preservation.log` and `restart_checkpoints/latest.json` in the run folder. A preservation process that exits unexpectedly while the solver is running stops the run with an error rather than silently continuing without preservation. Check the log if preservation fails. Companion CPU/RAM are separate from solver metrics; final preservation cleanup is included in reported wall time.
+
+### Attach preservation to an older already-running run
 
 `preserve_restart.py` can package a complete accepted-step restart snapshot using existing periodic field checkpoints and the new CSV. It does not edit, stop, attach to, or change the live solver. From this folder:
 
@@ -86,7 +92,7 @@ A tiny real-equation fixture produced identical field and L-history arrays with 
 python preserve_restart.py --run-dir runs/RUN_ID --watch
 ```
 
-Without `--watch` it packages the latest complete periodic checkpoint once. With `--watch` it checks every five seconds, captures newer complete periodic checkpoints and stops when the original worker stops. Use only one watcher per run. Snapshots are saved atomically under the ignored run's `restart_checkpoints/step_N/`; `latest.json` points to the newest complete package. Each package currently occupies roughly 0.8 GiB, including copied fields and fixed references.
+Without `--watch` it packages the latest complete periodic checkpoint once. With `--watch` it checks every five seconds, captures newer complete periodic checkpoints and stops when the original worker stops. Use only one watcher per run; do not start this manual watcher for a run already managed automatically. Snapshots are saved atomically under the ignored run's `restart_checkpoints/step_N/`; `latest.json` points to the newest complete package. Each package currently occupies roughly 0.8 GiB, including copied fields and fixed references.
 
 Packages contain the accepted field, original step-0 boundary reference, weight volume, coordinates, L and relaxation-time histories, next adaptive timestep, accepted step/attempt/rejection counts, source/settings and file hashes. At an accepted checkpoint, divB is recomputed from the saved accepted field with the run's copied original helper and saved as an array. This reconstructs the state at that accepted checkpoint, not the later state of an in-progress rejected trial. Only complete periodic accepted checkpoints are selected; partial writes are skipped and retried.
 
@@ -116,7 +122,7 @@ The time cap and reported wall/CPU time apply to this new invocation. Its CSV ke
 
 Unsaved attempts after the checkpoint are repeated. For the original four-hour run this means replaying the last 41 accepted steps after step 3600, rather than repeating the first 3600. Initial checkpoint files in the new run use the restored step label rather than step 0.
 
-The same live viewer works: restart its server to select the newest CSV, or explicitly select the new run with --csv. To preserve later accepted checkpoints from the resumed run, use preserve_restart.py --run-dir runs/NEW_RUN_ID --watch in another terminal; it also works after a stopped run without --watch. The measurement runner does not automatically start that companion watcher.
+The same live viewer works: restart its server to select the newest CSV, or explicitly select the new run with --csv. Restart preservation starts automatically for resumed runs too; no manual watcher command is needed.
 
 Tests (small synthetic workload only):
 
