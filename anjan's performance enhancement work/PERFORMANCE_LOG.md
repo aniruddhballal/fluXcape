@@ -97,6 +97,20 @@ The earlier 300-second end-to-end attempt stopped during extraction and is not a
 - **Limitations:** iteration count and objective history are not printed at the original verbosity. One trial is not a repeated median baseline.
 - **Evidence:** [full baseline report](step_3_preprocess/preprocess_20261113_154914_817499.md), logs and raw measurements under its ignored run directory.
 
+### Step 3 — unchanged-source OpenMP comparison — 2026-11-17
+
+All three runs used the same saved step 2 inputs. The original executable was compiled with `-O3`; the OpenMP executable used `-O3 -fopenmp` and ran with `OMP_NUM_THREADS=8`. No changes were made to `preproc.c`. These are single execution trials, not repeated medians.
+
+| Run | Wall time (s) | CPU time (s) | Peak RSS (MiB) |
+| --- | ---: | ---: | ---: |
+| [Original, November 13](step_3_preprocess/preprocess_20261113_154914_817499.md) | 2.549950 | 2.53 | 15.921875 |
+| [OpenMP, November 17](step_3_preprocess/preprocess_20261117_113050_217567.md) | 0.582391 | 3.71 | 15.414062 |
+| [Original rerun, November 17](step_3_preprocess/preprocess_20261117_113257_948829.md) | 2.488151 | 2.47 | 15.660156 |
+
+Both output files (`Bpre.dat` and `Bfield_processed.dat`) from the original rerun match the original baseline exactly when loaded as numeric arrays. The OpenMP run differs from both original runs: maximum absolute difference is 1.207747 G in `Bpre.dat` and 1.208 G in `Bfield_processed.dat` (coordinates included in comparison).
+
+The OpenMP run was about 4.38 times faster than the November 13 baseline, but it is not an identical-output replacement. Existing OpenMP reductions change floating-point summation order; propagation through the iterative calculation is a possible explanation, not a confirmed diagnosis. The cause and acceptability of the differences have not been established. No source modification or decision to replace the original executable was made.
+
 ### Step 4 — original boundary packaging baseline — 2026-11-13
 
 - **Status:** one completed original trial; no optimisation or candidate comparison.
