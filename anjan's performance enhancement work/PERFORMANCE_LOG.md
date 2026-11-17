@@ -135,3 +135,7 @@ The earlier 300-second end-to-end attempt stopped during extraction and is not a
 A read-only companion watcher was started for the four-hour WSR run 20261116_121943_573055. It packages complete periodic accepted checkpoints plus CSV state under that run's ignored restart_checkpoints directory. Step 3400 was packaged first; latest.json identifies the latest preserved state. Source/run data are not altered. Tiny-fixture continuation matched uninterrupted fields, L, dt and time history exactly. The resume command remains future work; no full observation has been resumed yet.
 
 Restart package step_3600 was subsequently captured and all 19 file hashes verified. Its accepted-step count is 3600, total attempts 3652 (52 rejected), source elapsed time 14,227.598990 s (about 3 h 57 min), next dt 8.005451725555968e-05 and L 707,992,979.2977588. The companion watcher remains responsible for later completed checkpoints until the worker stops.
+
+## Resume implementation — 2026-11-16
+
+measure_nlfff.py now supports --resume for preserved packages, retaining original equations and total step budget. The real step_3600 package passed preflight without executing reconstruction. A small end-to-end test verified uninterrupted/resumed field and L-array equality, exact dt/time history, counter continuity, repeated preservation/resume, and rejection of corrupted state. CSV history and elapsed active time continue across sessions; each invocation's measured runtime starts afresh. No real observation was resumed during implementation.

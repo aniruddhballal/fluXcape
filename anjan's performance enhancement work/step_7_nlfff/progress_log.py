@@ -1,18 +1,24 @@
 """Record WSR progress without changing original numerical statements."""
 import ast
 import csv
+import shutil
 from datetime import datetime
 from pathlib import Path
 import time
 
 
 class ProgressLog:
-    def __init__(self, path='convergence.csv'):
+    def __init__(self, path='convergence.csv', resume_state=None):
         self.path = Path(path)
-        self.started = time.perf_counter()
+        self.started = resume_state['_session_started'] if resume_state else time.perf_counter()
+        self.elapsed_offset = resume_state['source_elapsed_seconds'] if resume_state else 0
         self.previous = None
-        self.initial_L = None
-        self.attempts = self.rejected = 0
+        self.initial_L = resume_state['initial_L'] if resume_state else None
+        self.attempts = resume_state['attempts'] if resume_state else 0
+        self.rejected = resume_state['rejected_attempts'] if resume_state else 0
+        if resume_state:
+            shutil.copyfile(resume_state['_progress_history'], self.path)
+            return
         with self.path.open('w', newline='', encoding='utf-8') as stream:
             csv.writer(stream).writerow([
                 'timestamp', 'elapsed_seconds', 'event', 'attempts', 'accepted_steps',
@@ -32,14 +38,14 @@ class ProgressLog:
         normalised = float(L) / self.initial_L if self.initial_L else ''
         with self.path.open('a', newline='', encoding='utf-8') as stream:
             csv.writer(stream).writerow([
-                datetime.now().astimezone().isoformat(), now - self.started,
+                datetime.now().astimezone().isoformat(), self.elapsed_offset + now - self.started,
                 event, self.attempts, int(accepted_steps), self.rejected,
                 float(L), normalised, '' if trial_L is None else float(trial_L),
                 float(next_dt), float(relaxation_time), interval, duration])
         self.previous = now
 
 
-def instrument_wsr(source):
+def instrument_wsr(source, resume=False):
     tree = ast.parse(source)
     original = ast.dump(tree)
     added = []
@@ -53,8 +59,14 @@ def instrument_wsr(source):
         return isinstance(node, ast.Assign) and any(isinstance(t, ast.Name) and t.id == name for t in node.targets)
 
     initial = next(i for i, node in enumerate(tree.body) if assigns(node, 'step'))
-    insert(tree.body, initial + 1,
-           '_wsr_progress.record("initial", step, L_values[-1], current_dt, time[-1])')
+    if resume:
+        insert(tree.body, initial + 1,
+               'from _wsr_progress import ProgressLog\n'
+               '_wsr_progress = ProgressLog(resume_state=_resume_state)\n'
+               '_wsr_progress.record("resumed", step, L_values[-1], current_dt, time[-1])')
+    else:
+        insert(tree.body, initial + 1,
+               '_wsr_progress.record("initial", step, L_values[-1], current_dt, time[-1])')
     loops = [n for n in tree.body if isinstance(n, ast.While)
              and ast.dump(n.test) == ast.dump(ast.parse('step < num_steps', mode='eval').body)]
     if len(loops) != 1:
@@ -76,7 +88,8 @@ def instrument_wsr(source):
     insert(tree.body, len(tree.body),
            '_wsr_progress.record("finished", step, L_values[-1], current_dt, time[-1])')
     first = next(i for i, n in enumerate(tree.body) if not isinstance(n, (ast.Import, ast.ImportFrom)))
-    insert(tree.body, first, 'from _wsr_progress import ProgressLog\n_wsr_progress = ProgressLog()')
+    if not resume:
+        insert(tree.body, first, 'from _wsr_progress import ProgressLog\n_wsr_progress = ProgressLog()')
     result = ast.unparse(ast.fix_missing_locations(tree)) + '\n'
     for body, node in reversed(added):
         body.remove(node)

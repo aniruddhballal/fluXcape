@@ -87,13 +87,17 @@ def save_latest(run):
             staging.mkdir()
             for subdir in ('field', 'boundary_reference', 'weight_function', 'source'):
                 (staging / subdir).mkdir()
+            reference_dir = run / '_restart/boundary_reference' if (run / '_restart/boundary_reference').is_dir() else run / 'Optimizedmagneticfield/step_0'
             for axis in 'xyz':
                 shutil.copy2(checkpoint / f'B{axis}.npy', staging / 'field' / f'B{axis}.npy')
-                shutil.copy2(run / 'Optimizedmagneticfield/step_0' / f'B{axis}.npy',
+                shutil.copy2(reference_dir / f'B{axis}.npy',
                              staging / 'boundary_reference' / f'B{axis}.npy')
             shutil.copy2(checkpoint / 'L_values.npy', staging / 'L_values.npy')
             np.save(staging / 'time.npy', np.array([float(r['relaxation_time']) for r in prior]))
-            shutil.copy2(run / 'weight_function/W.npy', staging / 'weight_function/W.npy')
+            weights = run / 'weight_function/W.npy'
+            if not weights.is_file():
+                weights = run / '_restart/weight_function/W.npy'
+            shutil.copy2(weights, staging / 'weight_function/W.npy')
             for name in ('Main.py', 'laplace.py', 'vectormath.py', '_step7.py', '_step7_original.py', '_wsr_progress.py'):
                 shutil.copy2(run / name, staging / 'source' / name)
             np.savez(staging / 'coordinates.npz', X1=grid['X1'], Y1=grid['Y1'], Z1=grid['Z1'])
@@ -127,7 +131,7 @@ def save_latest(run):
             for axis in 'xyz':
                 if digest(staging / 'field' / f'B{axis}.npy') != digest(checkpoint / f'B{axis}.npy'):
                     raise ValueError('Checkpoint changed during copying; retry later')
-                if digest(staging / 'boundary_reference' / f'B{axis}.npy') != digest(run / 'Optimizedmagneticfield/step_0' / f'B{axis}.npy'):
+                if digest(staging / 'boundary_reference' / f'B{axis}.npy') != digest(reference_dir / f'B{axis}.npy'):
                     raise ValueError('Initial boundary reference changed during copying')
             atomic_json(staging / 'state.json', state)
             staging.rename(final)

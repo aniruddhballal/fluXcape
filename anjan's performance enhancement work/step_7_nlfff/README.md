@@ -92,4 +92,36 @@ Packages contain the accepted field, original step-0 boundary reference, weight 
 
 The initial four-hour run already writes the CSV information needed to recover dt and time history. That is why useful restart data can be preserved without injecting new code into its live process. Unsaved attempts after the selected checkpoint must be repeated; the preservation cannot recover the exact state at an arbitrary timeout instant. Identical continuation requires the same numerical environment and copied equations. An isolated tiny test verified that continuing one step from a preserved checkpoint exactly matches uninterrupted fields, L, dt and time history.
 
-This tool preserves restart **data**. A user-facing resume runner still needs to be implemented and tested before using it for tomorrow's reconstruction. No real observation was restarted during this preservation work.
+This tool preserves restart data. The measurement runner now supports --resume as described below. No real observation was restarted while implementing or testing the feature.
+
+## Resume a preserved checkpoint
+
+From this folder with the original virtual environment activated, check the preserved step 3600 package:
+
+```bash
+python measure_nlfff.py --resume "runs/20261116_121943_573055/restart_checkpoints/step_3600" --check-only
+```
+
+To continue for up to another four hours:
+
+```bash
+python measure_nlfff.py --resume "runs/20261116_121943_573055/restart_checkpoints/step_3600" --max-seconds 14400
+```
+
+Do not combine --resume with --input-dir/--weights-dir. The package supplies the saved inputs, copied original sources, settings and solver state; --source-dir does not select new code during a resume. A state.json path can also be passed. Hashes, shapes, history consistency and recorded Python/package versions are checked before launch.
+
+A new run directory is created; the preserved package and old run are not modified. It restores Bx/By/Bz, original fixed boundary references, divB, weights, coordinates, dt/current_dt, step count and L/time histories. Only original imports, the checkpoint-save block, reconstruction loop and final-save block run; initial field construction and original WSR setup calculations are skipped. The next accepted step will be 3601, while the original log labels its attempt from step 3600 before incrementing. The original total accepted-step budget remains 2,000,001, not 2,000,001 extra steps.
+
+The time cap and reported wall/CPU time apply to this new invocation. Its CSV keeps all history through the preserved checkpoint, appends a resumed event, continues attempt/rejection counts and L/initial-L normalisation, and offsets elapsed_seconds by the previous checkpoint's active elapsed time. Overnight downtime is excluded; timestamps are actual clock times. Fields loaded at startup are included in this invocation's measurements. No field/L state is recomputed during restoration.
+
+Unsaved attempts after the checkpoint are repeated. For the original four-hour run this means replaying the last 41 accepted steps after step 3600, rather than repeating the first 3600. Initial checkpoint files in the new run use the restored step label rather than step 0.
+
+The same live viewer works: restart its server to select the newest CSV, or explicitly select the new run with --csv. To preserve later accepted checkpoints from the resumed run, use preserve_restart.py --run-dir runs/NEW_RUN_ID --watch in another terminal; it also works after a stopped run without --watch. The measurement runner does not automatically start that companion watcher.
+
+Tests (small synthetic workload only):
+
+```bash
+python -m unittest discover -s . -p test_resume.py -v
+```
+
+The integration test compares uninterrupted versus resumed fields and L arrays bit-for-bit, dt/time history and progress counts; it tests a second preservation/resume and rejects a damaged package. The original Main.py/equations remain unchanged. No real observation reconstruction is launched by the tests.

@@ -15,6 +15,7 @@ import subprocess
 import sys
 import time
 from progress_log import instrument_wsr
+from restart_state import read_checkpoint, resume_script
 
 ROOT = Path(__file__).resolve().parent
 
@@ -48,8 +49,9 @@ def extract_wsr(text):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--source-dir', type=Path, default=ROOT.parent / 'hmi.sharp_cea_720s.4698.20141022_000000_TAI')
-    parser.add_argument('--input-dir', type=Path, required=True, help='Completed step 6 run directory')
-    parser.add_argument('--weights-dir', type=Path, required=True, help='Step 5 run directory containing weight_function/W.npy')
+    parser.add_argument('--input-dir', type=Path, help='Completed step 6 run directory')
+    parser.add_argument('--weights-dir', type=Path, help='Step 5 run directory containing weight_function/W.npy')
+    parser.add_argument('--resume', type=Path, help='Preserved restart package directory or state.json')
     parser.add_argument('--label', default='original')
     parser.add_argument('--max-seconds', type=float, default=600,
                         help='Measured execution limit; 0 means unlimited (default: 600)')
@@ -57,22 +59,37 @@ def main():
     args = parser.parse_args()
     if args.max_seconds < 0:
         parser.error('time limit must be nonnegative')
+    if args.resume and (args.input_dir or args.weights_dir):
+        parser.error('--resume uses its package; omit --input-dir and --weights-dir')
+    if not args.resume and (not args.input_dir or not args.weights_dir):
+        parser.error('Fresh runs need --input-dir and --weights-dir; otherwise use --resume')
     packages = ['numpy', 'scipy', 'matplotlib', 'psutil']
     linux = sys.platform.startswith('linux') and Path('/usr/bin/time').is_file()
     if linux:
         linux = 'GNU' in subprocess.run(['/usr/bin/time', '--version'], capture_output=True, text=True).stdout
     missing = [p for p in packages if importlib.util.find_spec(p) is None]
-    sources = [args.source_dir / name for name in ('Main.py', 'laplace.py', 'vectormath.py')]
-    field_names = [f'PFSSmagneticfield_for_uniform_grid/Bfield_full/B{axis}_full.npy' for axis in 'xyz']
-    boundary_names = [f'Preprocessedmagneticfield_interpolated/B{axis}.npy' for axis in 'xyz']
-    inputs = [(args.input_dir / name, Path(name)) for name in field_names + boundary_names]
-    inputs.append((args.weights_dir / 'weight_function/W.npy', Path('weight_function/W.npy')))
+    restart = restart_info = None
+    if args.resume:
+        if missing:
+            parser.error('Missing packages: '+', '.join(missing))
+        try:
+            restart, restart_info = read_checkpoint(args.resume)
+        except (OSError, ValueError, KeyError) as exc:
+            parser.error(str(exc))
+        sources = [restart / 'source' / name for name in ('Main.py','laplace.py','vectormath.py')]
+        inputs = [(p, Path('_restart') / p.relative_to(restart)) for p in sorted(restart.rglob('*')) if p.is_file()]
+    else:
+        sources = [args.source_dir / name for name in ('Main.py','laplace.py','vectormath.py')]
+        field_names = [f'PFSSmagneticfield_for_uniform_grid/Bfield_full/B{axis}_full.npy' for axis in 'xyz']
+        boundary_names = [f'Preprocessedmagneticfield_interpolated/B{axis}.npy' for axis in 'xyz']
+        inputs = [(args.input_dir / name, Path(name)) for name in field_names + boundary_names]
+        inputs.append((args.weights_dir / 'weight_function/W.npy', Path('weight_function/W.npy')))
     missing += [str(p) for p in [*sources, *(p for p, _ in inputs)] if not p.is_file()]
     if missing:
         parser.exit(2, 'Missing prerequisites: ' + ', '.join(missing) + '\n'
                     'Windows/non-GNU platforms also need psutil.\n')
     if args.check_only:
-        print('Step 7 prerequisites available; reconstruction not started.')
+        print(f'Step 7 prerequisites available; resume step: {restart_info["step"] if restart_info else 0}. Reconstruction not started.')
         return 0
     stamp = datetime.now().astimezone().strftime('%Y%m%d_%H%M%S_%f')
     run = ROOT / 'runs' / stamp
@@ -86,7 +103,11 @@ def main():
     script, first_line = extract_wsr((run / 'Main.py').read_text())
     stage_script = run / '_step7.py'
     (run / '_step7_original.py').write_text(script)
-    stage_script.write_text(instrument_wsr(script), encoding='utf-8')
+    if restart:
+        read_checkpoint(run / '_restart')  # Verify the isolated copy before launching.
+        script = resume_script(script)
+        shutil.copy2(ROOT / 'restart_state.py', run / '_restart_state.py')
+    stage_script.write_text(instrument_wsr(script, resume=bool(restart)), encoding='utf-8')
     shutil.copy2(ROOT / 'progress_log.py', run / '_wsr_progress.py')
     command = [sys.executable, '-u', '-B', str(stage_script)]
     state = {'label': args.label, 'status': 'running', 'started': datetime.now().astimezone().isoformat(),
@@ -94,6 +115,9 @@ def main():
              'python': sys.version, 'versions': {p: importlib.metadata.version(p) for p in packages},
              'command': command, 'copied_files': copied, 'run_directory': str(run),
              'max_seconds': args.max_seconds, 'main_start_line': first_line,
+             'resumed_from': str(restart) if restart else None,
+             'start_accepted_step': restart_info['step'] if restart_info else 0,
+             'progress_elapsed_offset_seconds': restart_info['source_elapsed_seconds'] if restart_info else 0,
              'original_wsr_sha256': digest(run / '_step7_original.py'),
              'executed_wsr_sha256': digest(stage_script),
              'progress_helper_sha256': digest(run / '_wsr_progress.py'),
@@ -106,6 +130,8 @@ def main():
     peak = 0
     seen = {}
     start = time.perf_counter()
+    if restart_info:
+        print(f'Resuming accepted step {restart_info["step"]}; original total budget {restart_info["num_steps"]}.', flush=True)
     print(f'Outputs: {run}\nTime limit: {args.max_seconds}s (0 = unlimited)', flush=True)
     try:
         with (run / 'nlfff.log').open('wb') as log:
@@ -186,6 +212,9 @@ def main():
             'can be double-counted and short-lived activity missed. A timeout is partial, not '
             'completed runtime. Output size counts generated checkpoints/plots only. '
             'On timeout a last checkpoint may be incomplete; output existence is not a restart guarantee. '
+            'Resume runs restore preserved state and retain the original loop and total accepted-step budget. '
+            'Their wall/CPU measurements cover this invocation only; CSV elapsed time continues from '
+            'the checkpoint offset and retains its prior history. The time limit restarts for this invocation. '
             'Logging-only instrumentation records full-precision L, accepted/rejected attempts, next dt, '
             'numerical relaxation time and elapsed wall time in convergence.csv. Its overhead is included; '
             'the original arithmetic, acceptance conditions and stopping rules are unchanged.\n\n```json\n'
