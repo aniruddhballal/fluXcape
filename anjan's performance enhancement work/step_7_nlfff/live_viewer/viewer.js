@@ -179,6 +179,8 @@ function render(){
     const timed=rows.filter(r=>r.speed!==null&&Number.isFinite(r.speed));
     $('speed').textContent=timed.length?timed[timed.length-1].speed.toFixed(3)+' s':'—';
     $('dt').textContent=Number.isFinite(last.dt)?last.dt.toExponential(3):'—';
+    const minDt=rows.reduce((minimum,r)=>Number.isFinite(r.dt)&&r.dt>0?Math.min(minimum,r.dt):minimum,Infinity);
+    $('minDt').textContent=`Lowest recorded dt: ${Number.isFinite(minDt)?minDt.toExponential(6):'—'}`;
     $('event').textContent=last.event==='finished'?'Code finished normally':`Latest event: ${last.event}`;
   }
   chart('errorChart',rows.map(r=>({...r,value:r.change})),true,320);
