@@ -85,3 +85,9 @@ Original run: `20261118_194031_937624`; V1: `20261118_214427_942015`; V2: `20261
 V2 captured `NUMBA_NUM_THREADS=4` and `OMP_NUM_THREADS=8`; its actual runtime confirms four Numba workers and the `omp` threading layer. The historical V1 report captures only `OMP_NUM_THREADS=8`, not its actual Numba worker count; the current environment defaults to 12, but that must not be represented as a recorded historical count.
 
 CPU times sum activity across worker threads, so they are not elapsed time. RAM is sampled every 100 ms and brief peaks may be missed. Temperature, clocks, application load and AC/battery state were not controlled. The repeatable short-workload sweep favoured V2 with four workers; the full run confirms a further wall-time improvement and exact saved results on this input. This is not a proof of a global optimum or a CUDA performance conclusion.
+
+## V2 repeat after user disabled battery saver
+
+The user reported disabling battery saver before run `20261118_222334_743670`. It completed successfully with the same four-worker v2 solver, original source snapshots and input hashes. Runtime was 387.1346839 s (6 min 27.13 s), sampled CPU time 1507.953125 s and sampled peak RSS 675.80 MiB. The previous v2 run took 408.8075312 s (6 min 48.81 s): this repeat was 21.6728473 s faster, a 5.3015% elapsed-time reduction.
+
+All three output files were independently rehashed and match the previous v2 files exactly. All 340 logged iteration/error pairs match, with convergence at zero-based label 16975 in both runs. No numerical difference was found in the saved results. Power-saver status was user-reported and was not instrumented in either run; this single repeat does not isolate the cause of the timing difference. See [the repeat report](potential_20261118_222334_743670.md).
