@@ -32,7 +32,7 @@ def main():
     parser.add_argument('--source-dir', type=Path, default=ROOT.parent / 'hmi.sharp_cea_720s.4698.20141022_000000_TAI')
     parser.add_argument('--input-dir', type=Path, required=True, help='Step 4 run directory containing Preprocessedmagneticfield/')
     parser.add_argument('--label', default='original')
-    parser.add_argument('--implementation', choices=('original', 'optimised', 'optimised-v2'), default='original',
+    parser.add_argument('--implementation', choices=('original', 'optimised', 'optimised-v2', 'optimised-v3'), default='original',
                         help='Solver implementation; original remains the default')
     parser.add_argument('--first-field-only', action='store_true',
                         help='Stop after the first three field files; exclude interpolation')
@@ -89,7 +89,8 @@ def main():
             raise ValueError('Expected nine original saves; review source boundaries')
         prefix = ''.join(prefix.splitlines(keepends=True)[:saves[2].end_lineno])
     original_prefix = prefix
-    solver_module = 'optimised_laplace_v2' if args.implementation == 'optimised-v2' else 'optimised_laplace'
+    solver_module = {'optimised-v2': 'optimised_laplace_v2',
+                     'optimised-v3': 'optimised_laplace_v3'}.get(args.implementation, 'optimised_laplace')
     if args.implementation != 'original':
         shutil.copy2(ROOT / f'{solver_module}.py', run / f'{solver_module}.py')
         # Override only the active solver after imports. Original source is untouched.

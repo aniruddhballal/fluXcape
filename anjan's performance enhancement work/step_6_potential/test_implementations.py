@@ -27,6 +27,7 @@ sys.modules['laplace'] = original
 sys.modules['_step6_progress'] = progress_log
 from optimised_laplace import solve_pfss_cartesian_vectorized as optimised
 from optimised_laplace_v2 import solve_pfss_cartesian_vectorized as optimised_v2
+from optimised_laplace_v3 import solve_pfss_cartesian_vectorized as optimised_v3, temporal_update
 
 
 class Implementations(unittest.TestCase):
@@ -44,7 +45,7 @@ class Implementations(unittest.TestCase):
         before = field.copy()
         with contextlib.redirect_stdout(io.StringIO()):
             expected = original.solve_pfss_cartesian_vectorized(field, 1.7, 2.3, 0.8, **options)
-            for candidate in (optimised, optimised_v2):
+            for candidate in (optimised, optimised_v2, optimised_v3):
                 actual = candidate(field, 1.7, 2.3, 0.8, **options)
                 np.testing.assert_array_equal(actual.view(np.uint64), expected.view(np.uint64))
         np.testing.assert_array_equal(field.view(np.uint64), before.view(np.uint64))
@@ -64,7 +65,7 @@ class Implementations(unittest.TestCase):
             expected = namespace['solve_pfss_cartesian_vectorized'](initial, 1.7, 2.3, 0.8, verbose=True)
         with Path('convergence.csv').open(encoding='utf-8') as stream:
             baseline = list(csv.DictReader(stream))
-        for solver in (optimised, optimised_v2):
+        for solver in (optimised, optimised_v2, optimised_v3):
             with contextlib.redirect_stdout(io.StringIO()) as candidate_log:
                 actual = solver(initial, 1.7, 2.3, 0.8, verbose=True)
             with Path('convergence.csv').open(encoding='utf-8') as stream:
@@ -112,6 +113,46 @@ class Implementations(unittest.TestCase):
             optimised_v2(field, 1.7, 2.3, 0.8, max_iter=1)
             self.assertEqual(json.loads(Path('solver_runtime.json').read_text())['numba_threads'], 1)
 
+    def test_v3_tile_fields_and_each_update_error(self):
+        from optimised_laplace_v2 import jacobi_update
+        rng = np.random.default_rng(30)
+        for shape in ((9, 8, 7), (12, 10, 8), (31, 29, 17)):
+            for steps in (1, 2, 3, 4, 6):
+                initial = rng.normal(size=shape)
+                reference, spare = initial.copy(), initial.copy()
+                reference_errors = []
+                for _ in range(steps):
+                    error = np.empty(shape[0]-2, dtype=np.uint64)
+                    jacobi_update(reference, spare, 1.7**2, 2.3**2, 0.8**2, 4.5, error)
+                    reference, spare = spare, reference
+                    reference_errors.append(error.max())
+                for bx, by in ((4, 3), (16, 16)):
+                    candidate = initial.copy()
+                    ntiles = ((shape[0]-2+bx-1)//bx) * ((shape[1]-2+by-1)//by)
+                    errors = np.empty((ntiles, steps), dtype=np.uint64)
+                    temporal_update(initial, candidate, 1.7**2, 2.3**2, 0.8**2, 4.5, errors, steps, bx, by)
+                    np.testing.assert_array_equal(candidate.view(np.uint64), reference.view(np.uint64))
+                    np.testing.assert_array_equal(errors.max(axis=0), reference_errors)
+
+    def test_v3_replays_first_converged_state(self):
+        initial = np.zeros((17, 15, 11))
+        initial[:, :, 0] = np.random.default_rng(72).normal(size=(17, 15))
+        states = [initial]
+        with contextlib.redirect_stdout(io.StringIO()):
+            for count in range(1, 4):
+                states.append(original.solve_pfss_cartesian_vectorized(initial, 1.7, 2.3, 0.8, tol=0, max_iter=count))
+            errors = [np.max(np.abs(states[i]-states[i-1])) for i in range(1, 4)]
+            self.assertTrue(errors[1] > errors[2])
+            tolerance = (errors[1]+errors[2])/2
+            expected = original.solve_pfss_cartesian_vectorized(initial, 1.7, 2.3, 0.8, tol=tolerance)
+            actual = optimised_v3(initial, 1.7, 2.3, 0.8, tol=tolerance)
+        np.testing.assert_array_equal(actual.view(np.uint64), expected.view(np.uint64))
+        runtime = json.loads(Path('solver_runtime.json').read_text())
+        self.assertEqual(runtime['final_iteration'], 2)
+        self.assertGreater(runtime['unused_speculative_updates'], 0)
+        self.assertGreater(runtime['replayed_updates'], 0)
+        self.assertEqual(runtime['final_max_change'], errors[2])
+
     def test_runner_dispatch_and_output_scope(self):
         fixture = Path('source').resolve()
         fixture.mkdir()
@@ -128,10 +169,10 @@ class Implementations(unittest.TestCase):
             np.save(inputs / f'B{axis}.npy', np.random.default_rng(ord(axis)).normal(size=(12, 10)))
         runner_root = Path('runner').resolve()
         runner_root.mkdir()
-        for name in ('progress_log.py', 'optimised_laplace.py', 'optimised_laplace_v2.py'):
+        for name in ('progress_log.py', 'optimised_laplace.py', 'optimised_laplace_v2.py', 'optimised_laplace_v3.py'):
             shutil.copy2(ROOT / name, runner_root / name)
         results = []
-        for implementation, first_only in [('original', True), ('optimised', True), ('original', False), ('optimised-v2', True)]:
+        for implementation, first_only in [('original', True), ('optimised', True), ('original', False), ('optimised-v2', True), ('optimised-v3', True)]:
             argv = ['measure_potential.py', '--source-dir', str(fixture), '--input-dir', str(inputs.parent),
                     '--max-seconds', '120']
             if first_only:
@@ -145,7 +186,7 @@ class Implementations(unittest.TestCase):
             state = json.loads((run / 'measurements.json').read_text())
             self.assertTrue(state['expected_outputs_present'])
             self.assertEqual(state['implementation'], implementation)
-            if implementation == 'optimised-v2':
+            if implementation in ('optimised-v2', 'optimised-v3'):
                 self.assertEqual(state['solver_runtime']['numba_threads'], 2)
             self.assertEqual(len(state['outputs']), 3 if first_only else 9)
             results.append((run, state))
@@ -155,6 +196,7 @@ class Implementations(unittest.TestCase):
             self.assertEqual(paths[0].read_bytes(), paths[1].read_bytes())
             self.assertEqual(paths[0].read_bytes(), paths[2].read_bytes())
             self.assertEqual(paths[0].read_bytes(), paths[3].read_bytes())
+            self.assertEqual(paths[0].read_bytes(), paths[4].read_bytes())
         # Source snapshot was never modified by dispatch.
         self.assertEqual((fixture / 'Main.py').read_text(encoding='utf-8'), source)
 

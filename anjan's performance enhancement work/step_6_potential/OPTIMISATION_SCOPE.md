@@ -88,6 +88,14 @@ Three 60-update full-grid trials per implementation at 1, 2, 4, 6, 8 and 12 work
 
 The full v2 observation run `20261118_221042_587814` subsequently completed successfully in 408.8075312 s (6 min 48.81 s), with four workers and threading layer `omp`. Compared with the recorded v1 run, it was 1.3219x faster (24.3498% less wall time); compared with the original it was 16.9534x faster. Sampled CPU time was 1581.125 s and sampled peak RSS 656.18 MiB. Independent file hashes and array-bit comparisons confirmed all three files are byte-identical across original, v1 and v2: all 40,500,000 field values finite and identical, maximum absolute difference zero. All 340 logged iteration/error pairs match, and all three runs stop at zero-based label 16975 (16976 updates). The scalar potential and exact stopping-update error were not saved. The full-run measurements are single trials, not repeated medians or proof of a global optimum. Detailed results are in the device/v2 report linked above. V2 code was committed as `04b550b` and its successful run report as `a541874`.
 
+## Third optimisation investigation
+
+The user requested research into a further V3 improvement on the same device and exact inputs. Primary-source research suggested temporal cache blocking; local paired trials verified the candidate's bit-exact fields and per-update errors. V3 lives separately in `optimised_laplace_v3.py` and is selected with `--implementation optimised-v3 --first-field-only`. Original stays the default; Anjan's source and V1/V2 modules are unchanged.
+
+V3 uses 16 by 16 x/y cores, full-z private halos, four temporal updates per batch and up to four workers by default. It retains field arithmetic and every iteration's error check. It caps batches at existing logging boundaries and replays the prefix if convergence occurs partway through a batch, returning the first converged field. Runtime metadata records actual workers, tile/depth, exact final error, logical updates and speculative/replayed work. No tolerance, precision or scientific setting was relaxed.
+
+Nine tests passed, including irregular-tile intermediate-state/error comparisons and explicit early-stop replay. Paired three-trial 120-update measurements favoured this configuration; full-observation validation follows separately. See [v3_windows_20261118.md](v3_windows_20261118.md) and its linked raw trials and research sources. Do not treat a short-workload gain as a full-run speedup or proof of a global optimum.
+
 ## User's question after the first implementation
 
 Record only; the user explicitly requested that this question remain unanswered here and in chat for this documentation task.

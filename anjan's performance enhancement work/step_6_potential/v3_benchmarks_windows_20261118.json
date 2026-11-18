@@ -1,0 +1,539 @@
+{
+  "screen": {
+    "steps": 60,
+    "trials": 1,
+    "shape": [
+      300,
+      300,
+      150
+    ],
+    "input_sha256": "1463128a492a641dec0ef9b23bd65f262910dbdc3d348b4205862dfb51344180",
+    "jit_included": false,
+    "records": [
+      {
+        "threads": 4,
+        "tile": 16,
+        "depth": 2,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.4008929999999964
+        ],
+        "temporal_seconds": [
+          0.8860645000004297
+        ],
+        "v2_median": 1.4008929999999964,
+        "temporal_median": 0.8860645000004297,
+        "speedup": 1.5810282434284604
+      },
+      {
+        "threads": 4,
+        "tile": 16,
+        "depth": 4,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.328580300001704
+        ],
+        "temporal_seconds": [
+          0.6731039000005694
+        ],
+        "v2_median": 1.328580300001704,
+        "temporal_median": 0.6731039000005694,
+        "speedup": 1.9738116210596612
+      },
+      {
+        "threads": 4,
+        "tile": 16,
+        "depth": 6,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.380277099999148
+        ],
+        "temporal_seconds": [
+          0.6863749999993161
+        ],
+        "v2_median": 1.380277099999148,
+        "temporal_median": 0.6863749999993161,
+        "speedup": 2.010966454198541
+      },
+      {
+        "threads": 4,
+        "tile": 24,
+        "depth": 2,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.322150199999669
+        ],
+        "temporal_seconds": [
+          0.9620066999996197
+        ],
+        "v2_median": 1.322150199999669,
+        "temporal_median": 0.9620066999996197,
+        "speedup": 1.3743669352824586
+      },
+      {
+        "threads": 4,
+        "tile": 24,
+        "depth": 4,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.3622283000004245
+        ],
+        "temporal_seconds": [
+          1.2201105000003736
+        ],
+        "v2_median": 1.3622283000004245,
+        "temporal_median": 1.2201105000003736,
+        "speedup": 1.1164794500170332
+      },
+      {
+        "threads": 4,
+        "tile": 24,
+        "depth": 6,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.2360641999985091
+        ],
+        "temporal_seconds": [
+          1.1056279000003997
+        ],
+        "v2_median": 1.2360641999985091,
+        "temporal_median": 1.1056279000003997,
+        "speedup": 1.117974862969777
+      },
+      {
+        "threads": 4,
+        "tile": 32,
+        "depth": 2,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.3584584000000177
+        ],
+        "temporal_seconds": [
+          2.120227100000193
+        ],
+        "v2_median": 1.3584584000000177,
+        "temporal_median": 2.120227100000193,
+        "speedup": 0.6407136292144809
+      },
+      {
+        "threads": 4,
+        "tile": 32,
+        "depth": 4,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.2449450000003708
+        ],
+        "temporal_seconds": [
+          1.8654733000003034
+        ],
+        "v2_median": 1.2449450000003708,
+        "temporal_median": 1.8654733000003034,
+        "speedup": 0.6673614679985869
+      },
+      {
+        "threads": 4,
+        "tile": 32,
+        "depth": 6,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.261721500000931
+        ],
+        "temporal_seconds": [
+          1.751881800000774
+        ],
+        "v2_median": 1.261721500000931,
+        "temporal_median": 1.751881800000774,
+        "speedup": 0.720209262976745
+      },
+      {
+        "threads": 4,
+        "tile": 48,
+        "depth": 2,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.2514664999998786
+        ],
+        "temporal_seconds": [
+          3.298994299999322
+        ],
+        "v2_median": 1.2514664999998786,
+        "temporal_median": 3.298994299999322,
+        "speedup": 0.3793478818681608
+      },
+      {
+        "threads": 4,
+        "tile": 48,
+        "depth": 4,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.2488226999994367
+        ],
+        "temporal_seconds": [
+          2.2861083000007056
+        ],
+        "v2_median": 1.2488226999994367,
+        "temporal_median": 2.2861083000007056,
+        "speedup": 0.5462657652741347
+      },
+      {
+        "threads": 4,
+        "tile": 48,
+        "depth": 6,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.2210875999990094
+        ],
+        "temporal_seconds": [
+          1.896126000001459
+        ],
+        "v2_median": 1.2210875999990094,
+        "temporal_median": 1.896126000001459,
+        "speedup": 0.6439907474493097
+      }
+    ]
+  },
+  "small_tiles": {
+    "steps": 60,
+    "trials": 2,
+    "shape": [
+      300,
+      300,
+      150
+    ],
+    "input_sha256": "1463128a492a641dec0ef9b23bd65f262910dbdc3d348b4205862dfb51344180",
+    "jit_included": false,
+    "records": [
+      {
+        "threads": 4,
+        "tile": 8,
+        "depth": 2,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.4147174999998242,
+          1.5723426999993535
+        ],
+        "temporal_seconds": [
+          0.8352239999985613,
+          0.8260799999989104
+        ],
+        "v2_median": 1.4935300999995889,
+        "temporal_median": 0.8306519999987358,
+        "speedup": 1.7980214337675247
+      },
+      {
+        "threads": 4,
+        "tile": 8,
+        "depth": 4,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.661867999999231,
+          1.6588541000000987
+        ],
+        "temporal_seconds": [
+          0.8742978999998741,
+          0.8042167999992671
+        ],
+        "v2_median": 1.6603610499996648,
+        "temporal_median": 0.8392573499995706,
+        "speedup": 1.9783693881269129
+      },
+      {
+        "threads": 4,
+        "tile": 8,
+        "depth": 6,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.6724030999994284,
+          1.6847338000006857
+        ],
+        "temporal_seconds": [
+          0.8881550000005518,
+          0.8746413999997458
+        ],
+        "v2_median": 1.678568450000057,
+        "temporal_median": 0.8813982000001488,
+        "speedup": 1.9044382550358891
+      },
+      {
+        "threads": 4,
+        "tile": 8,
+        "depth": 8,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.7232630000016798,
+          1.5518541999990703
+        ],
+        "temporal_seconds": [
+          1.2936673999993218,
+          1.1558139999997366
+        ],
+        "v2_median": 1.637558600000375,
+        "temporal_median": 1.2247406999995292,
+        "speedup": 1.337065551917238
+      },
+      {
+        "threads": 4,
+        "tile": 12,
+        "depth": 2,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.7116612999998324,
+          1.5858093000006193
+        ],
+        "temporal_seconds": [
+          0.9749558999992587,
+          0.8951880999993591
+        ],
+        "v2_median": 1.6487353000002258,
+        "temporal_median": 0.9350719999993089,
+        "speedup": 1.7632174848583257
+      },
+      {
+        "threads": 4,
+        "tile": 12,
+        "depth": 4,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.7016862000000401,
+          1.4912070999998832
+        ],
+        "temporal_seconds": [
+          0.6854574000008142,
+          0.6895459000006667
+        ],
+        "v2_median": 1.5964466499999617,
+        "temporal_median": 0.6875016500007405,
+        "speedup": 2.322098645142513
+      },
+      {
+        "threads": 4,
+        "tile": 12,
+        "depth": 6,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.614469200001622,
+          1.5475072000008367
+        ],
+        "temporal_seconds": [
+          0.8674546999991435,
+          0.8124346000004152
+        ],
+        "v2_median": 1.5809882000012294,
+        "temporal_median": 0.8399446499997794,
+        "speedup": 1.8822528365430327
+      },
+      {
+        "threads": 4,
+        "tile": 12,
+        "depth": 8,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.580718600000182,
+          1.5551105000013195
+        ],
+        "temporal_seconds": [
+          1.1581248999991658,
+          0.9818208000015147
+        ],
+        "v2_median": 1.5679145500007508,
+        "temporal_median": 1.0699728500003403,
+        "speedup": 1.4653778831867108
+      },
+      {
+        "threads": 4,
+        "tile": 16,
+        "depth": 2,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.6396371999999246,
+          1.5925337999997282
+        ],
+        "temporal_seconds": [
+          1.063205399999788,
+          1.0649090000006254
+        ],
+        "v2_median": 1.6160854999998264,
+        "temporal_median": 1.0640572000002066,
+        "speedup": 1.518795700080327
+      },
+      {
+        "threads": 4,
+        "tile": 16,
+        "depth": 4,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.6421413000007306,
+          1.4432967000011558
+        ],
+        "temporal_seconds": [
+          0.7450171999989834,
+          0.71041409999998
+        ],
+        "v2_median": 1.5427190000009432,
+        "temporal_median": 0.7277156499994817,
+        "speedup": 2.1199475372036343
+      },
+      {
+        "threads": 4,
+        "tile": 16,
+        "depth": 6,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.5214153999986593,
+          1.4833303000013984
+        ],
+        "temporal_seconds": [
+          0.8169044999995094,
+          0.7865132999995694
+        ],
+        "v2_median": 1.5023728500000288,
+        "temporal_median": 0.8017088999995394,
+        "speedup": 1.873963043195469
+      },
+      {
+        "threads": 4,
+        "tile": 16,
+        "depth": 8,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.5921775000006164,
+          1.5875832000001537
+        ],
+        "temporal_seconds": [
+          1.9986220999999205,
+          1.6887834999997722
+        ],
+        "v2_median": 1.589880350000385,
+        "temporal_median": 1.8437027999998463,
+        "speedup": 0.8623300620905482
+      }
+    ]
+  },
+  "confirm": {
+    "steps": 120,
+    "trials": 3,
+    "shape": [
+      300,
+      300,
+      150
+    ],
+    "input_sha256": "1463128a492a641dec0ef9b23bd65f262910dbdc3d348b4205862dfb51344180",
+    "jit_included": false,
+    "records": [
+      {
+        "threads": 2,
+        "tile": 12,
+        "depth": 4,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          2.522664400001304,
+          2.760122900001079,
+          2.5689599999986967
+        ],
+        "temporal_seconds": [
+          2.0188216999995348,
+          1.9263255000005302,
+          1.9492071000004216
+        ],
+        "v2_median": 2.5689599999986967,
+        "temporal_median": 1.9492071000004216,
+        "speedup": 1.3179512838826315
+      },
+      {
+        "threads": 2,
+        "tile": 16,
+        "depth": 4,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          2.634391899999173,
+          2.5810858000004373,
+          2.593024999998306
+        ],
+        "temporal_seconds": [
+          2.021296299999449,
+          1.8269776999986789,
+          1.8192230999993626
+        ],
+        "v2_median": 2.593024999998306,
+        "temporal_median": 1.8269776999986789,
+        "speedup": 1.4192975644969181
+      },
+      {
+        "threads": 4,
+        "tile": 12,
+        "depth": 4,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          2.8500048000005336,
+          2.827541000000565,
+          2.7300529000003735
+        ],
+        "temporal_seconds": [
+          1.1719828000004782,
+          1.1638927000003605,
+          1.1650566999996954
+        ],
+        "v2_median": 2.827541000000565,
+        "temporal_median": 1.1650566999996954,
+        "speedup": 2.4269557009554164
+      },
+      {
+        "threads": 4,
+        "tile": 16,
+        "depth": 4,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          2.8406381999993755,
+          2.721008000000438,
+          2.7257311000012123
+        ],
+        "temporal_seconds": [
+          1.1383986000000732,
+          1.2102340000001277,
+          1.1213336000000709
+        ],
+        "v2_median": 2.7257311000012123,
+        "temporal_median": 1.1383986000000732,
+        "speedup": 2.394355632553516
+      },
+      {
+        "threads": 6,
+        "tile": 12,
+        "depth": 4,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          3.0692006000008405,
+          3.0205815000008442,
+          3.0668523000003916
+        ],
+        "temporal_seconds": [
+          1.1672827000002144,
+          1.2408877999987453,
+          1.1784358000004431
+        ],
+        "v2_median": 3.0668523000003916,
+        "temporal_median": 1.1784358000004431,
+        "speedup": 2.6024771990118074
+      },
+      {
+        "threads": 6,
+        "tile": 16,
+        "depth": 4,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          3.136922699999559,
+          2.895759299999554,
+          3.002924799999164
+        ],
+        "temporal_seconds": [
+          1.4287543000009464,
+          1.5849182000001747,
+          1.3601613999999245
+        ],
+        "v2_median": 3.002924799999164,
+        "temporal_median": 1.4287543000009464,
+        "speedup": 2.1017783113563855
+      }
+    ]
+  }
+}
