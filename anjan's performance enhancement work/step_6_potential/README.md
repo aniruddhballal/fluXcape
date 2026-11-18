@@ -45,3 +45,16 @@ A timeout is recorded as partial, not a completed runtime; no outputs may exist 
 ## Live HTML charts
 
 A local viewer is available in [live_viewer/](live_viewer/). From this step's directory, run `python live_viewer/serve.py` in a second terminal, then open **http://127.0.0.1:8765/** in Firefox. It selects the newest CSV at startup and refreshes every two seconds. Pass `--csv runs/RUN_ID/convergence.csv` to select a particular run. The viewer only reads data and does not affect or restart the solver.
+
+## Executed baselines and available outputs
+
+Reviewed on 18 November 2026:
+
+| Run | Recorded outcome |
+| --- | --- |
+| [13 November, 600-second limit](potential_20261113_164206_525807.md) | Timed out during the initial solve; wall time 600.045567 s; no generated field arrays. This is not a completed runtime. |
+| [16 November, completed](potential_20261116_103848_750500.md) | Wall time **2,273.691902 s**, CPU time 2,277.05 s; nine generated arrays totaling **650,161,152 bytes**. |
+
+The completed run's GNU time peak RSS is **3,027.722656 MiB**; independently sampled process-tree peak RSS is **3,017.359375 MiB**. These are distinct measurements and must not be interchanged or added. Values are from a single original trial with CSV instrumentation, not a repeated-median optimization comparison.
+
+The completed local run is `runs/20261116_103848_750500/`. Its resampled field and boundary arrays supply the recorded step 7 runs; earlier steps need not be repeated while those saved inputs remain available. Ignored run arrays/CSV are not distributed by a clone. [The live viewer guide](live_viewer/README.md) explains read-only plotting; the viewer does not start the potential solver. No solve was run during this documentation update.

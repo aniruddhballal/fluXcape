@@ -25,3 +25,7 @@ It shows:
 - Interval-average iteration timing against the same selected horizontal axis.
 
 The CSV is the sole data source; it records only logged iteration samples, not every individual iteration or final run status. No new numerical measurements are introduced. Firefox checks covered loading real run data, both charts, axis switching, automatic updates after appending to a disposable CSV copy, and ignoring an incomplete appended row. The user's real CSV was not changed by those tests.
+
+## Retained run and chart evidence
+
+The [completed potential-field report](../potential_20261116_103848_750500.md) is the execution evidence for the example CSV above. A [saved convergence screenshot](snapshots/convergence_20261116.png) is retained for reference; live readings require the ignored local CSV. If the example run data are absent after cloning, the screenshot/report remain readable but the viewer needs a compatible CSV or a new deliberately launched run. This viewer does not provide WSR checkpoint/resume controls; [step 7's separate viewer](../../step_7_nlfff/live_viewer/README.md) reads the reconstruction progress schema. Documentation reviewed 18 November 2026; no solver or CSV was changed.

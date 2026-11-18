@@ -1,4 +1,4 @@
-# Task brief: performance enhancement and reusable magnetic-field workflows
+# Magnetic-field performance work: tools, measurements and task scope
 
 ## What needs to be achieved
 
@@ -8,7 +8,7 @@ Make Anjan’s magnetic-field reconstruction work quicker to run and easier to r
 2. Provide an automated pipeline that saves reusable results, supports selected observations and operations, and avoids unnecessary reruns.
 3. Optionally provide a UI for selecting an observation, requesting a supported operation, and viewing its results.
 
-These are complementary options, not a requirement to build all three immediately. No particular hardware, speedup, UI framework, or deployment arrangement has been agreed. This document defines the work; it does not implement it.
+These are complementary options, not a requirement to build all three immediately. No particular hardware, speedup, UI framework, or deployment arrangement has been agreed. This guide distinguishes the implemented stage tools below from the remaining performance, workflow and UI goals.
 
 ## Scope for this performance task
 
@@ -42,13 +42,38 @@ For each stage:
 4. Repeat with identical inputs, scientific settings and hardware; repeat trials and compare medians.
 5. Check numerical output equivalence before accepting the improvement. Do not bundle scientific corrections into performance changes.
 
-Reuse saved preparation outputs while studying a downstream stage; do not rerun the earlier stages for every trial. Stages 6 and 7 share Main.py. The step 6 runner now executes its exact initial-field/preparation prefix in isolation; the original Main.py remains unchanged. A compilation-only measurement script is available in [step_1_compile/](step_1_compile/); An extraction-only baseline tool is available in [step_2_extract/](step_2_extract/); Step 3 execution measurement is available in [step_3_preprocess/](step_3_preprocess/); Step 4 measurement is available in [step_4_package/](step_4_package/); Step 5 measurement is available in [step_5_weights/](step_5_weights/); Step 6 measurement is available in [step_6_potential/](step_6_potential/); Step 7 measurement files are prepared in [step_7_nlfff/](step_7_nlfff/); the real reconstruction has not been run.
+Reuse saved preparation outputs while studying downstream stages. All seven stage-specific runners are implemented; their READMEs document commands and their timestamped reports document execution outcomes. Step 6 runs the initial-field/preparation prefix of Main.py; step 7 runs its reconstruction suffix. Neither changes the original source. Step 7 additionally supports CSV progress, automatic checkpoint preservation and validated restart/resume. The current evidence is indexed below.
 
 For overall statistics, sum comparable completed stage times to estimate serial runtime reduction. **Never add peak RAM:** report per-stage peaks and their maximum. Splitting processes changes memory lifetimes and adds save/load overhead, so this is an estimate rather than an exact measurement of the original monolithic workflow. Compare storage separately without double-counting reused inputs.
 
 A bounded WSR trial can measure a fixed workload or cost per iteration, not total convergence time. Match actual accepted-step counts and account for rejected attempts, checkpoint writes and early termination. Keep grid, tolerances and stopping conditions consistent. Finish with an integration check; a full end-to-end benchmark is optional confirmation when practical.
 
-The earlier five-minute experiment stopped during extraction and never reached Main.py. Its testing scripts/report have been removed. The compilation-only script is now available in step_1_compile/; step 2 now also has an isolated extraction measurement script; remaining tests will be designed when work on each begins.
+The initial five-minute end-to-end attempt stopped during extraction. It is historical and is not the current execution status: later isolated stage runs completed preparation and reached real WSR reconstruction. Its old testing scripts/report were removed; the stage reports below are the retained evidence.
+
+## Implemented capabilities and evidence (reviewed 18 November 2026)
+
+The timestamped reports below are the measurement evidence. [PERFORMANCE_LOG.md](PERFORMANCE_LOG.md) preserves dated entries; some tracker/preparation text there predates the completed runs and resume work.
+
+| Stage | Retained result | Evidence |
+| --- | --- | --- |
+| 1: [compile](step_1_compile/README.md) | Three original builds, median 0.142465 s; three OpenMP builds, median 0.150748 s. Compilation time is not preprocessing execution time. | [Original](step_1_compile/compile_20261113_113407_004146.md), [OpenMP](step_1_compile/compile_20261117_110829_071919.md) |
+| 2: [extract/resample](step_2_extract/README.md) | Completed original trial: 47.256584 s; six output text maps. | [Report](step_2_extract/extraction_20261113_120212_837984.md) |
+| 3: [preprocess](step_3_preprocess/README.md) | Original 2.549950 s; OpenMP/8 threads 0.582391 s; original recheck 2.488151 s. OpenMP differs by up to approximately 1.208 G and is not an accepted identical-output replacement. | [Original](step_3_preprocess/preprocess_20261113_154914_817499.md), [OpenMP](step_3_preprocess/preprocess_20261117_113050_217567.md), [recheck](step_3_preprocess/preprocess_20261117_113257_948829.md); output comparison in [log](PERFORMANCE_LOG.md#step-3--unchanged-source-openmp-comparison--2026-11-17) |
+| 4: [package](step_4_package/README.md) | Completed original trial: 1.165231 s; three 300×300 boundary arrays. | [Report](step_4_package/package_20261113_160555_320989.md) |
+| 5: [weights](step_5_weights/README.md) | Completed original trial: 23.271376 s; 300×300×150 weights. | [Report](step_5_weights/weights_20261113_163255_483855.md) |
+| 6: [potential field](step_6_potential/README.md) | Completed original trial: 2,273.691902 s; nine arrays. Earlier 600 s attempt timed out without field outputs. | [Completed](step_6_potential/potential_20261116_103848_750500.md), [partial](step_6_potential/potential_20261113_164206_525807.md) |
+| 7: [WSR/NLFFF](step_7_nlfff/README.md) | Real-observation time-capped trials and resumes; latest finalized report saved step 7600. Full completion is not established. | [Four-hour run](step_7_nlfff/nlfff_20261116_121943_573055.md), [resume to saved step 7000](step_7_nlfff/nlfff_20261117_115008_927724.md), [resume to saved step 7600](step_7_nlfff/nlfff_20261117_155657_781931.md) |
+
+Most execution entries are one trial, not repeated medians. Time-capped WSR trials are partial measurements, not full convergence timings. These stage boundaries, plotting, checkpoint I/O and instrumentation must be matched for later comparisons; no full-workflow speedup is claimed.
+
+Additional implemented tools:
+
+- [Step 6 CSV viewer](step_6_potential/live_viewer/README.md), default localhost port 8765.
+- [Step 7 CSV viewer](step_7_nlfff/live_viewer/README.md), default localhost port 8766, with zoom, fullscreen and moving sample markers.
+- [Automatic restart preservation and resume](step_7_nlfff/README.md#automatic-restart-preservation), using `preserve_restart.py`, `restart_state.py`, logging support and `test_resume.py`. Complete state packages are distinct from ordinary three-field checkpoints.
+- [Retained timestep-curve comparison](step_7_nlfff/analysis/dt_curve_comparison_from_minute_240_20261118.png): a diagnostic figure, not an additional completed run or a speed benchmark.
+
+A continuation from saved step 7600 was observed running on 18 November, with a complete step 11600 restart package when inspected. It had no finalized measurement report then. This dated observation does not guarantee current process status; read the selected run's CSV, `restart_checkpoints/latest.json` and eventual report for later progress. No process was started, stopped or changed for this documentation review.
 
 ## Scientific context and terminology
 
@@ -69,7 +94,7 @@ The two terms measure departures from force-free and divergence-free conditions.
 
 ## What exists now
 
-The folder retains one original observation snapshot, preprocessing and reconstruction source, analysis/plotting scripts, and the paper. Generated data, plots, caches and the compiled executable have been removed; the regeneration steps below describe their dependencies. See the folder guide below for the detailed file inventory.
+The folder retains one original observation snapshot, preprocessing and reconstruction source, analysis/plotting scripts, and the paper. Originally supplied generated products were removed from that source folder. Later measurement products, copied inputs, checkpoints and logs live in separate ignored `step_*/runs/` directories; they are local and are not supplied by a clone. See the folder guide below for the detailed file inventory.
 
 The inferred workflow is:
 
@@ -157,13 +182,13 @@ The decisions still needed before implementation are:
 - Target machine resources, representative input sizes and the current runtime.
 - Which analyses matter first, and the numerical tolerances and stopping criteria Anjan considers acceptable.
 
-The original brief was based on local source inspection and the supplied paper. The stagewise performance approach is documented; numerical optimisations, benchmark tooling and the UI are still pending.
+Stage measurement tools, CSV progress viewers and restart/resume are implemented. An unchanged-source OpenMP build/execution comparison has been measured but differs numerically and has not been accepted as an equivalent-output replacement. A general reusable pipeline, job-control UI and validated full-workflow acceleration remain future work.
 
 ---
 
 # Anjan’s performance enhancement work: folder guide
 
-This guide is based on inspection of the source and the originally supplied array headers. A historical partial workflow benchmark exists; a completed full reconstruction baseline has not been established. Generated artefacts were subsequently removed as documented below; scientific source code and original FITS inputs are unchanged.
+This guide is based on inspection of the source and the originally supplied array headers. Stage baselines and partial/resumed real WSR runs are recorded; a completed full reconstruction baseline has not been established. Generated artefacts were subsequently removed as documented below; scientific source code and original FITS inputs are unchanged.
 
 ## What the work is about
 
@@ -214,7 +239,7 @@ Main.py + laplace.py + vectormath.py
   → energy / alpha / field-line / slice analysis
 ```
 
-This order is inferred from reads and writes, rather than a supplied run script. Scripts use paths relative to the current working directory, so they expect execution from the observation folder. The saved C executable’s build options and correspondence to the source have not been verified.
+This is the dependency order of the original observation-folder scripts. The stage measurement runners now provide isolated entry points with explicit saved-input directories. Original scripts use the current working directory; recorded step 1 builds have compiler flags and source/executable hashes, while the removed originally supplied executable has no verified build provenance.
 
 ## Which files probably need performance work?
 
@@ -247,7 +272,7 @@ Repeated pixel-by-pixel list building, large text-file writes followed immediate
 
 `preproc.c` already contains conditional OpenMP directives. There is no supplied build recipe demonstrating whether the executable enables them. Its actual runtime should be measured before prioritising it.
 
-## Retained inputs and removed generated files
+## Historical source-folder cleanup and local run products
 
 Retained: **15 Python source files, `preproc.c`, three original FITS component files, the supplied paper and documentation**. The folder-local `.gitignore` prevents generated products from being added again.
 
@@ -268,6 +293,8 @@ Removed **26 generated files**, totalling 254,567,866 bytes (about 243 MiB):
 | `__pycache__/*.pyc` | 3 | Automatically generated Python bytecode caches. |
 
 Of these, 22 were tracked files; the weight volume and three bytecode caches were already ignored. No original FITS input or scientific source file was deleted. Deletion changes the working tree; previously committed copies remain in Git history.
+
+The removal inventory above describes the earlier source-folder cleanup, not deletion of the newer stage runs. Local stage runs may contain regenerated copies of these products, potential fields, WSR checkpoints and restart packages. Those ignored products are not guaranteed to exist on another machine.
 
 ### Regenerate the calculation inputs
 

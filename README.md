@@ -9,8 +9,8 @@ The main research direction is to **continue from Ananya’s PFSS and surface fl
 | Folder | Role | Current state |
 | --- | --- | --- |
 | [ananya's research work/](<ananya's research work/>) | Inherited PFSS, surface flux transport and spatial-scale experiments, plus an implementation review. | Research scripts are present. Required original FITS inputs and generated model archives are absent. No magnetofrictional solver is supplied here. |
-| [my work/](<my work/>) | Study, acquisition of observations, review and validation of the inherited foundations, and preparation for the magnetofrictional model. | Pre-SFT reconstruction is implemented and an accuracy comparison is retained. Magnetofriction remains at the study/planning stage; its engine and output modules are empty. |
-| [anjan's performance enhancement work/](<anjan's performance enhancement work/>) | A separate performance task centred on Anjan’s `Main.py`: acceleration, reusable processing and potentially a UI. | Supplied code and preparation data have been inspected and the task documented. Performance changes, a reusable runner and a UI have not been implemented. |
+| [my work/](<my work/>) | Study, acquisition of observations, review and validation of the inherited foundations, and preparation for the magnetofrictional model. | Pre-SFT reconstruction is implemented; a consolidated six-change ablation record is retained. Magnetofriction remains at the study/planning stage; its engine and output modules are empty. |
+| [anjan's performance enhancement work/](<anjan's performance enhancement work/>) | A separate performance task centred on Anjan’s `Main.py`: acceleration, reusable processing and potentially a UI. | Seven stage-specific measurement runners, baseline reports, CSV viewers and WSR restart/resume tooling are implemented. An OpenMP preprocessing trial is recorded; an equivalent-output accelerated full workflow has not been established. |
 
 The intended scientific relationship is:
 
@@ -37,7 +37,7 @@ This is a development direction, not an already connected execution pipeline. An
 
 ## Ananya’s inherited research
 
-[Her original README](<ananya's research work/README.md>) describes the supplied work and recommends her paper, *Uncovering the Dominant Spatial Scales of the Sun’s Magnetic Field in Solar Cycle 24*, for PFSS and Anthony Yeates’s thesis for SFT. Those references are pointers in the inherited documentation; their full texts are not included in this folder.
+[Her README](<ananya's research work/README.md>) describes the supplied work and recommends her paper, *Uncovering the Dominant Spatial Scales of the Sun’s Magnetic Field in Solar Cycle 24*, for PFSS and Anthony Yeates’s thesis for SFT. Those references are pointers in the inherited documentation; their full texts are not included in this folder.
 
 ### PFSS files
 
@@ -87,7 +87,7 @@ These findings guide what to investigate or change; they do not amount to reject
 | Path | Purpose |
 | --- | --- |
 | [data_acquisition/](<my work/data_acquisition/>) | HMI data-acquisition utilities for synoptic maps and fixed CR2191 full-disk observations. |
-| [hmi_fits_data/720x360/](<my work/hmi_fits_data/720x360/>) | Local collection of 221 HMI radial synoptic maps, CR2096–CR2316 inclusive. CR2096 is the preserved historical input; CR2097–CR2316 are the current JSOC archive range. |
+| [hmi_fits_data/720x360/](<my work/hmi_fits_data/720x360/>) | Local collection of 221 HMI radial synoptic maps, CR2096–CR2316 inclusive. CR2096 is the preserved historical input; CR2097–CR2316 were the archive range recorded when this collection was documented. |
 | [hmi_fits_data/.gitattributes](<my work/hmi_fits_data/.gitattributes>) | Marks FITS files as binary to preserve their bytes. |
 | [requirements.txt](<my work/requirements.txt>) | Astropy and SciPy requirements for the current data tools and reconstruction, with NumPy available through dependencies. It is not a complete environment specification for all inherited code or the future MF solver. |
 
@@ -127,51 +127,45 @@ These are historical learning notes, not authoritative specifications or validat
 
 ## Anjan’s separate performance task
 
-[The folder README](<anjan's performance enhancement work/README.md>) contains the task definition, parallelisation limits, proposed reusable stages, optional UI scope and detailed code review. The folder was previously called `anjan's optimisation work`; old IDE tabs may still show that path.
+[The folder guide](<anjan's performance enhancement work/README.md>) describes the seven-stage workflow, implemented measurement tools, performance scope and outstanding work. [SETUP.md](<anjan's performance enhancement work/SETUP.md>) covers dependencies and execution; [PERFORMANCE_LOG.md](<anjan's performance enhancement work/PERFORMANCE_LOG.md>) preserves historical experiment entries. The folder was previously called `anjan's optimisation work`.
 
-The observation subfolder `hmi.sharp_cea_720s.4698.20141022_000000_TAI/` contains:
+The supplied observation folder contains the original scientific Python/C sources. Its three SHARP component FITS files are local, ignored inputs. Previously supplied generated products were cleaned from that source folder; newer measurement products are isolated under each stage's ignored `runs/` directory. They are not guaranteed to exist in a clone.
 
-| Files or group | Role |
+| Stage | Implemented tool and retained evidence |
 | --- | --- |
-| Three `.Bp.fits`, `.Bt.fits`, `.Br.fits` files | Input vector-field observation for SHARP patch 4698 at 2014-10-22 00:00:00 TAI. |
-| `fitsdataextraction.py`, `HMIdataplot.py` | Extract/resample components and view the original radial map. |
-| `preproc.c`, compiled `preproc` | Surface-boundary preprocessing source and executable. |
-| `plot.py` | Packages processed fields into NumPy arrays and compares them with the input maps. |
-| `Main.py` | Initial Cartesian potential-field calculation, grid/boundary preparation and iterative 3D WSR reconstruction. Confirmed target of the performance task. |
-| `laplace.py`, `vectormath.py`, `weightfunction.py` | Potential solver, curl/divergence helpers and boundary-taper weights. |
-| `changeresolution.py` | Interpolates saved 3D fields onto an analysis box. |
-| `Freeenergy.py`, `Freeenergyintegrated.py` | Energy comparisons using sums or volume integration. |
-| `alphaparameter.py`, `alphaparameter1.py` | Related alpha-parameter analyses and plots. |
-| `unsignedfluxfromfitsfile.py` | Unsigned-flux calculation from the radial FITS map. |
-| `plot_dual_fieldlines.py`, `plotCurrent.py` | Initial/reconstructed field-line comparisons and slice/curl-based visualisation. |
-| `outputB*.dat` | Extracted original component maps as coordinate/value text. |
-| `interpolated_dataB*.dat`, `interpolated_B*.dat` | Resampled text maps; each corresponding pair is byte-identical in this snapshot. |
-| `Bpre.dat`, `Bfield_processed.dat` | Preprocessing outputs in different text layouts. |
-| `Preprocessedmagneticfield/`, `Preprocessedmagneticfield_interpolated/` | Prepared 300×300 component arrays before/after box interpolation. |
-| `weight_function/W.npy` | Generated 300×300×150 weighting volume, retained locally and excluded from Git. Regenerate with `weightfunction.py` from the observation folder. |
-| `max_alpha.dat`, `frame_0000.png`, `frame_0001.png`, `alpha_animation.gif` | Retained analysis/visualisation artefacts; these alone do not demonstrate a completed reconstruction run. |
+| [1: compile](<anjan's performance enhancement work/step_1_compile/README.md>) | Compilation runner; original and OpenMP build reports. |
+| [2: extract](<anjan's performance enhancement work/step_2_extract/README.md>) | FITS extraction/resampling runner; completed original trial. |
+| [3: preprocess](<anjan's performance enhancement work/step_3_preprocess/README.md>) | C execution runner; original, OpenMP and original-recheck reports. The faster OpenMP output differs numerically. |
+| [4: package](<anjan's performance enhancement work/step_4_package/README.md>) | Boundary-packaging runner and completed original trial. |
+| [5: weights](<anjan's performance enhancement work/step_5_weights/README.md>) | Weight-generation runner and completed original trial. |
+| [6: potential field](<anjan's performance enhancement work/step_6_potential/README.md>) | Isolated Main.py prefix, completed 2,273.691902 s trial, CSV logging and a localhost viewer. An earlier 600 s trial timed out. |
+| [7: WSR/NLFFF](<anjan's performance enhancement work/step_7_nlfff/README.md>) | Isolated Main.py suffix, time-capped real-observation runs, live CSV charts, automatic restart preservation, state validation, resume support and a tiny-fixture resume test suite. Full reconstruction completion is not established. |
 
-`Wheatland_2000_ApJ_540_1150.pdf` is the supplied paper explaining the underlying scientific optimisation method. The initial and reconstructed 3D-field directories referenced by downstream scripts are absent.
+The latest finalized step 7 report is [the 17 November resumed run](<anjan's performance enhancement work/step_7_nlfff/nlfff_20261117_155657_781931.md>): it timed out after a 2,700 s limit and preserved step 7600. A further continuation from that package was observed running during this documentation review on **18 November 2026**; it had a complete step 11600 package when inspected. This is a dated local status snapshot, not a completed timing or a claim that the process remains running whenever this README is read. Consult its run metadata and CSV for subsequent progress.
 
-Successive solver iterations depend on previous states. Work within an iteration and independent observations may be parallelised; a useful complementary deliverable is to save and reuse completed stages so a user can select an observation and operation without repeating the entire computation. A UI would sit on that reusable workflow. These remain proposed deliverables.
+The viewers are read-only progress tools, not a general observation-selection or job-submission UI. Stage runners reuse explicitly selected saved inputs; a general dependency-aware cached pipeline remains future work. Scientific equations in the inherited Main.py are preserved by the measurement/restart tooling. No full-workflow speedup or equivalent-output OpenMP replacement is claimed.
 
 ## Root files, execution and repository state
 
-- `allinonesunvisual.md` currently contains one external solar-visualisation URL. It is a bookmark, not a local application.
+- [visualisation websites.md](<visualisation websites.md>) contains external solar-visualisation bookmarks, not a local application.
 - `.gitignore` excludes `.venv/`, Python caches/bytecode, generated products and FITS observation files. FITS data are kept locally, not distributed with a clone. Previously committed data remain in Git history.
 - `.git/` holds repository metadata. `__pycache__/` folders contain generated interpreter caches rather than research source or results.
 
 There is no single command that runs this whole repository. For the current data tools, follow [my work/README.md](<my work/README.md>); inherited research scripts need their own inputs, dependencies and configuration. Many scripts execute substantial work when imported. Paths, dates and output locations should be checked before running them.
 
-This overview is based on the current files, source inspection and retained reports. Preparing it did not run the SFT, PFSS, WSR or MF simulations or independently reproduce the archived numerical comparisons.
+This overview is based on the current files, source inspection and retained reports. Updating this overview did not start, stop or modify any simulation or independently reproduce archived numerical results. Status and figures are attributed to retained reports and, where explicitly dated, read-only local run inspection.
 
 ## Acquiring observation inputs after cloning
 
 FITS files are local data and are not tracked by Git. The inventories above describe the local research data and expected inputs, not files guaranteed to arrive with a clone.
 
 - Run `my work/data_acquisition/download_synoptic_maps.py` and select the low-resolution product to acquire the synoptic maps. The current reconstruction specifically needs CR2190, CR2191 and CR2192; newer maps are not substitutes for that experiment. The downloader checks the archive and offers missing maps, rather than automatically running an analysis.
-- Run `my work/data_acquisition/download_cr2191_hmi_observations.py` to reacquire its fixed June 2017 full-disk observation records if repeating the observational comparison. The cleaned comparison archive does not include its original analysis runner.
+- Run `my work/data_acquisition/download_cr2191_hmi_observations.py` to reacquire its fixed June 2017 full-disk observation records if repeating the observational comparison. The retained ablation document summarizes the study; the superseded comparison arrays, plots and analysis runner are no longer present.
 - Anjan’s three SHARP files require separate acquisition: `hmi.sharp_cea_720s`, patch 4698, `2014.10.22_00:00:00_TAI`, segments `Bp`, `Bt`, `Br`. There is no downloader for that set in this repository. Existing local copies are preserved.
 - Ananya’s original MDI-labelled maps, CR2193 PFSS input and dated experiment map also require separate acquisition and provenance checks; the supplied scripts do not provide one automatic downloader for all of them.
 
 These scripts require archive availability and suitable dependencies. Retrieving the latest observations alone does not reproduce the historical experiments.
+
+## Documentation review
+
+Reviewed on **18 November 2026 (Asia/Kolkata)** against the current source, retained reports and local metadata. The project and stage READMEs describe current capabilities; timestamped reports preserve measurements as recorded. Historical entries in PERFORMANCE_LOG.md can describe earlier preparation states and should be read with their dates.

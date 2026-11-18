@@ -30,3 +30,9 @@ Each graph has a **Fullscreen** button. The selected panel fills the screen whil
 ## Moving hover marker
 
 Move over any graph to see a highlighted dot snap to the nearest visible logged point, with a vertical guide and value bubble. The bubble shows the graph's value, attempt/accepted-step counts, elapsed minutes and event. It follows the curve's recorded samples rather than inventing interpolated values. Markers work in zoomed/fullscreen views, hide during drag selection or on pointer leave, and are restored during live redraws while the pointer remains over the graph. No data or solver settings are changed.
+
+## Resumed runs and retained evidence
+
+The viewer supports the history/`resumed` rows written by the current [measurement and resume tools](../README.md). A resumed invocation writes a new CSV with preserved history and a continued active-time axis; this is not the same as the wall time of that invocation or the numerical relaxation time. Start a new viewer or pass `--csv` to select that new file: an existing server never follows the newest run automatically after startup.
+
+[The step 7 guide](../README.md#current-status) links the finalized bounded-run reports and a dated 18 November continuation snapshot. The [retained timestep comparison](../analysis/dt_curve_comparison_from_minute_240_20261118.png) is a static diagnostic, not the live source. Run CSVs and restart packages are local ignored artifacts; a clone does not contain them. Checkpoint capture/resume is handled by the runner, not by browser controls. Documentation reviewed 18 November 2026; no live data were modified.

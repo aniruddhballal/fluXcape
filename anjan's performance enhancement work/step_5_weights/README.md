@@ -19,3 +19,7 @@ Measurements cover grid/weight generation, saving W.npy, contour construction an
 The report records wall/CPU time, peak RSS, output bytes/hash, source hash and environment. GNU time RSS is the largest individual process peak; psutil samples simultaneous process-tree RSS at 20 ms and may double-count shared pages or miss brief peaks. Match measurement backend/settings for before/after comparisons. One invocation is one trial; use repeated completed runs for a median comparison when testing a candidate.
 
 The original implementation and numerical settings are unchanged. Future candidates must preserve its generated weights and output interface. Record baseline and candidate results in [PERFORMANCE_LOG.md](../PERFORMANCE_LOG.md).
+
+## Retained baseline
+
+The [13 November completed trial](weights_20261113_163255_483855.md) records **23.271376 s** wall time, 25.18 s CPU time and 193.046875 MiB GNU time peak RSS. The generated float64 weight volume has shape 300×300×150 and occupies 108,000,128 bytes including its NumPy header. Step 7 reuses this saved volume. This is one original trial, not a before/after speedup. Generated arrays remain local ignored run products; the report is retained. Documentation reviewed 18 November 2026; no weight generation was started for this update.

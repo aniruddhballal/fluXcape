@@ -68,7 +68,7 @@ They must contain the expected component maps in FITS HDU 1. The filenames and o
 
 The current approach is documented in [README.md](README.md): measure and improve one of the seven stages at a time using fixed inputs, rather than require a full end-to-end baseline first. The old end-to-end testing scripts and report were removed. A focused compilation-only tool is now available: see [step_1_compile/README.md](step_1_compile/README.md). It does not run the remaining workflow. For the next stage, see [step_2_extract/README.md](step_2_extract/README.md) for the extraction-only measurement command and dependencies.
 
-When implementing each stage's tests, compare original/candidate runtime, peak RAM, storage and numerical outputs with matching settings. Sum comparable stage times for an approximate serial total; use the maximum memory peak rather than their sum. Main.py still contains stages 6 and 7 together; the step 6 measurement script now executes its unchanged initial-field prefix separately. Step 7 measurement is future work.
+When implementing each stage's tests, compare original/candidate runtime, peak RAM, storage and numerical outputs with matching settings. Sum comparable stage times for an approximate serial total; use the maximum memory peak rather than their sum. Main.py still contains stages 6 and 7 together; the step 6 measurement script now executes its unchanged initial-field prefix separately. Step 7 measurement, CSV viewing, automatic restart preservation and resume are implemented; use [its guide](step_7_nlfff/README.md) for fresh/resume preflight and commands.
 
 ## Run individual stages
 
@@ -126,4 +126,8 @@ See [step_6_potential/README.md](step_6_potential/README.md). Supply the saved s
 
 ## Step 7 baseline
 
-See [step_7_nlfff/README.md](step_7_nlfff/README.md). Supply the completed step 6 run and saved step 5 run. The runner executes only the original WSR reconstruction suffix and defaults to a 600-second cap. Preflight is available with --check-only; no real reconstruction has been started while preparing these files.
+See [step_7_nlfff/README.md](step_7_nlfff/README.md). Supply the completed step 6 run and saved step 5 run. The runner executes only the original WSR reconstruction suffix and defaults to a 600-second cap. Preflight is available with --check-only. Real bounded runs and resumed continuations are recorded in its README and timestamped reports; none establishes full reconstruction completion. The 18 November documentation review did not launch a solver.
+
+## Current tool status
+
+All seven isolated stage runners are implemented. Completed stage reports, partial WSR reports, the OpenMP output-difference result, local viewer commands and restart/resume guidance are indexed in [README.md](README.md#implemented-capabilities-and-evidence-reviewed-18-november-2026). The earlier preparation narrative above is not a requirement to rerun stages whose compatible saved outputs already exist. Reports are retained in Git; stage `runs/` directories, raw FITS observations and generated arrays remain local. Documentation reviewed 18 November 2026.

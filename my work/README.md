@@ -15,10 +15,10 @@ reconstructing a photospheric magnetic-field map before surface flux transport
 |---|---|
 | [magnetofriction/](magnetofriction/) | The intended final model: planning files and theory/numerical-method study notes. The solver is not implemented yet. |
 | [pre_iisc_self_study/](<pre_iisc_self_study/>) | Personal solar-physics exploration from before joining IISc, undertaken out of interest over roughly one week before work began. These are historical learning notes and early research directions. |
-| [pre_sft_reconstruction/](pre_sft_reconstruction/) | The implemented three-map pre-SFT reconstruction and its retained accuracy comparison. |
-| [hmi_fits_data/](hmi_fits_data/) | Shared FITS data storage. Currently contains 221 low-resolution HMI synoptic maps in `720x360/`, CR2096–CR2316 inclusive. CR2096 is the preserved historical input; CR2097–CR2316 are the current JSOC archive range. |
+| [pre_sft_reconstruction/](pre_sft_reconstruction/) | The implemented three-map pre-SFT reconstruction and its consolidated ablation/validation record. |
+| [hmi_fits_data/](hmi_fits_data/) | Shared FITS data storage. Currently contains 221 low-resolution HMI synoptic maps in `720x360/`, CR2096–CR2316 inclusive. CR2096 is the preserved historical input; CR2097–CR2316 were the archive range recorded for this local collection. |
 | [data_acquisition/](data_acquisition/) | Data-download utilities for HMI synoptic maps and CR2191 full-disk observations. |
-| [requirements.txt](requirements.txt) | Python dependency requirements for the FITS tools and pre-SFT reconstruction. This is a `.txt` file, not a `.tsx` file. |
+| [requirements.txt](requirements.txt) | Python dependency requirements for the FITS tools and pre-SFT reconstruction. It covers the current data tools and reconstruction. |
 
 The two HMI downloaders are grouped in `data_acquisition/`.
 There are additional Python files inside `pre_sft_reconstruction/` and `magnetofriction/`,
@@ -44,6 +44,12 @@ they do not yet form a working model:
   They explain the ideas being studied and the implementation questions still
   to resolve; they are not a finalized solver specification.
 
+The equations guide includes vector-calculus examples, the force → artificial
+velocity → induction-update sequence, friction conventions, weak-field
+handling, illustrative Euler stepping, coordinate/component conversion, and
+seven implementation questions to discuss before selecting the solver scope.
+These are study records; neither empty Python placeholder is a working engine.
+
 ## Personal study before IISc
 
 [pre_iisc_self_study/](<pre_iisc_self_study/>) preserves the earlier, approximately week-long
@@ -60,7 +66,7 @@ period of self-directed exploration:
 These files preserve the learning process and its context. The implementation
 status is described in the model-development section above.
 
-## Pre-SFT reconstruction and accuracy comparison
+## Pre-SFT reconstruction and ablation record
 
 [pre_sft_reconstruction/reconstruct_synoptic_map.py](pre_sft_reconstruction/reconstruct_synoptic_map.py) reconstructs a radial magnetic-field map
 from three neighboring HMI synoptic maps:
@@ -87,11 +93,20 @@ implementation. It records the physical rationale, stepwise quantitative
 effects, cumulative improvement, validation methodology, masks, limitations,
 and the fact that full SFT evolution was not run.
 
+The ablation record covers seven cumulative versions (V0–V6): colatitude,
+neighboring-rotation selection, sampling sign, exact time denominator, FITS
+pixel centers, and gap-preserving interpolation. Its pooled synthetic RMSE
+changes from 17.7057 G to 7.1335 G (59.71% lower); individual changes are not
+uniformly beneficial on every metric. Literal V0–V5 are unscorable on the raw
+missing-data inputs; their finite observational comparison uses a separately
+labeled nearest-filled diagnostic. These are reported study results, not new
+calculations performed for this README. The older multi-file accuracy archive
+has been superseded by this single retained justification document.
+
 ## FITS data and the two download scripts
 
 [hmi_fits_data/](hmi_fits_data/) stores shared data rather than model code or project
-documentation. Its `.gitattributes` file marks FITS files as binary so Git
-preserves their bytes. The CR2190–2192 maps needed by `pre_sft_reconstruction/reconstruct_synoptic_map.py` remain
+documentation. Its `.gitattributes` file marks FITS files as binary; the repository now ignores and leaves FITS data untracked, so these observations are local inputs rather than clone contents. The CR2190–2192 maps needed by `pre_sft_reconstruction/reconstruct_synoptic_map.py` remain
 in `720x360/`.
 
 ### Synoptic-map downloader
@@ -133,8 +148,7 @@ validation, SFT, or magnetofrictional evolution.
 
 Both downloaders resolve their destinations relative to their own script
 locations, independently of the shell's working directory. Network access to
-JSOC is needed to use them. Reading the retained comparison report and tables
-does not require downloading observations again.
+JSOC is needed to use them. Reading the retained ablation record does not require downloading observations again.
 
 ## Dependencies and running the tools
 
@@ -170,3 +184,7 @@ it does not invoke either downloader automatically.
 ## Local FITS storage and cloning
 
 FITS files are ignored and untracked; the local collection described above remains on the working machine but is not included in a fresh clone. Use the synoptic downloader to acquire the required rotations before running reconstruction (currently CR2190–2192). Use the observation downloader for the fixed CR2191 full-disk records when needed. Fetching newer observations does not replace the specific inputs required to reproduce these experiments.
+
+## Documentation status
+
+Reviewed on **18 November 2026 (Asia/Kolkata)**. This guide describes the files currently retained here; earlier experiments and removed binary data may still be described historically in the ablation record or Git history. Anjan’s separate stage measurements, viewers and restart tools are documented in [their folder guide](<../anjan's performance enhancement work/README.md>), not part of the planned MF solver.

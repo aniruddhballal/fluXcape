@@ -42,4 +42,6 @@ Keep the original script unchanged. A candidate can later be benchmarked with `-
 
 ## Current status
 
-Source inspected and extraction-only measurement script prepared. Structural smoke checks passed using small stand-in fixtures, including timeout termination. The current Linux Python interpreter lacks the scientific dependencies, so no original scientific extraction baseline has been measured here. No candidate optimisation has been implemented yet.
+The [original extraction trial](extraction_20261113_120212_837984.md) completed on 13 November 2026: wall time **47.256584 s**, CPU time 57.32 s, GNU time peak RSS **2,399.468750 MiB**, and six generated text files totaling **124,586,983 bytes**. This supersedes the earlier dependency-pending preparation status. It is one trial, not a repeated median or an optimized candidate comparison.
+
+The run report records the actual installed environment. Original source and input copies remain unchanged; generated outputs and raw measurements are in its ignored local run directory. A clone needs the three SHARP FITS observations and regenerated outputs. No new extraction was run for the README review on 18 November 2026.

@@ -52,7 +52,20 @@ The unchanged configuration permits **2,000,001 accepted steps** and can stop ea
 
 ## Current status
 
-Files prepared; preflight passes for the saved step 5/6 inputs. The real reconstruction has **not** been started. An isolated tiny 4×4×4 synthetic smoke test verified suffix execution, initial/final checkpoint writing and report generation; it is a tooling test, not a measured baseline for the real observation. Record actual runs in [PERFORMANCE_LOG.md](../PERFORMANCE_LOG.md).
+Real-observation runs and resumed continuations have been executed. The retained finalized runs below all ended at their time limits; none establishes full reconstruction completion. Small synthetic smoke/resume tests verify the tooling rather than physical accuracy or full-scale speedup.
+
+| Run | Start state | Time limit | Highest saved field step | Retained report |
+| --- | --- | ---: | ---: | --- |
+| 16 November, 11:52 | Fresh step 6 inputs | 600 s | 0 | [Initial bounded trial](nlfff_20261116_115212_374166.md) |
+| 16 November, 12:19 | Fresh step 6 inputs | 14,400 s | 3600 | [Four-hour trial](nlfff_20261116_121943_573055.md) |
+| 17 November, 11:50 | Restart package step 3600 | 14,400 s | 7000 | [Resumed trial](nlfff_20261117_115008_927724.md) |
+| 17 November, 15:56 | Restart package step 7000 | 2,700 s | 7600 | [Resumed trial with automatic preservation](nlfff_20261117_155657_781931.md) |
+
+Saved field steps are not the exact terminal accepted-step counts. For example, the four-hour run progressed beyond its saved step 3600; unsaved progress must be repeated on resume. Reports distinguish ordinary field checkpoints from complete restart packages and record each invocation's measurements separately.
+
+A further run, `runs/20261118_102825_170239/`, was observed active during the **18 November 2026** documentation review. It was launched from the step 7600 restart package with `--max-seconds 0` (no time cap). At the read-only inspection around 15:13 IST, its CSV recorded accepted step 11761 and `restart_checkpoints/latest.json` identified a complete step 11600 package. No finalized `measurements.json` or timestamped report existed then. These are dated observations, not completed baseline values or a promise of current process status. The documentation update did not touch the worker, its CSV or checkpoints.
+
+Historical experiment entries remain in [PERFORMANCE_LOG.md](../PERFORMANCE_LOG.md); earlier preparation statements there predate these runs.
 
 ## CSV progress and four-hour run
 
@@ -98,7 +111,7 @@ Packages contain the accepted field, original step-0 boundary reference, weight 
 
 The initial four-hour run already writes the CSV information needed to recover dt and time history. That is why useful restart data can be preserved without injecting new code into its live process. Unsaved attempts after the selected checkpoint must be repeated; the preservation cannot recover the exact state at an arbitrary timeout instant. Identical continuation requires the same numerical environment and copied equations. An isolated tiny test verified that continuing one step from a preserved checkpoint exactly matches uninterrupted fields, L, dt and time history.
 
-This tool preserves restart data. The measurement runner now supports --resume as described below. No real observation was restarted while implementing or testing the feature.
+This tool preserves restart data. The measurement runner now supports --resume as described below. The small implementation tests did not restart a real observation; the subsequent real resumes are recorded in the status table above.
 
 ## Resume a preserved checkpoint
 
@@ -130,4 +143,18 @@ Tests (small synthetic workload only):
 python -m unittest discover -s . -p test_resume.py -v
 ```
 
-The integration test compares uninterrupted versus resumed fields and L arrays bit-for-bit, dt/time history and progress counts; it tests a second preservation/resume and rejects a damaged package. The original Main.py/equations remain unchanged. No real observation reconstruction is launched by the tests.
+The integration test compares uninterrupted versus resumed fields and L arrays bit-for-bit, dt/time history and progress counts; it tests a second preservation/resume and rejects a damaged package. The original Main.py/equations remain unchanged. No real observation reconstruction is launched by these tests; the real run reports above are separate execution evidence.
+
+## Tool and evidence map
+
+| File/location | Role |
+| --- | --- |
+| [measure_nlfff.py](measure_nlfff.py) | Fresh/resume preflight, isolated execution, timing, reports, and automatic preservation supervision. |
+| [progress_log.py](progress_log.py) | CSV progress instrumentation and resumed-history handling. |
+| [preserve_restart.py](preserve_restart.py) | Captures complete periodic accepted-step packages; supports a read-only watcher for older runs. |
+| [restart_state.py](restart_state.py) | Validates saved files, hashes, shapes, history and environment, restores runtime state, and generates the original-loop continuation. |
+| [test_resume.py](test_resume.py) | Tiny synthetic uninterrupted-versus-resumed equivalence and damaged-package tests. |
+| [live_viewer/](live_viewer/README.md) | Read-only CSV charts with zoom, fullscreen and moving sample markers. |
+| [Timestep-curve comparison, 18 November](analysis/dt_curve_comparison_from_minute_240_20261118.png) | Retained diagnostic plot. It is not an additional solver run, a convergence proof or a performance benchmark. |
+
+`runs/` holds ignored local inputs, copied source, arrays, CSVs and complete restart packages. A clone supplies the tools and retained reports, not those run products. A raw `Optimizedmagneticfield/step_N/` field directory is not interchangeable with a validated `restart_checkpoints/step_N/` package. For an existing local run, read `restart_checkpoints/latest.json` rather than assuming the illustrative step 3600 path is the newest package. A new viewer process is needed to select a newly created resumed CSV; already-open viewers stay attached to their selected file.

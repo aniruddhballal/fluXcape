@@ -17,3 +17,7 @@ Timing includes reading, reshaping, NumPy saves, six contour plots and layout ca
 Reports record wall/CPU time, peak RSS, source/input hashes, versions and output bytes/hashes. GNU time RSS is the largest individual process peak; psutil samples simultaneous process-tree RSS at 20 ms and may double-count shared pages or miss brief peaks. Match backend, inputs, plotting mode and workload for candidate comparisons. One run is one trial; collect repeated completed runs for a median comparison when testing improvements.
 
 The original behaviour is the reference. No candidate has been implemented. Record measurements in [PERFORMANCE_LOG.md](../PERFORMANCE_LOG.md).
+
+## Retained baseline
+
+The [13 November completed trial](package_20261113_160555_320989.md) records **1.165231 s** wall time, 3.05 s CPU time and 212.480469 MiB GNU time peak RSS. Three 300×300 component arrays total 2,160,384 bytes. This is a single unchanged-source baseline; no optimized candidate or speedup is established. Its outputs are explicitly reused by step 6. The report is retained in Git, while copied inputs and generated arrays are local ignored run products. Documentation reviewed 18 November 2026; no packaging run was started for this update.

@@ -19,3 +19,15 @@ Executable and inputs are copied and hashed into ignored `runs/<timestamp>/` dir
 The report records elapsed time, CPU time, peak RSS, executable/input hashes, output size/hashes and environment. GNU time RSS is the largest individual process peak; psutil samples process-tree RSS and may miss short peaks or double-count shared pages. Timeout results are partial, not completed baselines. Retain the original verbosity and numerical settings for performance comparisons.
 
 For candidate comparisons, keep the three input maps fixed and select a separately compiled candidate with `--binary`. Record the compiler flags and source commit/hash from its build report, and validate output shapes, coordinates, finite values and field differences before accepting faster execution. Update [PERFORMANCE_LOG.md](../PERFORMANCE_LOG.md) with retained measurements and their limitations.
+
+## Recorded original/OpenMP comparison
+
+Reviewed against retained reports and the output-comparison entry in [PERFORMANCE_LOG.md](../PERFORMANCE_LOG.md#step-3--unchanged-source-openmp-comparison--2026-11-17) on 18 November 2026:
+
+| Execution | Wall time (s) | Report |
+| --- | ---: | --- |
+| Original `-O3`, 13 November | 2.549950 | [Original baseline](preprocess_20261113_154914_817499.md) |
+| `-O3 -fopenmp`, 8 threads, 17 November | 0.582391 | [OpenMP trial](preprocess_20261117_113050_217567.md) |
+| Original `-O3` recheck, 17 November | 2.488151 | [Original recheck](preprocess_20261117_113257_948829.md) |
+
+All used the same saved step 2 inputs and unchanged C source. Original-recheck outputs match the original baseline numerically. The OpenMP outputs differ: maximum absolute differences are 1.207747 G in `Bpre.dat` and 1.208 G in `Bfield_processed.dat`. Its roughly 4.38× lower wall time relative to the first trial is not an accepted equivalent-output speedup. The cause and acceptability of the differences remain unresolved. These are single execution trials, not repeated medians; no scientific correction or source modification was made.
