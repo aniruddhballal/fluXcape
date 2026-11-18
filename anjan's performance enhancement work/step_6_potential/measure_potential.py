@@ -32,7 +32,7 @@ def main():
     parser.add_argument('--source-dir', type=Path, default=ROOT.parent / 'hmi.sharp_cea_720s.4698.20141022_000000_TAI')
     parser.add_argument('--input-dir', type=Path, required=True, help='Step 4 run directory containing Preprocessedmagneticfield/')
     parser.add_argument('--label', default='original')
-    parser.add_argument('--implementation', choices=('original', 'optimised'), default='original',
+    parser.add_argument('--implementation', choices=('original', 'optimised', 'optimised-v2'), default='original',
                         help='Solver implementation; original remains the default')
     parser.add_argument('--first-field-only', action='store_true',
                         help='Stop after the first three field files; exclude interpolation')
@@ -43,7 +43,7 @@ def main():
     if args.max_seconds < 0:
         parser.error('time limit must be nonnegative')
     packages = ['numpy', 'scipy', 'matplotlib', 'psutil']
-    if args.implementation == 'optimised':
+    if args.implementation != 'original':
         packages.append('numba')
     linux = sys.platform.startswith('linux') and Path('/usr/bin/time').is_file()
     if linux:
@@ -89,14 +89,15 @@ def main():
             raise ValueError('Expected nine original saves; review source boundaries')
         prefix = ''.join(prefix.splitlines(keepends=True)[:saves[2].end_lineno])
     original_prefix = prefix
-    if args.implementation == 'optimised':
-        shutil.copy2(ROOT / 'optimised_laplace.py', run / 'optimised_laplace.py')
+    solver_module = 'optimised_laplace_v2' if args.implementation == 'optimised-v2' else 'optimised_laplace'
+    if args.implementation != 'original':
+        shutil.copy2(ROOT / f'{solver_module}.py', run / f'{solver_module}.py')
         # Override only the active solver after imports. Original source is untouched.
         nodes = ast.parse(prefix).body
         setup = next(node for node in nodes if assigns(node, 'Nx'))
         lines = prefix.splitlines(keepends=True)
         lines.insert(setup.lineno - 1,
-                     'from optimised_laplace import solve_pfss_cartesian_vectorized\n')
+                     f'from {solver_module} import solve_pfss_cartesian_vectorized\n')
         prefix = ''.join(lines)
     stage_script = run / '_step6.py'
     stage_script.write_text(prefix, encoding='utf-8')
@@ -108,7 +109,8 @@ def main():
     state = {'label': args.label, 'status': 'running', 'started': datetime.now().astimezone().isoformat(),
              'implementation': args.implementation, 'first_field_only': args.first_field_only,
              'original_prefix_sha256': hashlib.sha256(original_prefix.encode()).hexdigest(),
-             'optimised_solver_sha256': digest(run / 'optimised_laplace.py') if args.implementation == 'optimised' else None,
+             'optimised_solver_sha256': digest(run / f'{solver_module}.py') if args.implementation != 'original' else None,
+             'optimised_solver_file': f'{solver_module}.py' if args.implementation != 'original' else None,
              'platform': platform.platform(), 'processor': platform.processor(), 'logical_cpus': os.cpu_count(),
              'python': sys.version, 'versions': {p: importlib.metadata.version(p) for p in packages},
              'command': command, 'copied_files': copied, 'run_directory': str(run),
@@ -192,6 +194,8 @@ def main():
         state['outputs'] = [{'name': str(p.relative_to(run)), 'bytes': p.stat().st_size, 'sha256': digest(p)} for p in outputs]
         state['generated_data_bytes'] = sum(p.stat().st_size for p in outputs)
         state['expected_outputs_present'] = len(outputs) == len(expected_outputs)
+        if (run / 'solver_runtime.json').is_file():
+            state['solver_runtime'] = json.loads((run / 'solver_runtime.json').read_text(encoding='utf-8'))
         (run / 'measurements.json').write_text(json.dumps(state, indent=2), encoding='utf-8')
         report.write_text('# Step 6: initial potential field measurement\n\n'
             f'Implementation: {args.implementation}. First field only: {args.first_field_only}. '

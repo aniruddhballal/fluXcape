@@ -78,6 +78,14 @@ All three output files were independently rehashed and compared: byte-identical 
 
 See [comparison_windows_20261118.md](comparison_windows_20261118.md) for full metrics, component ranges/hashes, progress samples, environment and limitations. This is one run per implementation, not a repeated-trial median. The actual Numba worker count was not recorded; `OMP_NUM_THREADS=8` alone does not establish it. The question below remains unanswered.
 
+## Second optimisation after device inspection
+
+The user requested inspection of this device and a separate second optimised implementation (third solver overall) if further gains could be demonstrated. The relevant device is an HP Victus with Ryzen 5 5600H (6 cores/12 logical processors), one 8 GiB RAM module configured at 3200 MT/s, GTX 1650 with 4 GiB VRAM and Windows 11. See [device_and_v2_windows_20261118.md](device_and_v2_windows_20261118.md) for the inventory, raw benchmark link and limitations. Numba's CUDA compiler runtime is unavailable locally; no GPU performance claim is made.
+
+`optimised_laplace_v2.py` is selected through the same runner with `--implementation optimised-v2 --first-field-only`. Original remains the default; the original code and version 1 module are unchanged. V2 preserves the float64 field expression, arithmetic order, gradients, scaling, boundary values and stopping rule. It replaces the floating maximum recurrence with an exact unsigned ordering of the nonnegative float64 error bit patterns, viewed back as float64 for the stopping comparison. This allows SIMD with fast-math disabled; it does not lower precision. NaN handling and exceptional-input fallbacks are covered by tests.
+
+Three 60-update full-grid trials per implementation at 1, 2, 4, 6, 8 and 12 workers all produced bit-identical potentials and error histories. Four workers gave the lowest v2 median in this sweep, so v2 defaults to up to four workers. An explicit `NUMBA_NUM_THREADS` overrides this choice. Actual worker count and threading layer are recorded in `solver_runtime.json` and the run report. Seven unit/integration tests passed, covering all three selectors. A complete v2 observation run is being validated separately; fixed-workload results alone are not a full-solve speedup or proof of a global optimum.
+
 ## User's question after the first implementation
 
 Record only; the user explicitly requested that this question remain unanswered here and in chat for this documentation task.

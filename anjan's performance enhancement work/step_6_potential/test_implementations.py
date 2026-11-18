@@ -26,6 +26,7 @@ spec.loader.exec_module(original)
 sys.modules['laplace'] = original
 sys.modules['_step6_progress'] = progress_log
 from optimised_laplace import solve_pfss_cartesian_vectorized as optimised
+from optimised_laplace_v2 import solve_pfss_cartesian_vectorized as optimised_v2
 
 
 class Implementations(unittest.TestCase):
@@ -43,8 +44,9 @@ class Implementations(unittest.TestCase):
         before = field.copy()
         with contextlib.redirect_stdout(io.StringIO()):
             expected = original.solve_pfss_cartesian_vectorized(field, 1.7, 2.3, 0.8, **options)
-            actual = optimised(field, 1.7, 2.3, 0.8, **options)
-        np.testing.assert_array_equal(actual.view(np.uint64), expected.view(np.uint64))
+            for candidate in (optimised, optimised_v2):
+                actual = candidate(field, 1.7, 2.3, 0.8, **options)
+                np.testing.assert_array_equal(actual.view(np.uint64), expected.view(np.uint64))
         np.testing.assert_array_equal(field.view(np.uint64), before.view(np.uint64))
 
     def test_exact_iterations_and_boundaries(self):
@@ -62,15 +64,16 @@ class Implementations(unittest.TestCase):
             expected = namespace['solve_pfss_cartesian_vectorized'](initial, 1.7, 2.3, 0.8, verbose=True)
         with Path('convergence.csv').open(encoding='utf-8') as stream:
             baseline = list(csv.DictReader(stream))
-        with contextlib.redirect_stdout(io.StringIO()) as candidate_log:
-            actual = optimised(initial, 1.7, 2.3, 0.8, verbose=True)
-        with Path('convergence.csv').open(encoding='utf-8') as stream:
-            candidate = list(csv.DictReader(stream))
-        np.testing.assert_array_equal(actual.view(np.uint64), expected.view(np.uint64))
-        self.assertEqual([(r['iteration'], r['max_change']) for r in baseline],
-                         [(r['iteration'], r['max_change']) for r in candidate])
-        self.assertEqual(re.findall(r'Converged in (\d+)', baseline_log.getvalue()),
-                         re.findall(r'Converged in (\d+)', candidate_log.getvalue()))
+        for solver in (optimised, optimised_v2):
+            with contextlib.redirect_stdout(io.StringIO()) as candidate_log:
+                actual = solver(initial, 1.7, 2.3, 0.8, verbose=True)
+            with Path('convergence.csv').open(encoding='utf-8') as stream:
+                candidate = list(csv.DictReader(stream))
+            np.testing.assert_array_equal(actual.view(np.uint64), expected.view(np.uint64))
+            self.assertEqual([(r['iteration'], r['max_change']) for r in baseline],
+                             [(r['iteration'], r['max_change']) for r in candidate])
+            self.assertEqual(re.findall(r'Converged in (\d+)', baseline_log.getvalue()),
+                             re.findall(r'Converged in (\d+)', candidate_log.getvalue()))
 
     def test_nonfinite_fallback(self):
         for value in (np.nan, np.inf, -np.inf):
@@ -85,6 +88,29 @@ class Implementations(unittest.TestCase):
             self.compare(field, tol=0, max_iter=3)
         set_num_threads(1)
         self.compare(np.random.default_rng(21).normal(size=(9, 8, 7)), tol=0, max_iter=17)
+
+    def test_v2_subnormals_and_fallbacks(self):
+        field = np.random.default_rng(9).normal(size=(9, 8, 7)) * 1e-310
+        self.compare(field, tol=0, max_iter=3)
+        self.compare(field[::-1], tol=0, max_iter=3)
+        self.compare(np.full((9, 8, 7), -0.0), tol=0, max_iter=3)
+        narrow = field.astype(np.float32)
+        with contextlib.redirect_stdout(io.StringIO()):
+            expected = original.solve_pfss_cartesian_vectorized(narrow, 1.7, 2.3, 0.8, max_iter=2)
+            actual = optimised_v2(narrow, 1.7, 2.3, 0.8, max_iter=2)
+        self.assertEqual(actual.dtype, expected.dtype)
+        self.assertEqual(actual.tobytes(), expected.tobytes())
+
+    def test_v2_worker_settings(self):
+        field = np.zeros((5, 6, 7))
+        with patch.dict(os.environ), contextlib.redirect_stdout(io.StringIO()):
+            os.environ.pop('NUMBA_NUM_THREADS', None)
+            optimised_v2(field, 1.7, 2.3, 0.8, max_iter=1)
+            self.assertEqual(json.loads(Path('solver_runtime.json').read_text())['numba_threads'], 4)
+            os.environ['NUMBA_NUM_THREADS'] = '1'
+            set_num_threads(1)
+            optimised_v2(field, 1.7, 2.3, 0.8, max_iter=1)
+            self.assertEqual(json.loads(Path('solver_runtime.json').read_text())['numba_threads'], 1)
 
     def test_runner_dispatch_and_output_scope(self):
         fixture = Path('source').resolve()
@@ -102,10 +128,10 @@ class Implementations(unittest.TestCase):
             np.save(inputs / f'B{axis}.npy', np.random.default_rng(ord(axis)).normal(size=(12, 10)))
         runner_root = Path('runner').resolve()
         runner_root.mkdir()
-        for name in ('progress_log.py', 'optimised_laplace.py'):
+        for name in ('progress_log.py', 'optimised_laplace.py', 'optimised_laplace_v2.py'):
             shutil.copy2(ROOT / name, runner_root / name)
         results = []
-        for implementation, first_only in [('original', True), ('optimised', True), ('original', False)]:
+        for implementation, first_only in [('original', True), ('optimised', True), ('original', False), ('optimised-v2', True)]:
             argv = ['measure_potential.py', '--source-dir', str(fixture), '--input-dir', str(inputs.parent),
                     '--max-seconds', '120']
             if first_only:
@@ -119,6 +145,8 @@ class Implementations(unittest.TestCase):
             state = json.loads((run / 'measurements.json').read_text())
             self.assertTrue(state['expected_outputs_present'])
             self.assertEqual(state['implementation'], implementation)
+            if implementation == 'optimised-v2':
+                self.assertEqual(state['solver_runtime']['numba_threads'], 2)
             self.assertEqual(len(state['outputs']), 3 if first_only else 9)
             results.append((run, state))
         self.assertEqual(results[0][1]['original_prefix_sha256'], results[1][1]['original_prefix_sha256'])
@@ -126,6 +154,7 @@ class Implementations(unittest.TestCase):
             paths = [run / 'PFSSmagneticfield/Bfield_full' / f'{name}.npy' for run, _ in results]
             self.assertEqual(paths[0].read_bytes(), paths[1].read_bytes())
             self.assertEqual(paths[0].read_bytes(), paths[2].read_bytes())
+            self.assertEqual(paths[0].read_bytes(), paths[3].read_bytes())
         # Source snapshot was never modified by dispatch.
         self.assertEqual((fixture / 'Main.py').read_text(encoding='utf-8'), source)
 

@@ -1,0 +1,152 @@
+{
+  "platform": "Windows-11-10.0.26200-SP0",
+  "numba": "0.68.1",
+  "numpy": "2.5.4",
+  "shape": [
+    300,
+    300,
+    150
+  ],
+  "steps": 60,
+  "trials": 3,
+  "input_sha256": "1463128a492a641dec0ef9b23bd65f262910dbdc3d348b4205862dfb51344180",
+  "jit_included": false,
+  "records": [
+    {
+      "implementation": "v1",
+      "threads": 1,
+      "wall_seconds": [
+        7.346092200001294,
+        7.368512999999439,
+        7.495808899999247
+      ],
+      "median_seconds": 7.368512999999439,
+      "all_bit_exact": true
+    },
+    {
+      "implementation": "v2",
+      "threads": 1,
+      "wall_seconds": [
+        2.1850979999999254,
+        2.2172565999990184,
+        2.217767800000729
+      ],
+      "median_seconds": 2.2172565999990184,
+      "all_bit_exact": true
+    },
+    {
+      "implementation": "v1",
+      "threads": 2,
+      "wall_seconds": [
+        3.762684299999819,
+        3.7459785000010015,
+        3.660100600000078
+      ],
+      "median_seconds": 3.7459785000010015,
+      "all_bit_exact": true
+    },
+    {
+      "implementation": "v2",
+      "threads": 2,
+      "wall_seconds": [
+        1.4748662000001787,
+        1.4514003000003868,
+        1.2265778000000864
+      ],
+      "median_seconds": 1.4514003000003868,
+      "all_bit_exact": true
+    },
+    {
+      "implementation": "v1",
+      "threads": 4,
+      "wall_seconds": [
+        1.9856905999986338,
+        1.8667595000006258,
+        1.8610985000013898
+      ],
+      "median_seconds": 1.8667595000006258,
+      "all_bit_exact": true
+    },
+    {
+      "implementation": "v2",
+      "threads": 4,
+      "wall_seconds": [
+        1.3100257000005513,
+        1.2651239999995596,
+        1.2849916000013764
+      ],
+      "median_seconds": 1.2849916000013764,
+      "all_bit_exact": true
+    },
+    {
+      "implementation": "v1",
+      "threads": 6,
+      "wall_seconds": [
+        1.8329209000003175,
+        1.5407253000012133,
+        1.4804060999995272
+      ],
+      "median_seconds": 1.5407253000012133,
+      "all_bit_exact": true
+    },
+    {
+      "implementation": "v2",
+      "threads": 6,
+      "wall_seconds": [
+        1.3225216999999247,
+        1.3347192000001087,
+        1.3355441999992763
+      ],
+      "median_seconds": 1.3347192000001087,
+      "all_bit_exact": true
+    },
+    {
+      "implementation": "v1",
+      "threads": 8,
+      "wall_seconds": [
+        1.8851524999990943,
+        1.9377982000005431,
+        1.8818676000009873
+      ],
+      "median_seconds": 1.8851524999990943,
+      "all_bit_exact": true
+    },
+    {
+      "implementation": "v2",
+      "threads": 8,
+      "wall_seconds": [
+        1.4630515000008018,
+        1.4778274999989662,
+        1.5031753000002936
+      ],
+      "median_seconds": 1.4778274999989662,
+      "all_bit_exact": true
+    },
+    {
+      "implementation": "v1",
+      "threads": 12,
+      "wall_seconds": [
+        2.0501096000007237,
+        1.9551585000008345,
+        2.0020734000008815
+      ],
+      "median_seconds": 2.0020734000008815,
+      "all_bit_exact": true
+    },
+    {
+      "implementation": "v2",
+      "threads": 12,
+      "wall_seconds": [
+        1.8692277000009199,
+        1.775172300000122,
+        1.8025419999994483
+      ],
+      "median_seconds": 1.8025419999994483,
+      "all_bit_exact": true
+    }
+  ],
+  "vector_divide_instructions": {
+    "v1": 0,
+    "v2": 8
+  }
+}
