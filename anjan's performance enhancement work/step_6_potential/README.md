@@ -2,9 +2,72 @@
 
 For current optimisation work, read [OPTIMISATION_SCOPE.md](OPTIMISATION_SCOPE.md) first: the user has narrowed the task to the initial solve, gradients and scaling that produce the first three field files, with execution time as the priority.
 
+## Complete commands from the step 6 folder (PowerShell)
+
+With the virtual environment activated, use the same prepared input directory for every version. This directory is local/ignored; a clone needs these arrays copied separately or regenerated before the commands will work. They contain `Preprocessedmagneticfield/Bx.npy`, `By.npy` and `Bz.npy`.
+
+```powershell
+$step6Inputs = "..\step_4_package\runs\20261118_192252_109811"
+$env:OMP_NUM_THREADS = "8"
+
+# Optional solver dependency, required for V1, V2 and V3.
+python -m pip install -r .\requirements-optimised.txt
+
+# V0: original NumPy solver.
+python .\measure_potential.py --input-dir $step6Inputs --implementation original --first-field-only --label windows_original_first_field --max-seconds 0
+
+# V1: Numba's machine-default worker count; remove any previous override.
+Remove-Item Env:\NUMBA_NUM_THREADS -ErrorAction SilentlyContinue
+python .\measure_potential.py --input-dir $step6Inputs --implementation optimised --first-field-only --label windows_optimised_first_field --max-seconds 0
+
+# V2: four workers, matching the recorded V2 configuration.
+$env:NUMBA_NUM_THREADS = "4"
+python .\measure_potential.py --input-dir $step6Inputs --implementation optimised-v2 --first-field-only --label windows_optimised_v2_first_field --max-seconds 0
+
+# V3: four workers, matching the recorded V3 configuration.
+$env:NUMBA_NUM_THREADS = "4"
+python .\measure_potential.py --input-dir $step6Inputs --implementation optimised-v3 --first-field-only --label windows_v3_temporal_first_field --max-seconds 0
+```
+
+Run the desired version's command, not necessarily the entire block. `--max-seconds 0` removes the execution time limit; `--first-field-only` limits every run to our three field files. Every invocation creates a new timestamped run and report. The original remains the default when `--implementation` is omitted. The historical V1 report did not capture its actual worker count; using the current machine default does not reconstruct an unrecorded historical setting. V2's battery-saver-off repeat used the same V2 command/settings with label `windows_v2_battery_saver_off`; battery saver was changed manually by the user, not by the solver.
+
+## What each version changes
+
+| Version | Solver file | Implementation change |
+| --- | --- | --- |
+| V0 | Original observation-folder `laplace.py` | NumPy Jacobi update; full potential copy and array temporaries per iteration. Behavioural reference. |
+| V1 | [optimised_laplace.py](optimised_laplace.py) | Compiled parallel CPU update, two reusable buffers, fused update/error scan; avoids per-iteration full potential copies and arithmetic temporaries. |
+| V2 | [optimised_laplace_v2.py](optimised_laplace_v2.py) | Adds an exactly ordered unsigned reduction over nonnegative float64 error bits, allowing SIMD without fast-math; worker tuning selected four on this laptop. |
+| V3 | [optimised_laplace_v3.py](optimised_laplace_v3.py) | Adds private 16 by 16 x/y temporal tiles spanning z, four updates per batch and shrinking halos to reuse cached data. Checks each update's error; replays a prefix to return the exact first converged state. |
+
+All versions preserve the original float64 field arithmetic/order, grid, boundary values, tolerance, stopping rule, gradients, scaling and saves. Only generated isolated runner scripts override the solver import; Anjan's source and earlier solver modules are unchanged. The strict requirement is zero or near-zero accuracy tradeoff; the recorded runs below achieved byte-identical outputs, not just approximate agreement.
+
+## Measured Windows results for the same inputs and three-file workload
+
+| Version / report | Wall time (s) | Speedup over V0 | Less time than V0 | Sampled peak RAM (MiB) |
+| --- | ---: | ---: | ---: | ---: |
+| [V0](potential_20261118_194031_937624.md) | 6930.6786912 | 1.0000x | 0.0000% | 713.304688 |
+| [V1](potential_20261118_214427_942015.md) | 540.3921980 | 12.8253x | 92.2029% | 659.179688 |
+| [V2 first](potential_20261118_221042_587814.md) | 408.8075312 | 16.9534x | 94.1015% | 656.183594 |
+| [V2 repeat; user disabled battery saver](potential_20261118_222334_743670.md) | 387.1346839 | 17.9025x | 94.4142% | 675.800781 |
+| [V3](potential_20261118_224124_147720.md) | 159.2331245 | 43.5254x | 97.7025% | 761.187500 |
+
+Speedup = V0 wall time / version wall time. Time reduction = 100 x (1 - version wall time / V0 wall time). V2 first versus V1 reduced time by 24.3498%; V3 versus the fastest recorded V2 repeat reduced time by 58.8688%. The V2 repeat was 5.3015% faster than its first run; this single repeat does not isolate battery saver as the cause.
+
+All five completed runs have byte-identical field files: 40,500,000 bit-identical finite float64 values, maximum absolute difference zero, matching SHA-256 hashes, all 340 logged convergence samples identical and stopping label 16975 (16976 logical global updates). Output size is 324,000,384 bytes in every run. V3's final error is `0.00099992026044049`; earlier full runs did not save the exact stopping-update error or scalar potential. V3 includes redundant halo work and three unused speculative updates plus one replayed prefix update; those costs are included in its measured time.
+
+These are recorded full runs, not repeated-trial medians. The paired short-workload sweeps provide additional evidence, but power/thermal/background conditions were not controlled. Wall time includes JIT where applicable, logging, gradients, scaling and saves; input copying and final output hashing are excluded. RAM/CPU use 100-ms sampling. V3 increased RAM use while reducing time. No version is claimed to be a global optimum, and the Windows speedup cannot be assumed for Ubuntu hardware.
+
+Detailed evidence and implementation explanations:
+
+- [V0/V1 comparison](comparison_windows_20261118.md): exact output ranges/hashes, convergence samples and timing boundaries.
+- [Device inventory, V2 implementation and benchmarks](device_and_v2_windows_20261118.md): hardware, thread tuning, CPU/RAM metrics and V2 repeat.
+- [V3 research, implementation and validation](v3_windows_20261118.md): primary research sources, private halos, exact stopping/replay, raw paired benchmarks and full comparison across all five runs.
+- [Requirements and current scope](OPTIMISATION_SCOPE.md): user constraints, decisions, implementation history and open question.
+
 ## Selecting the implementation
 
-The existing entry point and original default remain available. Existing commands still run the complete step 6 and produce nine arrays. To measure only the first three arrays, use `--first-field-only` with either implementation:
+The existing entry point and original default remain available. Existing commands still run the complete step 6 and produce nine arrays. To measure only the first three arrays, use `--first-field-only` with any implementation:
 
 ```bash
 python "anjan's performance enhancement work/step_6_potential/measure_potential.py" --input-dir "PATH_TO_EXISTING_INPUT_RUN" --implementation original --first-field-only --max-seconds 0
@@ -25,9 +88,9 @@ V3 is selected with `--implementation optimised-v3 --first-field-only` through t
 
 The completed full-input V3 run took 2 min 39.23 s, versus the fastest recorded V2 run's 6 min 27.13 s (2.43x faster, 58.87% less elapsed time). Its three output files are byte-identical to all earlier Windows runs, with matching convergence history and stopping label. Sampled peak RSS increased to 761.19 MiB. V3 also records its exact final maximum change, `0.00099992026044049`. These are single full-run observations, not repeated medians or proof of a global optimum.
 
-Each optimised path copies its separate solver module into the isolated run and overrides only the active solver import. Anjan's source is unchanged. The kernels reuse two potential buffers, parallelise independent x planes, and combine the Jacobi update and maximum-change scan. They use float64, the original field expression order, and disabled fast-math. Gradients, scaling, saving and any requested interpolation remain the original code. Unsupported array layouts/types and nonfinite inputs fall back to the original solver.
+Each optimised path copies its separate solver module into the isolated run and overrides only the active solver import. Anjan's source is unchanged. V1/V2 parallelise independent x planes; V3 parallelises private temporal tiles. They reuse buffers and combine field updates with error scans, using float64, the original field expression order, and disabled fast-math. Gradients, scaling, saving and any requested interpolation remain the original code. Unsupported array layouts/types and nonfinite inputs fall back to the original solver.
 
-Numba compilation is included in wall time. Each isolated run has its own copy/cache, so do not assume compilation is free. Set `NUMBA_NUM_THREADS` before launching to control the worker count; version 1 uses Numba's default, while v2 uses the default described above. More threads do not guarantee a faster solve. Reports record the implementation, workload boundary, solver hash, dependency versions and thread environment. `--check-only` checks prerequisites without running or compiling the kernel.
+Numba compilation is included in wall time. Each isolated run has its own copy/cache, so do not assume compilation is free. Set `NUMBA_NUM_THREADS` before launching to control the worker count; version 1 uses Numba's default, while V2/V3 default to up to four workers. More threads do not guarantee a faster solve. Reports record the implementation, workload boundary, solver hash, dependency versions and thread environment. `--check-only` checks prerequisites without running or compiling the kernel.
 
 Small-fixture tests check bit-identical potential values, matching stopping iterations/progress, unchanged inputs, nonfinite fallback, and matching first-three output files through the runner. Run them with:
 
