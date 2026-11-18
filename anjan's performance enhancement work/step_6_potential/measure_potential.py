@@ -14,7 +14,7 @@ import signal
 import subprocess
 import sys
 import time
-from progress_log import instrument_solver
+from support.progress_log import instrument_solver
 
 ROOT = Path(__file__).resolve().parent
 
@@ -92,7 +92,7 @@ def main():
     solver_module = {'optimised-v2': 'optimised_laplace_v2',
                      'optimised-v3': 'optimised_laplace_v3'}.get(args.implementation, 'optimised_laplace')
     if args.implementation != 'original':
-        shutil.copy2(ROOT / f'{solver_module}.py', run / f'{solver_module}.py')
+        shutil.copy2(ROOT / 'solvers' / f'{solver_module}.py', run / f'{solver_module}.py')
         # Override only the active solver after imports. Original source is untouched.
         nodes = ast.parse(prefix).body
         setup = next(node for node in nodes if assigns(node, 'Nx'))
@@ -105,7 +105,7 @@ def main():
     # Instrument only the isolated solver copy; retain original provenance.
     shutil.copy2(run / 'laplace.py', run / 'laplace_original.py')
     (run / 'laplace.py').write_text(instrument_solver((run / 'laplace.py').read_text(encoding='utf-8')), encoding='utf-8')
-    shutil.copy2(ROOT / 'progress_log.py', run / '_step6_progress.py')
+    shutil.copy2(ROOT / 'support' / 'progress_log.py', run / '_step6_progress.py')
     command = [sys.executable, '-u', '-B', str(stage_script)]
     state = {'label': args.label, 'status': 'running', 'started': datetime.now().astimezone().isoformat(),
              'implementation': args.implementation, 'first_field_only': args.first_field_only,
@@ -121,7 +121,8 @@ def main():
              'instrumented_solver_sha256': digest(run / 'laplace.py'),
              'progress_helper_sha256': digest(run / '_step6_progress.py'),
              'thread_environment': {k: os.environ[k] for k in ('OMP_NUM_THREADS','OPENBLAS_NUM_THREADS','MKL_NUM_THREADS','NUMBA_NUM_THREADS') if k in os.environ}}
-    report = ROOT / f'potential_{stamp}.md'
+    report = ROOT / 'reports' / 'runs' / f'potential_{stamp}.md'
+    report.parent.mkdir(parents=True, exist_ok=True)
     metrics_path = run / 'time.txt'
     launch = ['/usr/bin/time', '-f', 'METRICS %U %S %M', '-o', str(metrics_path), *command] if linux else command
     proc = None

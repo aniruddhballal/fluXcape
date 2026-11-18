@@ -2,6 +2,26 @@
 
 For current optimisation work, read [OPTIMISATION_SCOPE.md](OPTIMISATION_SCOPE.md) first: the user has narrowed the task to the initial solve, gradients and scaling that produce the first three field files, with execution time as the priority.
 
+## Tracked folder layout
+
+```text
+step_6_potential/
+  measure_potential.py           # Same entry point and arguments
+  README.md                     # Commands, versions and measured results
+  OPTIMISATION_SCOPE.md          # User requirements and implementation history
+  requirements-optimised.txt
+  solvers/                      # V1, V2 and V3 implementations
+  support/                      # CSV logging/instrumentation
+  tests/                        # Numerical equivalence and runner checks
+  benchmarks/                   # Timing experiments
+    results/                    # Retained raw benchmark JSON
+  reports/                      # Comparisons, device inventory and research
+    runs/                       # Individual potential_*.md run reports
+  live_viewer/                  # Existing read-only viewer
+```
+
+Ignored `runs/` data and caches are local artifacts. The reorganisation moves only tracked source/documentation; historical run contents and embedded provenance paths remain as recorded. New run reports are written to `reports/runs/`. The commands below still start from this step 6 folder.
+
 ## Complete commands from the step 6 folder (PowerShell)
 
 With the virtual environment activated, use the same prepared input directory for every version. This directory is local/ignored; a clone needs these arrays copied separately or regenerated before the commands will work. They contain `Preprocessedmagneticfield/Bx.npy`, `By.npy` and `Bz.npy`.
@@ -36,9 +56,9 @@ Run the desired version's command, not necessarily the entire block. `--max-seco
 | Version | Solver file | Implementation change |
 | --- | --- | --- |
 | V0 | Original observation-folder `laplace.py` | NumPy Jacobi update; full potential copy and array temporaries per iteration. Behavioural reference. |
-| V1 | [optimised_laplace.py](optimised_laplace.py) | Compiled parallel CPU update, two reusable buffers, fused update/error scan; avoids per-iteration full potential copies and arithmetic temporaries. |
-| V2 | [optimised_laplace_v2.py](optimised_laplace_v2.py) | Adds an exactly ordered unsigned reduction over nonnegative float64 error bits, allowing SIMD without fast-math; worker tuning selected four on this laptop. |
-| V3 | [optimised_laplace_v3.py](optimised_laplace_v3.py) | Adds private 16 by 16 x/y temporal tiles spanning z, four updates per batch and shrinking halos to reuse cached data. Checks each update's error; replays a prefix to return the exact first converged state. |
+| V1 | [optimised_laplace.py](solvers/optimised_laplace.py) | Compiled parallel CPU update, two reusable buffers, fused update/error scan; avoids per-iteration full potential copies and arithmetic temporaries. |
+| V2 | [optimised_laplace_v2.py](solvers/optimised_laplace_v2.py) | Adds an exactly ordered unsigned reduction over nonnegative float64 error bits, allowing SIMD without fast-math; worker tuning selected four on this laptop. |
+| V3 | [optimised_laplace_v3.py](solvers/optimised_laplace_v3.py) | Adds private 16 by 16 x/y temporal tiles spanning z, four updates per batch and shrinking halos to reuse cached data. Checks each update's error; replays a prefix to return the exact first converged state. |
 
 All versions preserve the original float64 field arithmetic/order, grid, boundary values, tolerance, stopping rule, gradients, scaling and saves. Only generated isolated runner scripts override the solver import; Anjan's source and earlier solver modules are unchanged. The strict requirement is zero or near-zero accuracy tradeoff; the recorded runs below achieved byte-identical outputs, not just approximate agreement.
 
@@ -46,11 +66,11 @@ All versions preserve the original float64 field arithmetic/order, grid, boundar
 
 | Version / report | Wall time (s) | Speedup over V0 | Less time than V0 | Sampled peak RAM (MiB) |
 | --- | ---: | ---: | ---: | ---: |
-| [V0](potential_20261118_194031_937624.md) | 6930.6786912 | 1.0000x | 0.0000% | 713.304688 |
-| [V1](potential_20261118_214427_942015.md) | 540.3921980 | 12.8253x | 92.2029% | 659.179688 |
-| [V2 first](potential_20261118_221042_587814.md) | 408.8075312 | 16.9534x | 94.1015% | 656.183594 |
-| [V2 repeat; user disabled battery saver](potential_20261118_222334_743670.md) | 387.1346839 | 17.9025x | 94.4142% | 675.800781 |
-| [V3](potential_20261118_224124_147720.md) | 159.2331245 | 43.5254x | 97.7025% | 761.187500 |
+| [V0](reports/runs/potential_20261118_194031_937624.md) | 6930.6786912 | 1.0000x | 0.0000% | 713.304688 |
+| [V1](reports/runs/potential_20261118_214427_942015.md) | 540.3921980 | 12.8253x | 92.2029% | 659.179688 |
+| [V2 first](reports/runs/potential_20261118_221042_587814.md) | 408.8075312 | 16.9534x | 94.1015% | 656.183594 |
+| [V2 repeat; user disabled battery saver](reports/runs/potential_20261118_222334_743670.md) | 387.1346839 | 17.9025x | 94.4142% | 675.800781 |
+| [V3](reports/runs/potential_20261118_224124_147720.md) | 159.2331245 | 43.5254x | 97.7025% | 761.187500 |
 
 Speedup = V0 wall time / version wall time. Time reduction = 100 x (1 - version wall time / V0 wall time). V2 first versus V1 reduced time by 24.3498%; V3 versus the fastest recorded V2 repeat reduced time by 58.8688%. The V2 repeat was 5.3015% faster than its first run; this single repeat does not isolate battery saver as the cause.
 
@@ -60,9 +80,9 @@ These are recorded full runs, not repeated-trial medians. The paired short-workl
 
 Detailed evidence and implementation explanations:
 
-- [V0/V1 comparison](comparison_windows_20261118.md): exact output ranges/hashes, convergence samples and timing boundaries.
-- [Device inventory, V2 implementation and benchmarks](device_and_v2_windows_20261118.md): hardware, thread tuning, CPU/RAM metrics and V2 repeat.
-- [V3 research, implementation and validation](v3_windows_20261118.md): primary research sources, private halos, exact stopping/replay, raw paired benchmarks and full comparison across all five runs.
+- [V0/V1 comparison](reports/comparison_windows_20261118.md): exact output ranges/hashes, convergence samples and timing boundaries.
+- [Device inventory, V2 implementation and benchmarks](reports/device_and_v2_windows_20261118.md): hardware, thread tuning, CPU/RAM metrics and V2 repeat.
+- [V3 research, implementation and validation](reports/v3_windows_20261118.md): primary research sources, private halos, exact stopping/replay, raw paired benchmarks and full comparison across all five runs.
 - [Requirements and current scope](OPTIMISATION_SCOPE.md): user constraints, decisions, implementation history and open question.
 
 ## Selecting the implementation
@@ -80,11 +100,11 @@ Install the optional dependency in the active environment before selecting `opti
 python -m pip install -r "anjan's performance enhancement work/step_6_potential/requirements-optimised.txt"
 ```
 
-Version 2 is selected with `--implementation optimised-v2`, using the same entry point, optional dependency and input directory. It lives separately in `optimised_laplace_v2.py`. The original and version 1 selectors retain their behaviour. V2 changes the error-maximum reduction to an exact ordering of nonnegative float64 bit patterns, enabling SIMD with fast-math disabled; the field update expression is unchanged. On the inspected Ryzen 5 5600H laptop, four workers gave the best v2 median in a six-configuration sweep. V2 therefore defaults to up to four workers; set `NUMBA_NUM_THREADS` explicitly to override it. Its `solver_runtime.json` and measurement report record actual worker count and threading layer. See [device inspection and v2 experiments](device_and_v2_windows_20261118.md) for measurements and validation limits.
+Version 2 is selected with `--implementation optimised-v2`, using the same entry point, optional dependency and input directory. It lives separately in `optimised_laplace_v2.py`. The original and version 1 selectors retain their behaviour. V2 changes the error-maximum reduction to an exact ordering of nonnegative float64 bit patterns, enabling SIMD with fast-math disabled; the field update expression is unchanged. On the inspected Ryzen 5 5600H laptop, four workers gave the best v2 median in a six-configuration sweep. V2 therefore defaults to up to four workers; set `NUMBA_NUM_THREADS` explicitly to override it. Its `solver_runtime.json` and measurement report record actual worker count and threading layer. See [device inspection and v2 experiments](reports/device_and_v2_windows_20261118.md) for measurements and validation limits.
 
-The full Windows v2 run finished in 6 min 48.81 s versus v1's 9 min 0.39 s: 24.35% less wall time in these single completed runs. All three saved field files are byte-identical to both v1 and the original, with identical logged convergence and stopping label. V2's full report is [potential_20261118_221042_587814.md](potential_20261118_221042_587814.md).
+The full Windows v2 run finished in 6 min 48.81 s versus v1's 9 min 0.39 s: 24.35% less wall time in these single completed runs. All three saved field files are byte-identical to both v1 and the original, with identical logged convergence and stopping label. V2's full report is [potential_20261118_221042_587814.md](reports/runs/potential_20261118_221042_587814.md).
 
-V3 is selected with `--implementation optimised-v3 --first-field-only` through the same runner. It uses private temporal tiles, exact per-update error checks and prefix replay if convergence occurs inside a batch. It defaults to up to four workers, with `NUMBA_NUM_THREADS` taking precedence. See [V3 research, benchmarks and validation](v3_windows_20261118.md). Earlier implementations remain available and unchanged.
+V3 is selected with `--implementation optimised-v3 --first-field-only` through the same runner. It uses private temporal tiles, exact per-update error checks and prefix replay if convergence occurs inside a batch. It defaults to up to four workers, with `NUMBA_NUM_THREADS` taking precedence. See [V3 research, benchmarks and validation](reports/v3_windows_20261118.md). Earlier implementations remain available and unchanged.
 
 The completed full-input V3 run took 2 min 39.23 s, versus the fastest recorded V2 run's 6 min 27.13 s (2.43x faster, 58.87% less elapsed time). Its three output files are byte-identical to all earlier Windows runs, with matching convergence history and stopping label. Sampled peak RSS increased to 761.19 MiB. V3 also records its exact final maximum change, `0.00099992026044049`. These are single full-run observations, not repeated medians or proof of a global optimum.
 
@@ -92,13 +112,20 @@ Each optimised path copies its separate solver module into the isolated run and 
 
 Numba compilation is included in wall time. Each isolated run has its own copy/cache, so do not assume compilation is free. Set `NUMBA_NUM_THREADS` before launching to control the worker count; version 1 uses Numba's default, while V2/V3 default to up to four workers. More threads do not guarantee a faster solve. Reports record the implementation, workload boundary, solver hash, dependency versions and thread environment. `--check-only` checks prerequisites without running or compiling the kernel.
 
-Small-fixture tests check bit-identical potential values, matching stopping iterations/progress, unchanged inputs, nonfinite fallback, and matching first-three output files through the runner. Run them with:
+Small-fixture tests check bit-identical potential values, matching stopping iterations/progress, unchanged inputs, nonfinite fallback, and matching first-three output files through the runner. From this step 6 folder, run them with:
 
-```bash
-python -m unittest discover -s "anjan's performance enhancement work/step_6_potential" -p test_implementations.py -v
+```powershell
+python -m unittest discover -s .\tests -p test_implementations.py -v
 ```
 
-The subsequent [matched Windows full-input comparison](comparison_windows_20261118.md) verified byte-identical output files and matching logged convergence, with an observed 12.83x wall-time speedup (one completed run per implementation, not repeated medians). The historical 37 min 53.69 s Ubuntu report includes all nine outputs and is not a scoped baseline.
+The benchmark scripts also run from this folder. Using `$step6Inputs` from the command section above, examples are:
+
+```powershell
+python .\benchmarks\benchmark_kernels.py --input-dir $step6Inputs --output .\runs\kernel_sweep.json
+python .\benchmarks\benchmark_temporal.py --input-dir $step6Inputs --steps 120 --trials 3 --threads 4 --tiles 16 --depths 4 --output .\runs\temporal_sweep.json
+```
+
+The subsequent [matched Windows full-input comparison](reports/comparison_windows_20261118.md) verified byte-identical output files and matching logged convergence, with an observed 12.83x wall-time speedup (one completed run per implementation, not repeated medians). The historical 37 min 53.69 s Ubuntu report includes all nine outputs and is not a scoped baseline.
 
 Runs only the initial-field/preparation section of the current Main.py. Step 7's WSR reconstruction is excluded; step 5's weights are not needed. Earlier stages do not rerun.
 
@@ -118,7 +145,7 @@ The original grid remains 300×300×150; Laplace tolerance 1e-3 and limit 100,00
 - `PFSSmagneticfield_for_uniform_grid/Bfield_full/{Bx_full,By_full,Bz_full}.npy`: three resampled 3D components.
 - `Preprocessedmagneticfield_interpolated/{Bx,By,Bz}.npy`: three resampled surface components.
 
-Reports are `potential_<timestamp>.md`. Raw measurements.json, potential.log, copied files and generated arrays remain in the run directory. The log captures the solver's existing iteration progress. Output size excludes copied inputs and monitoring files. Copying/hash time is outside measured execution. GNU time reports largest individual process RSS on completion. A separate 100-ms psutil sample records tree RSS and CPU counters, including partial runs; shared pages can be double-counted and short-lived activity/peaks can be missed. These are distinctly named metrics in the report.
+Reports are `reports/runs/potential_<timestamp>.md`. Raw measurements.json, potential.log, copied files and generated arrays remain in the run directory. The log captures the solver's existing iteration progress. Output size excludes copied inputs and monitoring files. Copying/hash time is outside measured execution. GNU time reports largest individual process RSS on completion. A separate 100-ms psutil sample records tree RSS and CPU counters, including partial runs; shared pages can be double-counted and short-lived activity/peaks can be missed. These are distinctly named metrics in the report.
 
 ## Timestamped convergence data
 
@@ -152,8 +179,8 @@ Reviewed on 18 November 2026:
 
 | Run | Recorded outcome |
 | --- | --- |
-| [13 November, 600-second limit](potential_20261113_164206_525807.md) | Timed out during the initial solve; wall time 600.045567 s; no generated field arrays. This is not a completed runtime. |
-| [16 November, completed](potential_20261116_103848_750500.md) | Wall time **2,273.691902 s**, CPU time 2,277.05 s; nine generated arrays totaling **650,161,152 bytes**. |
+| [13 November, 600-second limit](reports/runs/potential_20261113_164206_525807.md) | Timed out during the initial solve; wall time 600.045567 s; no generated field arrays. This is not a completed runtime. |
+| [16 November, completed](reports/runs/potential_20261116_103848_750500.md) | Wall time **2,273.691902 s**, CPU time 2,277.05 s; nine generated arrays totaling **650,161,152 bytes**. |
 
 The completed run's GNU time peak RSS is **3,027.722656 MiB**; independently sampled process-tree peak RSS is **3,017.359375 MiB**. These are distinct measurements and must not be interchanged or added. Values are from a single original trial with CSV instrumentation, not a repeated-median optimization comparison.
 

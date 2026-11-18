@@ -44,7 +44,7 @@ Each trial performs 60 full-grid Jacobi updates on `(300, 300, 150)` with the sa
 | 8 | 1.885152 | 1.477827 | 1.276x |
 | 12 | 2.002073 | 1.802542 | 1.111x |
 
-Raw trials and input hash: [kernel_benchmark_windows_v2_20261118.json](kernel_benchmark_windows_v2_20261118.json). Thermal conditions, background load and CPU clocks were not controlled. Four workers gave the lowest measured v2 median in this sweep; this is a measured choice on this laptop, not a universal optimal worker count.
+Raw trials and input hash: [kernel_benchmark_windows_v2_20261118.json](../benchmarks/results/kernel_benchmark_windows_v2_20261118.json). Thermal conditions, background load and CPU clocks were not controlled. Four workers gave the lowest measured v2 median in this sweep; this is a measured choice on this laptop, not a universal optimal worker count.
 
 ## Validation
 
@@ -90,4 +90,4 @@ CPU times sum activity across worker threads, so they are not elapsed time. RAM 
 
 The user reported disabling battery saver before run `20261118_222334_743670`. It completed successfully with the same four-worker v2 solver, original source snapshots and input hashes. Runtime was 387.1346839 s (6 min 27.13 s), sampled CPU time 1507.953125 s and sampled peak RSS 675.80 MiB. The previous v2 run took 408.8075312 s (6 min 48.81 s): this repeat was 21.6728473 s faster, a 5.3015% elapsed-time reduction.
 
-All three output files were independently rehashed and match the previous v2 files exactly. All 340 logged iteration/error pairs match, with convergence at zero-based label 16975 in both runs. No numerical difference was found in the saved results. Power-saver status was user-reported and was not instrumented in either run; this single repeat does not isolate the cause of the timing difference. See [the repeat report](potential_20261118_222334_743670.md).
+All three output files were independently rehashed and match the previous v2 files exactly. All 340 logged iteration/error pairs match, with convergence at zero-based label 16975 in both runs. No numerical difference was found in the saved results. Power-saver status was user-reported and was not instrumented in either run; this single repeat does not isolate the cause of the timing difference. See [the repeat report](runs/potential_20261118_222334_743670.md).

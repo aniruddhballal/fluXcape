@@ -15,10 +15,12 @@ from unittest.mock import patch
 
 import numpy as np
 from numba import set_num_threads
-import progress_log
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / 'solvers'))
+from support import progress_log
 import measure_potential
 
-ROOT = Path(__file__).resolve().parent
 SOURCE = ROOT.parent / 'hmi.sharp_cea_720s.4698.20141022_000000_TAI'
 spec = importlib.util.spec_from_file_location('laplace', SOURCE / 'laplace.py')
 original = importlib.util.module_from_spec(spec)
@@ -169,8 +171,11 @@ class Implementations(unittest.TestCase):
             np.save(inputs / f'B{axis}.npy', np.random.default_rng(ord(axis)).normal(size=(12, 10)))
         runner_root = Path('runner').resolve()
         runner_root.mkdir()
-        for name in ('progress_log.py', 'optimised_laplace.py', 'optimised_laplace_v2.py', 'optimised_laplace_v3.py'):
-            shutil.copy2(ROOT / name, runner_root / name)
+        (runner_root / 'support').mkdir()
+        (runner_root / 'solvers').mkdir()
+        shutil.copy2(ROOT / 'support/progress_log.py', runner_root / 'support/progress_log.py')
+        for name in ('optimised_laplace.py', 'optimised_laplace_v2.py', 'optimised_laplace_v3.py'):
+            shutil.copy2(ROOT / 'solvers' / name, runner_root / 'solvers' / name)
         results = []
         for implementation, first_only in [('original', True), ('optimised', True), ('original', False), ('optimised-v2', True), ('optimised-v3', True)]:
             argv = ['measure_potential.py', '--source-dir', str(fixture), '--input-dir', str(inputs.parent),

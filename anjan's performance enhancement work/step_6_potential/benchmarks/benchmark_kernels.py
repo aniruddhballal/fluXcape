@@ -5,15 +5,15 @@ import json
 from pathlib import Path
 import platform
 import statistics
+import sys
 import time
 
 import numba
 import numpy as np
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'solvers'))
 import optimised_laplace as v1
 import optimised_laplace_v2 as v2
-
-ROOT = Path(__file__).resolve().parent
-
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)

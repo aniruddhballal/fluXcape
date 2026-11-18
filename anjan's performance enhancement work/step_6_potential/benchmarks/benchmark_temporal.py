@@ -4,10 +4,13 @@ import hashlib
 import json
 from pathlib import Path
 import statistics
+import sys
 import time
 
 import numba
 import numpy as np
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'solvers'))
 from optimised_laplace_v2 import jacobi_update
 from optimised_laplace_v3 import temporal_update
 

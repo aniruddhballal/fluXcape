@@ -138,7 +138,7 @@ The OpenMP run was about 4.38 times faster than the November 13 baseline, but it
 - **Measured elapsed time:** 600.045567 s; not a completed stage runtime. **Peak sampled process-tree RSS:** 638.625000 MiB (100-ms psutil sampling). **Sampled cumulative CPU:** 603.64 s. GNU time final counters are unavailable after process-group termination.
 - **Last logged iteration:** 4350 (zero-based solver label); max update/error 0.0157, versus stopping tolerance 0.001 (15.7 times the threshold). Progress prints every 50 iterations, so this is the last reported label, not the exact iteration reached at termination.
 - **Generated field outputs:** none; the solve had not returned to the output-writing code. No unfinished potential checkpoint exists. Step 7 needs a completed compatible set of step 6 outputs before it can run.
-- **Evidence:** [partial run report](step_6_potential/potential_20261113_164206_525807.md); original progress log and sampled counters in its ignored run directory. No extrapolated completion time or speedup is claimed.
+- **Evidence:** [partial run report](step_6_potential/reports/runs/potential_20261113_164206_525807.md); original progress log and sampled counters in its ignored run directory. No extrapolated completion time or speedup is claimed.
 
 ## Step 7 preparation — 2026-11-16
 
