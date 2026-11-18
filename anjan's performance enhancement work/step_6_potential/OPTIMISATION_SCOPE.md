@@ -54,3 +54,23 @@ The user requests answers as short as possible, accurate, and explicit about unc
 Commit completed changes whenever files are created or modified. Finish the requested task, including its commit, before handing back to the user.
 
 The user subsequently authorised implementation using the same entry point (`measure_potential.py`), an original default path, and a selectable separate optimised implementation with minimal runner changes. The candidate now exists as `optimised_laplace.py`; use `--implementation original|optimised` and `--first-field-only` for this narrowed workload. Existing commands retain the complete step 6 behaviour. See README.md for usage and validation limits. Full-observation equivalence and performance acceptance remain pending; do not treat the candidate as an accepted speedup.
+
+## First optimisation implementation
+
+Implemented in commit `e17895f`, with the intent of reducing time per Jacobi iteration while retaining the original equations and numerical behaviour:
+
+- `measure_potential.py` remains the entry point. `--implementation original` is the default; `--implementation optimised` selects the separate candidate. `--first-field-only` stops either path immediately after the first three saves. Without it, the existing complete step 6 workload remains available.
+- The runner copies source and inputs into an isolated run directory. For the optimised path, it inserts a solver import override into the generated script. Anjan's original source files are unchanged.
+- `optimised_laplace.py` uses a Numba-compiled CPU kernel (`njit`, `parallel=True`, `fastmath=False`). It parallelises independent x planes within each Jacobi update; successive iterations remain sequential.
+- Two potential buffers are allocated and swapped between iterations, avoiding a full potential copy every iteration. The cell update and maximum-change scan share one traversal, avoiding the original full-volume arithmetic temporaries and separate difference array. Per-plane errors are reduced using NumPy's maximum.
+- The candidate retains float64, the original expression order, fixed boundary values, convergence tolerance and iteration limit. Unsupported layouts/types or nonfinite initial values fall back to the original solver. Gradients, scaling and file saves remain the original code.
+- Numba is an optional dependency listed in `requirements-optimised.txt`. Compilation and CSV logging are included in measured runtime. `NUMBA_NUM_THREADS` controls the candidate's worker count when set before launch.
+- Reports identify the implementation and workload boundary and retain source hashes, dependency versions, output hashes and timing information.
+
+Five tests in `test_implementations.py` passed locally. They cover bit-identical potential values over fixed iteration counts, matching convergence iteration and logged maximum changes, unchanged inputs, nonfinite fallback, overflow behaviour, one/two-thread execution, and runner dispatch. The first three saved files were byte-identical between original and optimised paths on a small fixture; the original default full-step path also produced its nine expected files. These are fixture results, not full-observation validation. No full-input speedup has been measured.
+
+## User's question after the first implementation
+
+Record only; the user explicitly requested that this question remain unanswered here and in chat for this documentation task.
+
+Could this optimised version be further optimised using OpenMP (OMP), MPI or CUDA, and would that improve performance even more dramatically?
