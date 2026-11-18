@@ -30,3 +30,14 @@ An initial Linux/GCC measurement is retained in [the timestamped report](compile
 - [OpenMP build, 17 November](compile_20261117_110829_071919.md): three `-O3 -fopenmp` trials; median wall time 0.150748 s; executable size 29,776 bytes.
 
 Both compiled unchanged `preproc.c`. Their runtime/output comparison belongs to [step 3](../step_3_preprocess/README.md), where the OpenMP output is documented as numerically different. These compilation reports do not establish execution speedup. Executables and detailed compiler logs are local ignored run artifacts, not clone contents.
+
+## Windows OpenMP prerequisite and repair
+
+On 18 November 2026, the Windows OpenMP preparation build failed with `cannot find -lgomp`. The installed MSYS2 UCRT64 GCC 16.2.0-4 lists its OpenMP library as an optional dependency; that package was absent. Installing the matching package resolved the link failure:
+
+```bash
+# Run in MSYS2, not directly in PowerShell.
+pacman -S --needed mingw-w64-ucrt-x86_64-libgomp
+```
+
+Keep `C:\msys64\ucrt64\bin` on PATH for both compilation and subsequent execution. The successful [replacement build](compile_20261118_190459_669526.md) used `-O3 -fopenmp`, completed in 1.460845 s and produced `runs/20261118_190459_669526/preproc_trial_1.exe`. This is compilation only; no preprocessing was executed. The earlier failed report is retained as history.
