@@ -28,7 +28,7 @@ function element(tag, attributes={}, content='') {
   Object.entries(attributes).forEach(([key,value])=>el.setAttribute(key,value));
   el.textContent=content;return el;
 }
-function chart(id, points, log, height) {
+function chart(id, points, log, height, threshold=null) {
   const svg=$(id);svg.replaceChildren();
   const width=svg.clientWidth || 1000; height=svg.clientHeight || height;
   svg.setAttribute('viewBox',`0 0 ${width} ${height}`);
@@ -40,6 +40,7 @@ function chart(id, points, log, height) {
   let low,high;
   if(log){
     const positives=points.map(r=>r.value).filter(v=>v>0);
+    if(Number.isFinite(threshold)&&threshold>0)positives.push(threshold);
     const min=positives.length?Math.min(...positives):1e-12;
     const max=positives.length?Math.max(...positives):1e-11;
     const lo=Math.log10(min),hi=Math.log10(max),pad=Math.max((hi-lo)*.1,.00001);
@@ -68,6 +69,11 @@ function chart(id, points, log, height) {
   const defs=element('defs'),clip=element('clipPath',{id:`clip-${id}`});
   clip.append(element('rect',{x:left,y:top,width:plotW,height:plotH}));defs.append(clip);svg.append(defs);
   const curve=element('g',{'clip-path':`url(#clip-${id})`});
+  if(Number.isFinite(threshold)&&threshold>0){
+    const yy=y(threshold);
+    curve.append(element('line',{x1:left,x2:left+plotW,y1:yy,y2:yy,class:'target'}));
+    curve.append(element('text',{x:left+plotW-6,y:yy-6,'text-anchor':'end'},`Initial dt / 1000 · ${threshold.toExponential(1)}`));
+  }
   curve.append(element('path',{d:points.map((r,i)=>(i?'L':'M')+x(r).toFixed(2)+','+y(r.value).toFixed(2)).join(' '),class:'line'}));
   const latest=points[points.length-1];curve.append(element('circle',{cx:x(latest),cy:y(latest.value),r:3,fill:'#18765e'}));svg.append(curve);
   svg.append(element('text',{x:left+plotW/2,y:height-5,'text-anchor':'middle'},isTime?'Wall-clock elapsed (minutes)':'Attempt'));
@@ -190,7 +196,8 @@ function render(){
     $('event').textContent=last.event==='finished'?'Code finished normally':`Latest event: ${last.event}`;
   }
   chart('errorChart',rows.map(r=>({...r,value:r.change})),true,320);
-  chart('dtChart',rows.filter(r=>Number.isFinite(r.dt)&&r.dt>0).map(r=>({...r,value:r.dt})),true,320);
+  const startingDt=rows.find(r=>r.event==='initial'&&Number.isFinite(r.dt)&&r.dt>0)?.dt;
+  chart('dtChart',rows.filter(r=>Number.isFinite(r.dt)&&r.dt>0).map(r=>({...r,value:r.dt})),true,320,startingDt?startingDt/1000:null);
   chart('speedChart',rows.filter(r=>r.speed!==null&&Number.isFinite(r.speed)).map(r=>({...r,value:r.speed})),false,260);
 }
 async function refresh(){
