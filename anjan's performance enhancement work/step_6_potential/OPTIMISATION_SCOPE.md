@@ -43,7 +43,7 @@ The second output group derives from the first group; the third derives separate
 ## Measurement and validation
 
 - The recorded 2273.691901564 seconds (37 min 53.69 s) measures the whole of step 6, including both excluded interpolation groups. It is not a measured runtime for this narrower workload.
-- The Windows original first-field-only baseline completed on 18 November 2026: run `20261118_194031_937624`, report `potential_20261118_194031_937624.md`, wall time 6930.6786912 s (1 h 55 min 30.68 s), sampled peak RSS 747954176 bytes, exit code 0, all three outputs present. Its log reports convergence at zero-based label 16975 (16976 updates). It used the saved inputs from `../step_4_package/runs/20261118_192252_109811`. Use exactly these inputs for the optimised comparison; their hashes differ from the historical Ubuntu inputs. The optimised full-input run and equivalence check are still pending.
+- The Windows original first-field-only baseline completed on 18 November 2026: run `20261118_194031_937624`, report `potential_20261118_194031_937624.md`, wall time 6930.6786912 s (1 h 55 min 30.68 s), sampled peak RSS 747954176 bytes, exit code 0, all three outputs present. Its log reports convergence at zero-based label 16975 (16976 updates). It used the saved inputs from `../step_4_package/runs/20261118_192252_109811`. The optimised comparison used exactly these inputs; their hashes differ from the historical Ubuntu inputs. See the completed full-input comparison below.
 - No separate timing for the three output groups has been established. The earlier conversational estimate of approximately 99% / 1% / less than 0.1% was speculative, not measured evidence; do not use it to claim a bottleneck or speedup.
 - Measure the scoped original workload before claiming improvements. Compare candidates on matching inputs, hardware, numerical settings and execution boundaries.
 - Preserve original source and fixed inputs; develop candidates separately. Check candidate numerical outputs against the original before accepting an improvement, including layouts and finite/NaN behaviour. Do not silently relax tolerances or change precision, boundaries or stopping rules to obtain a speedup.
@@ -54,7 +54,7 @@ The user requests answers as short as possible, accurate, and explicit about unc
 
 Commit completed changes whenever files are created or modified. Finish the requested task, including its commit, before handing back to the user.
 
-The user subsequently authorised implementation using the same entry point (`measure_potential.py`), an original default path, and a selectable separate optimised implementation with minimal runner changes. The candidate now exists as `optimised_laplace.py`; use `--implementation original|optimised` and `--first-field-only` for this narrowed workload. Existing commands retain the complete step 6 behaviour. See README.md for usage and validation limits. Full-observation equivalence and performance acceptance remain pending; do not treat the candidate as an accepted speedup.
+The user subsequently authorised implementation using the same entry point (`measure_potential.py`), an original default path, and a selectable separate optimised implementation with minimal runner changes. The implementation now exists as `optimised_laplace.py`; use `--implementation original|optimised` and `--first-field-only` for this narrowed workload. Existing commands retain the complete step 6 behaviour. Full-input output equivalence has now been verified for one matched Windows run pair, with an observed speedup; repeated-trial performance validation remains outstanding. See README.md and the comparison report for limits.
 
 ## First optimisation implementation
 
@@ -68,7 +68,15 @@ Implemented in commit `e17895f`, with the intent of reducing time per Jacobi ite
 - Numba is an optional dependency listed in `requirements-optimised.txt`. Compilation and CSV logging are included in measured runtime. `NUMBA_NUM_THREADS` controls the candidate's worker count when set before launch.
 - Reports identify the implementation and workload boundary and retain source hashes, dependency versions, output hashes and timing information.
 
-Five tests in `test_implementations.py` passed locally. They cover bit-identical potential values over fixed iteration counts, matching convergence iteration and logged maximum changes, unchanged inputs, nonfinite fallback, overflow behaviour, one/two-thread execution, and runner dispatch. The first three saved files were byte-identical between original and optimised paths on a small fixture; the original default full-step path also produced its nine expected files. These are fixture results, not full-observation validation. No full-input speedup has been measured.
+Five tests in `test_implementations.py` passed locally. They cover bit-identical potential values over fixed iteration counts, matching convergence iteration and logged maximum changes, unchanged inputs, nonfinite fallback, overflow behaviour, one/two-thread execution, and runner dispatch. The first three saved files were byte-identical between original and optimised paths on a small fixture; the original default full-step path also produced its nine expected files. The full-input comparison below was completed subsequently.
+
+## Completed Windows full-input comparison
+
+The optimised run `20261118_214427_942015` completed successfully in 540.392198 s (9 min 0.39 s), including any JIT compilation. Compared with the matched original run, this is an observed 12.8253x wall-time speedup (92.2029% reduction). Both used the same inputs, original source snapshots, workload boundary and Windows system. Both stopped at zero-based iteration label 16975.
+
+All three output files were independently rehashed and compared: byte-identical SHA-256 hashes, float64 shape `(300, 300, 150)`, 40,500,000 total finite values, zero maximum absolute difference, and bit-identical elements. All 340 logged convergence samples match in iteration label and full-precision maximum change. The exact final stopping-update error and scalar potential were not saved; do not claim direct comparisons of those unsaved quantities. Sampled peak RSS fell from 713.30 to 659.18 MiB. CPU time fell from 6895.20 to 5460.59 sampled CPU seconds; parallel CPU seconds sum work across cores.
+
+See [comparison_windows_20261118.md](comparison_windows_20261118.md) for full metrics, component ranges/hashes, progress samples, environment and limitations. This is one run per implementation, not a repeated-trial median. The actual Numba worker count was not recorded; `OMP_NUM_THREADS=8` alone does not establish it. The question below remains unanswered.
 
 ## User's question after the first implementation
 

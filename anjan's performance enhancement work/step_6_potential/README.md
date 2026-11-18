@@ -27,7 +27,7 @@ Small-fixture tests check bit-identical potential values, matching stopping iter
 python -m unittest discover -s "anjan's performance enhancement work/step_6_potential" -p test_implementations.py -v
 ```
 
-These checks do not establish equivalence or a speedup on the full observation. Full-input comparison on matching hardware is still required before accepting this candidate. The historical 37 min 53.69 s report includes all nine outputs and is not a scoped baseline.
+The subsequent [matched Windows full-input comparison](comparison_windows_20261118.md) verified byte-identical output files and matching logged convergence, with an observed 12.83x wall-time speedup (one completed run per implementation, not repeated medians). The historical 37 min 53.69 s Ubuntu report includes all nine outputs and is not a scoped baseline.
 
 Runs only the initial-field/preparation section of the current Main.py. Step 7's WSR reconstruction is excluded; step 5's weights are not needed. Earlier stages do not rerun.
 
