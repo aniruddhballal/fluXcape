@@ -53,4 +53,4 @@ The user requests answers as short as possible, accurate, and explicit about unc
 
 Commit completed changes whenever files are created or modified. Finish the requested task, including its commit, before handing back to the user.
 
-The immediate request was to document this scope before starting optimisation work. At the time of writing, no optimisation has been implemented for this narrowed task. The pending discussion is where time-based performance enhancement has the most scope within the included operations.
+The user subsequently authorised implementation using the same entry point (`measure_potential.py`), an original default path, and a selectable separate optimised implementation with minimal runner changes. The candidate now exists as `optimised_laplace.py`; use `--implementation original|optimised` and `--first-field-only` for this narrowed workload. Existing commands retain the complete step 6 behaviour. See README.md for usage and validation limits. Full-observation equivalence and performance acceptance remain pending; do not treat the candidate as an accepted speedup.

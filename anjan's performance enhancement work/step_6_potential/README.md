@@ -2,6 +2,33 @@
 
 For current optimisation work, read [OPTIMISATION_SCOPE.md](OPTIMISATION_SCOPE.md) first: the user has narrowed the task to the initial solve, gradients and scaling that produce the first three field files, with execution time as the priority.
 
+## Selecting the implementation
+
+The existing entry point and original default remain available. Existing commands still run the complete step 6 and produce nine arrays. To measure only the first three arrays, use `--first-field-only` with either implementation:
+
+```bash
+python "anjan's performance enhancement work/step_6_potential/measure_potential.py" --input-dir "PATH_TO_EXISTING_INPUT_RUN" --implementation original --first-field-only --max-seconds 0
+python "anjan's performance enhancement work/step_6_potential/measure_potential.py" --input-dir "PATH_TO_EXISTING_INPUT_RUN" --implementation optimised --first-field-only --max-seconds 0
+```
+
+Install the optional dependency in the active environment before selecting `optimised`:
+
+```bash
+python -m pip install -r "anjan's performance enhancement work/step_6_potential/requirements-optimised.txt"
+```
+
+The optimised path copies a separate `optimised_laplace.py` into the isolated run and overrides only the active solver import. Anjan's source is unchanged. The kernel reuses two potential buffers, parallelises independent x planes, and combines the Jacobi update and maximum-change scan. It uses float64, the original expression order, and disabled fast-math. Gradients, scaling, saving and any requested interpolation remain the original code. Unsupported array layouts/types and nonfinite inputs fall back to the original solver.
+
+Numba compilation is included in wall time. Each isolated run has its own copy/cache, so do not assume compilation is free. Set `NUMBA_NUM_THREADS` before launching to control the worker count; its default comes from Numba. More threads do not guarantee a faster solve. Reports record the implementation, workload boundary, solver hash, dependency versions and thread environment. `--check-only` checks prerequisites without running or compiling the kernel.
+
+Small-fixture tests check bit-identical potential values, matching stopping iterations/progress, unchanged inputs, nonfinite fallback, and matching first-three output files through the runner. Run them with:
+
+```bash
+python -m unittest discover -s "anjan's performance enhancement work/step_6_potential" -p test_implementations.py -v
+```
+
+These checks do not establish equivalence or a speedup on the full observation. Full-input comparison on matching hardware is still required before accepting this candidate. The historical 37 min 53.69 s report includes all nine outputs and is not a scoped baseline.
+
 Runs only the initial-field/preparation section of the current Main.py. Step 7's WSR reconstruction is excluded; step 5's weights are not needed. Earlier stages do not rerun.
 
 With the Python environment activated, from the repository root:

@@ -1,0 +1,2 @@
+# Optional; the original implementation does not need Numba.
+numba>=0.61
