@@ -8,6 +8,8 @@ Optimise execution time for only the first output group within step 6: the itera
 
 Anjan supplied the scientific code. The user has spent time understanding its mathematics and measuring stage runtimes and is now beginning performance enhancement. Preserve the existing mathematics, numerical settings, boundary treatment, scaling conventions and output behaviour. Scientific corrections are outside this task.
 
+Accuracy is a strict user priority: performance improvements must involve zero or very close to zero accuracy tradeoff relative to the original implementation. Aim for bit-identical results where feasible. If a candidate differs numerically, quantify the differences and establish that they satisfy this requirement before accepting it; do not assume a small difference is acceptable or sacrifice accuracy for speed.
+
 ## Exact boundary
 
 Relevant original source directory:
