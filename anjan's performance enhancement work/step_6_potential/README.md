@@ -1,5 +1,7 @@
 # Step 6: initial potential field and grid preparation
 
+For current optimisation work, read [OPTIMISATION_SCOPE.md](OPTIMISATION_SCOPE.md) first: the user has narrowed the task to the initial solve, gradients and scaling that produce the first three field files, with execution time as the priority.
+
 Runs only the initial-field/preparation section of the current Main.py. Step 7's WSR reconstruction is excluded; step 5's weights are not needed. Earlier stages do not rerun.
 
 With the Python environment activated, from the repository root:
