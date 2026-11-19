@@ -1,5 +1,6 @@
+import os
 import numpy as np
-from numba import njit, prange
+from numba import config, njit, prange, set_num_threads
 
 def laplace_solver_nonuniform(Phi, dx, dy, dz, tol=1e-3, max_iter=100000):
     nx, ny, nz = Phi.shape
@@ -87,8 +88,7 @@ import numpy as np
 def _jacobi_update(Phi_old, Phi, dx2, dy2, dz2, denom, errors):
     Nx, Ny, Nz = Phi.shape
     for i in prange(1, Nx-1):
-        maximum = 0.0
-        has_nan = False
+        maximum = np.uint64(0)
         for j in range(1, Ny-1):
             for k in range(1, Nz-1):
                 value = (
@@ -97,12 +97,11 @@ def _jacobi_update(Phi_old, Phi, dx2, dy2, dz2, denom, errors):
                     (Phi_old[i,j,k+1] + Phi_old[i,j,k-1]) / dz2
                 ) / denom
                 Phi[i,j,k] = value
-                difference = abs(value - Phi_old[i,j,k])
-                if np.isnan(difference):
-                    has_nan = True
-                elif difference > maximum:
-                    maximum = difference
-        errors[i-1] = np.nan if has_nan else maximum
+                # Nonnegative float64 bit ordering permits SIMD without fast-math.
+                bits = np.float64(abs(value - Phi_old[i,j,k])).view(np.uint64)
+                if bits > maximum:
+                    maximum = bits
+        errors[i-1] = maximum
 
 
 def solve_pfss_cartesian_vectorized(Phi_init, dx, dy, dz, tol=1e-3, max_iter=100000, verbose=False):
@@ -133,14 +132,16 @@ def solve_pfss_cartesian_vectorized(Phi_init, dx, dy, dz, tol=1e-3, max_iter=100
     use_numba = (Phi_init.dtype == np.float64 and Phi_init.flags.c_contiguous
                  and min(Phi.shape) >= 3 and np.isfinite(Phi_init).all())
     if use_numba:
+        if 'NUMBA_NUM_THREADS' not in os.environ:
+            set_num_threads(min(4, config.NUMBA_NUM_THREADS))
         Phi_old = Phi.copy()
-        errors = np.empty(Nx-2)
+        errors = np.empty(Nx-2, dtype=np.uint64)
 
     for step in range(max_iter):
         if use_numba:
             Phi, Phi_old = Phi_old, Phi
             _jacobi_update(Phi_old, Phi, dx2, dy2, dz2, denom, errors)
-            error = np.max(errors)
+            error = np.max(errors).view(np.float64)
         else:
             Phi_old = Phi.copy()
 
