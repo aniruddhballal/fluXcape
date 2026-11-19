@@ -1,6 +1,12 @@
 # Current optimisation scope
 
-User-confirmed scope, recorded 18 November 2026. Read this before continuing performance work in step 6. This narrows the broader project brief; it does not authorise work on other stages.
+User-confirmed scope, recorded 18 November 2026; Ubuntu extension recorded below on 19 November 2026. Read this before continuing performance work in step 6. This narrows the broader project brief; it does not authorise work on other stages.
+
+## Ubuntu desktop extension — 19 November 2026
+
+The user now authorises an audit of this Ubuntu desktop and a separately selectable V4 tuned to its hardware/software, preserving original source, numerical settings and output accuracy. For Ubuntu validation the user explicitly requires the **complete step 6 workload and all nine outputs**, using the exact saved inputs of the earlier Ubuntu run (`../step_4_package/runs/20261113_160555_320989`). The first-field-only Windows scope below remains historical; it does not restrict this newly authorised full-step comparison. Do not compare scoped Windows timings directly with these Ubuntu full-step results. No step 7 work or solver run is part of this audit.
+
+The completed V4 profile is 16 workers, 12×12 tiles and depth eight, retaining V3 arithmetic/replay. Three alternating full-step pairs measured medians of 68.242571 s for V3 and 45.579457 s for V4 (33.21% less elapsed time). All nine arrays and 340 logged errors match the original Ubuntu run exactly. V4 uses more CPU seconds (636.48 versus 257.54 median) and slightly more RAM; execution time is the priority. See [the Ubuntu audit and verification](reports/v4_ubuntu_20261119.md). This is a measured desktop profile, not a global optimum.
 
 ## Objective and priority
 

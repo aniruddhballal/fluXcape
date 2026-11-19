@@ -1,0 +1,634 @@
+{
+  "thread_screen": {
+    "steps": 240,
+    "trials": 3,
+    "shape": [
+      300,
+      300,
+      150
+    ],
+    "input_sha256": "62445018056b5d8edcb2f0b9de8c6a914cb291ede0eab67e5c3f9d52ce6c6e17",
+    "jit_included": false,
+    "records": [
+      {
+        "threads": 4,
+        "tile": 16,
+        "depth": 4,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          2.4751373199999307,
+          2.4551593639999965,
+          2.487840086999995
+        ],
+        "temporal_seconds": [
+          1.2699454090000017,
+          0.8555315779999546,
+          0.8853105729999697
+        ],
+        "v2_median": 2.4751373199999307,
+        "temporal_median": 0.8853105729999697,
+        "speedup": 2.7957842089388616
+      },
+      {
+        "threads": 8,
+        "tile": 16,
+        "depth": 4,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          2.4744036530000812,
+          2.4946578520000458,
+          2.5024452309999106
+        ],
+        "temporal_seconds": [
+          0.7188892069999611,
+          0.7283999810000523,
+          0.7273909519999506
+        ],
+        "v2_median": 2.4946578520000458,
+        "temporal_median": 0.7273909519999506,
+        "speedup": 3.4295970346359423
+      },
+      {
+        "threads": 16,
+        "tile": 16,
+        "depth": 4,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          2.6842628690000083,
+          2.6510023670000464,
+          2.6337920609998946
+        ],
+        "temporal_seconds": [
+          0.6994188109999868,
+          0.783444798000005,
+          0.7140204029999495
+        ],
+        "v2_median": 2.6510023670000464,
+        "temporal_median": 0.7140204029999495,
+        "speedup": 3.712782374091674
+      },
+      {
+        "threads": 32,
+        "tile": 16,
+        "depth": 4,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          3.6425056699999914,
+          3.348249158000044,
+          3.555038319999994
+        ],
+        "temporal_seconds": [
+          1.168471856999986,
+          1.1700559589999102,
+          1.0986095060000025
+        ],
+        "v2_median": 3.555038319999994,
+        "temporal_median": 1.168471856999986,
+        "speedup": 3.04246807375185
+      }
+    ]
+  },
+  "tile_screen": {
+    "steps": 120,
+    "trials": 1,
+    "shape": [
+      300,
+      300,
+      150
+    ],
+    "input_sha256": "62445018056b5d8edcb2f0b9de8c6a914cb291ede0eab67e5c3f9d52ce6c6e17",
+    "jit_included": false,
+    "records": [
+      {
+        "threads": 8,
+        "tile": 12,
+        "depth": 4,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.2043856840000444
+        ],
+        "temporal_seconds": [
+          0.37050494699997216
+        ],
+        "v2_median": 1.2043856840000444,
+        "temporal_median": 0.37050494699997216,
+        "speedup": 3.250660196988233
+      },
+      {
+        "threads": 8,
+        "tile": 12,
+        "depth": 8,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.2322546200000488
+        ],
+        "temporal_seconds": [
+          0.3243174159999853
+        ],
+        "v2_median": 1.2322546200000488,
+        "temporal_median": 0.3243174159999853,
+        "speedup": 3.7995326775793767
+      },
+      {
+        "threads": 8,
+        "tile": 12,
+        "depth": 12,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.2344659460000003
+        ],
+        "temporal_seconds": [
+          0.46804155499989974
+        ],
+        "v2_median": 1.2344659460000003,
+        "temporal_median": 0.46804155499989974,
+        "speedup": 2.6375135558214797
+      },
+      {
+        "threads": 8,
+        "tile": 16,
+        "depth": 4,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.2096751300000506
+        ],
+        "temporal_seconds": [
+          0.35286336900003334
+        ],
+        "v2_median": 1.2096751300000506,
+        "temporal_median": 0.35286336900003334,
+        "speedup": 3.428168623532969
+      },
+      {
+        "threads": 8,
+        "tile": 16,
+        "depth": 8,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.2252665490000254
+        ],
+        "temporal_seconds": [
+          0.2968224129999726
+        ],
+        "v2_median": 1.2252665490000254,
+        "temporal_median": 0.2968224129999726,
+        "speedup": 4.127944842898836
+      },
+      {
+        "threads": 8,
+        "tile": 16,
+        "depth": 12,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.2355669199998829
+        ],
+        "temporal_seconds": [
+          0.47223508799993397
+        ],
+        "v2_median": 1.2355669199998829,
+        "temporal_median": 0.47223508799993397,
+        "speedup": 2.616423369201349
+      },
+      {
+        "threads": 8,
+        "tile": 24,
+        "depth": 4,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.212200608999865
+        ],
+        "temporal_seconds": [
+          0.37151749300005577
+        ],
+        "v2_median": 1.212200608999865,
+        "temporal_median": 0.37151749300005577,
+        "speedup": 3.262835887514139
+      },
+      {
+        "threads": 8,
+        "tile": 24,
+        "depth": 8,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.2060795889999554
+        ],
+        "temporal_seconds": [
+          0.35915176299999985
+        ],
+        "v2_median": 1.2060795889999554,
+        "temporal_median": 0.35915176299999985,
+        "speedup": 3.3581335614937684
+      },
+      {
+        "threads": 8,
+        "tile": 24,
+        "depth": 12,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.2236925289998908
+        ],
+        "temporal_seconds": [
+          0.6053021930001705
+        ],
+        "v2_median": 1.2236925289998908,
+        "temporal_median": 0.6053021930001705,
+        "speedup": 2.0216224939392315
+      },
+      {
+        "threads": 8,
+        "tile": 32,
+        "depth": 4,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.2275373369998306
+        ],
+        "temporal_seconds": [
+          0.46037868999997045
+        ],
+        "v2_median": 1.2275373369998306,
+        "temporal_median": 0.46037868999997045,
+        "speedup": 2.6663643727730086
+      },
+      {
+        "threads": 8,
+        "tile": 32,
+        "depth": 8,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.2304340450000382
+        ],
+        "temporal_seconds": [
+          0.5501715069999591
+        ],
+        "v2_median": 1.2304340450000382,
+        "temporal_median": 0.5501715069999591,
+        "speedup": 2.236455413166516
+      },
+      {
+        "threads": 8,
+        "tile": 32,
+        "depth": 12,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.214434342000004
+        ],
+        "temporal_seconds": [
+          0.7202641819999371
+        ],
+        "v2_median": 1.214434342000004,
+        "temporal_median": 0.7202641819999371,
+        "speedup": 1.6860957025905672
+      },
+      {
+        "threads": 16,
+        "tile": 12,
+        "depth": 4,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.2898410660000081
+        ],
+        "temporal_seconds": [
+          0.37694796799996766
+        ],
+        "v2_median": 1.2898410660000081,
+        "temporal_median": 0.37694796799996766,
+        "speedup": 3.4218013505782285
+      },
+      {
+        "threads": 16,
+        "tile": 12,
+        "depth": 8,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.304234856999983
+        ],
+        "temporal_seconds": [
+          0.24962671500020406
+        ],
+        "v2_median": 1.304234856999983,
+        "temporal_median": 0.24962671500020406,
+        "speedup": 5.224740697320465
+      },
+      {
+        "threads": 16,
+        "tile": 12,
+        "depth": 12,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.2839744159998645
+        ],
+        "temporal_seconds": [
+          0.36361018200000217
+        ],
+        "v2_median": 1.2839744159998645,
+        "temporal_median": 0.36361018200000217,
+        "speedup": 3.5311838874739125
+      },
+      {
+        "threads": 16,
+        "tile": 16,
+        "depth": 4,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.316697584000167
+        ],
+        "temporal_seconds": [
+          0.37547313599998233
+        ],
+        "v2_median": 1.316697584000167,
+        "temporal_median": 0.37547313599998233,
+        "speedup": 3.5067690808117598
+      },
+      {
+        "threads": 16,
+        "tile": 16,
+        "depth": 8,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.3032125259999248
+        ],
+        "temporal_seconds": [
+          0.262082934000091
+        ],
+        "v2_median": 1.3032125259999248,
+        "temporal_median": 0.262082934000091,
+        "speedup": 4.972519599461872
+      },
+      {
+        "threads": 16,
+        "tile": 16,
+        "depth": 12,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.2805215169998974
+        ],
+        "temporal_seconds": [
+          0.449663510000164
+        ],
+        "v2_median": 1.2805215169998974,
+        "temporal_median": 0.449663510000164,
+        "speedup": 2.847732779116167
+      },
+      {
+        "threads": 16,
+        "tile": 24,
+        "depth": 4,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.3062097539998376
+        ],
+        "temporal_seconds": [
+          0.3789162470000065
+        ],
+        "v2_median": 1.3062097539998376,
+        "temporal_median": 0.3789162470000065,
+        "speedup": 3.447225513135137
+      },
+      {
+        "threads": 16,
+        "tile": 24,
+        "depth": 8,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.2944338310001058
+        ],
+        "temporal_seconds": [
+          0.3692740330000106
+        ],
+        "v2_median": 1.2944338310001058,
+        "temporal_median": 0.3692740330000106,
+        "speedup": 3.505347561224454
+      },
+      {
+        "threads": 16,
+        "tile": 24,
+        "depth": 12,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.3000460270000076
+        ],
+        "temporal_seconds": [
+          0.6259212209999987
+        ],
+        "v2_median": 1.3000460270000076,
+        "temporal_median": 0.6259212209999987,
+        "speedup": 2.077012223555862
+      },
+      {
+        "threads": 16,
+        "tile": 32,
+        "depth": 4,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.2905790439999691
+        ],
+        "temporal_seconds": [
+          0.518009357999972
+        ],
+        "v2_median": 1.2905790439999691,
+        "temporal_median": 0.518009357999972,
+        "speedup": 2.4914203268120088
+      },
+      {
+        "threads": 16,
+        "tile": 32,
+        "depth": 8,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.2928630229998817
+        ],
+        "temporal_seconds": [
+          0.5792061639999702
+        ],
+        "v2_median": 1.2928630229998817,
+        "temporal_median": 0.5792061639999702,
+        "speedup": 2.232129254411644
+      },
+      {
+        "threads": 16,
+        "tile": 32,
+        "depth": 12,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          1.2770695910000995
+        ],
+        "temporal_seconds": [
+          0.8221881859999485
+        ],
+        "v2_median": 1.2770695910000995,
+        "temporal_median": 0.8221881859999485,
+        "speedup": 1.5532570435160444
+      }
+    ]
+  },
+  "tile_confirmation": {
+    "steps": 240,
+    "trials": 3,
+    "shape": [
+      300,
+      300,
+      150
+    ],
+    "input_sha256": "62445018056b5d8edcb2f0b9de8c6a914cb291ede0eab67e5c3f9d52ce6c6e17",
+    "jit_included": false,
+    "records": [
+      {
+        "threads": 12,
+        "tile": 12,
+        "depth": 6,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          2.519438108000031,
+          2.517490166000016,
+          2.5070977529999254
+        ],
+        "temporal_seconds": [
+          0.6562077849998786,
+          0.5655066619999616,
+          0.5644172400000116
+        ],
+        "v2_median": 2.517490166000016,
+        "temporal_median": 0.5655066619999616,
+        "speedup": 4.451742720583877
+      },
+      {
+        "threads": 12,
+        "tile": 12,
+        "depth": 8,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          2.52483254699996,
+          2.518400267000061,
+          2.5146000669999466
+        ],
+        "temporal_seconds": [
+          0.5372065779999957,
+          0.5052657119999822,
+          0.5055484559998149
+        ],
+        "v2_median": 2.518400267000061,
+        "temporal_median": 0.5055484559998149,
+        "speedup": 4.981521033467429
+      },
+      {
+        "threads": 12,
+        "tile": 16,
+        "depth": 6,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          2.57908653100003,
+          2.519116839999924,
+          2.5491420230000585
+        ],
+        "temporal_seconds": [
+          0.5419298409999556,
+          0.5476005610000811,
+          0.5515684520000832
+        ],
+        "v2_median": 2.5491420230000585,
+        "temporal_median": 0.5476005610000811,
+        "speedup": 4.655112146606586
+      },
+      {
+        "threads": 12,
+        "tile": 16,
+        "depth": 8,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          2.5145471389998875,
+          2.5226712080000198,
+          2.5213971759999367
+        ],
+        "temporal_seconds": [
+          0.5014167429999361,
+          0.5105432489999657,
+          0.5244543799999519
+        ],
+        "v2_median": 2.5213971759999367,
+        "temporal_median": 0.5105432489999657,
+        "speedup": 4.938655404686599
+      },
+      {
+        "threads": 16,
+        "tile": 12,
+        "depth": 6,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          2.577425706999975,
+          2.5846161609999854,
+          2.585086894000142
+        ],
+        "temporal_seconds": [
+          0.5742749710000226,
+          0.5728938689999268,
+          0.5711853590000828
+        ],
+        "v2_median": 2.5846161609999854,
+        "temporal_median": 0.5728938689999268,
+        "speedup": 4.511509549773722
+      },
+      {
+        "threads": 16,
+        "tile": 12,
+        "depth": 8,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          2.6000841139998556,
+          2.584224132999907,
+          2.574378237000019
+        ],
+        "temporal_seconds": [
+          0.512240527999893,
+          0.499812620000057,
+          0.5011750460000712
+        ],
+        "v2_median": 2.584224132999907,
+        "temporal_median": 0.5011750460000712,
+        "speedup": 5.1563304151411
+      },
+      {
+        "threads": 16,
+        "tile": 16,
+        "depth": 6,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          2.5859505870000703,
+          2.5693412269999953,
+          2.569213670999943
+        ],
+        "temporal_seconds": [
+          0.5337243819999458,
+          0.5336290479999661,
+          0.5336238439999761
+        ],
+        "v2_median": 2.5693412269999953,
+        "temporal_median": 0.5336290479999661,
+        "speedup": 4.814845137516124
+      },
+      {
+        "threads": 16,
+        "tile": 16,
+        "depth": 8,
+        "all_bit_exact": true,
+        "v2_seconds": [
+          2.6020372290001887,
+          2.571987573999877,
+          2.573953364999852
+        ],
+        "temporal_seconds": [
+          0.504144419999875,
+          0.49872443999993266,
+          0.5315290399998958
+        ],
+        "v2_median": 2.573953364999852,
+        "temporal_median": 0.504144419999875,
+        "speedup": 5.105587333487675
+      }
+    ]
+  },
+  "commands": [
+    "python benchmarks/benchmark_temporal.py --input-dir ../step_4_package/runs/20261113_160555_320989 --steps 240 --trials 3 --threads 4 8 16 32 --tiles 16 --depths 4 --output runs/v4_thread_screen.json",
+    "python benchmarks/benchmark_temporal.py --input-dir ../step_4_package/runs/20261113_160555_320989 --steps 120 --trials 1 --threads 8 16 --tiles 12 16 24 32 --depths 4 8 12 --output runs/v4_tile_screen.json",
+    "python benchmarks/benchmark_temporal.py --input-dir ../step_4_package/runs/20261113_160555_320989 --steps 240 --trials 3 --threads 12 16 --tiles 12 16 --depths 6 8 --output runs/v4_tile_confirmation.json"
+  ]
+}

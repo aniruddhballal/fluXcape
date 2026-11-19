@@ -1,0 +1,594 @@
+{
+  "reference_run": "/home/user/Projects/fluXcape/anjan's performance enhancement work/step_6_potential/runs/20261116_103848_750500",
+  "input_directory": "/home/user/Projects/fluXcape/anjan's performance enhancement work/step_4_package/runs/20261113_160555_320989",
+  "workload": "full step 6, nine arrays",
+  "jit_and_logging_included": true,
+  "trials_per_implementation": 3,
+  "records": [
+    {
+      "implementation": "optimised-v3",
+      "trial": 1,
+      "workers": 4,
+      "run_id": "20261119_101716_997756",
+      "command": [
+        "/home/user/Projects/fluXcape/.venv/bin/python",
+        "/home/user/Projects/fluXcape/anjan's performance enhancement work/step_6_potential/measure_potential.py",
+        "--input-dir",
+        "/home/user/Projects/fluXcape/anjan's performance enhancement work/step_4_package/runs/20261113_160555_320989",
+        "--implementation",
+        "optimised-v3",
+        "--max-seconds",
+        "0",
+        "--label",
+        "ubuntu_optimised-v3_paired_trial_1"
+      ],
+      "wall_seconds": 68.24257135700009,
+      "cpu_seconds": 257.53999999999996,
+      "peak_rss_bytes": 3350581248,
+      "solver_runtime": {
+        "implementation": "optimised-v3",
+        "numba_threads": 4,
+        "fastmath": false,
+        "dtype": "float64",
+        "tile": 16,
+        "depth": 4,
+        "error_reduction": "per-tile-per-update-uint64-max",
+        "unused_speculative_updates": 3,
+        "replayed_updates": 1,
+        "threading_layer": "omp",
+        "final_iteration": 16975,
+        "final_max_change": 0.0009999202787085437,
+        "logical_updates": 16976,
+        "stop_reason": "tolerance"
+      },
+      "output_comparisons": [
+        {
+          "name": "PFSSmagneticfield/Bfield_full/Bx_full.npy",
+          "sha256": "584b34053a998bec1ba202a09858594776bed3fae7a9c4e8e4c76fb0f7d5c5a1",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "PFSSmagneticfield/Bfield_full/By_full.npy",
+          "sha256": "233e1171b7156c70803dcbd83f7363335b1d05d6554429675bc514a37134aaea",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "PFSSmagneticfield/Bfield_full/Bz_full.npy",
+          "sha256": "69f613bcbc49adba79ad0fe552b2fea1dada5eeea23bc0cfe051d8228acb7ca9",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "PFSSmagneticfield_for_uniform_grid/Bfield_full/Bx_full.npy",
+          "sha256": "cba4d1f78adbea98117f6f69bed5b790756f58a97f680d2943292573cfa8166e",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "PFSSmagneticfield_for_uniform_grid/Bfield_full/By_full.npy",
+          "sha256": "bebe3e86ff40d0445560ee0e2157c79636fddaf169eb332d8104471278684caa",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "PFSSmagneticfield_for_uniform_grid/Bfield_full/Bz_full.npy",
+          "sha256": "777602832b1d17564ee9bca0b3178e1ba66f5f9f7f2998a9d9d707180578aeee",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "Preprocessedmagneticfield_interpolated/Bx.npy",
+          "sha256": "486d674e75c77cb323260a7364948f635e5b58bdc6ffe78797893ec17e415bdb",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "Preprocessedmagneticfield_interpolated/By.npy",
+          "sha256": "c46649dd16689757fd7a280c94244b6987e41d454ed5c1c815c84fdd5c5a483b",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "Preprocessedmagneticfield_interpolated/Bz.npy",
+          "sha256": "fa5ae10f9ceef6a28d9642d3c2f83bb780a383889467d3d64a59282db79b93bf",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        }
+      ],
+      "logged_convergence_samples": 340,
+      "convergence_exact": true
+    },
+    {
+      "implementation": "optimised-v4",
+      "trial": 1,
+      "workers": 16,
+      "run_id": "20261119_101826_226785",
+      "command": [
+        "/home/user/Projects/fluXcape/.venv/bin/python",
+        "/home/user/Projects/fluXcape/anjan's performance enhancement work/step_6_potential/measure_potential.py",
+        "--input-dir",
+        "/home/user/Projects/fluXcape/anjan's performance enhancement work/step_4_package/runs/20261113_160555_320989",
+        "--implementation",
+        "optimised-v4",
+        "--max-seconds",
+        "0",
+        "--label",
+        "ubuntu_optimised-v4_paired_trial_1"
+      ],
+      "wall_seconds": 44.984783334999975,
+      "cpu_seconds": 627.92,
+      "peak_rss_bytes": 3373887488,
+      "solver_runtime": {
+        "implementation": "optimised-v4",
+        "numba_threads": 16,
+        "fastmath": false,
+        "dtype": "float64",
+        "tile": 12,
+        "depth": 8,
+        "tuning_profile": "ryzen-9-9950x-ubuntu",
+        "error_reduction": "per-tile-per-update-uint64-max",
+        "unused_speculative_updates": 7,
+        "replayed_updates": 1,
+        "threading_layer": "omp",
+        "final_iteration": 16975,
+        "final_max_change": 0.0009999202787085437,
+        "logical_updates": 16976,
+        "stop_reason": "tolerance"
+      },
+      "output_comparisons": [
+        {
+          "name": "PFSSmagneticfield/Bfield_full/Bx_full.npy",
+          "sha256": "584b34053a998bec1ba202a09858594776bed3fae7a9c4e8e4c76fb0f7d5c5a1",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "PFSSmagneticfield/Bfield_full/By_full.npy",
+          "sha256": "233e1171b7156c70803dcbd83f7363335b1d05d6554429675bc514a37134aaea",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "PFSSmagneticfield/Bfield_full/Bz_full.npy",
+          "sha256": "69f613bcbc49adba79ad0fe552b2fea1dada5eeea23bc0cfe051d8228acb7ca9",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "PFSSmagneticfield_for_uniform_grid/Bfield_full/Bx_full.npy",
+          "sha256": "cba4d1f78adbea98117f6f69bed5b790756f58a97f680d2943292573cfa8166e",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "PFSSmagneticfield_for_uniform_grid/Bfield_full/By_full.npy",
+          "sha256": "bebe3e86ff40d0445560ee0e2157c79636fddaf169eb332d8104471278684caa",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "PFSSmagneticfield_for_uniform_grid/Bfield_full/Bz_full.npy",
+          "sha256": "777602832b1d17564ee9bca0b3178e1ba66f5f9f7f2998a9d9d707180578aeee",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "Preprocessedmagneticfield_interpolated/Bx.npy",
+          "sha256": "486d674e75c77cb323260a7364948f635e5b58bdc6ffe78797893ec17e415bdb",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "Preprocessedmagneticfield_interpolated/By.npy",
+          "sha256": "c46649dd16689757fd7a280c94244b6987e41d454ed5c1c815c84fdd5c5a483b",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "Preprocessedmagneticfield_interpolated/Bz.npy",
+          "sha256": "fa5ae10f9ceef6a28d9642d3c2f83bb780a383889467d3d64a59282db79b93bf",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        }
+      ],
+      "logged_convergence_samples": 340,
+      "convergence_exact": true
+    },
+    {
+      "implementation": "optimised-v4",
+      "trial": 2,
+      "workers": 16,
+      "run_id": "20261119_101912_201726",
+      "command": [
+        "/home/user/Projects/fluXcape/.venv/bin/python",
+        "/home/user/Projects/fluXcape/anjan's performance enhancement work/step_6_potential/measure_potential.py",
+        "--input-dir",
+        "/home/user/Projects/fluXcape/anjan's performance enhancement work/step_4_package/runs/20261113_160555_320989",
+        "--implementation",
+        "optimised-v4",
+        "--max-seconds",
+        "0",
+        "--label",
+        "ubuntu_optimised-v4_paired_trial_2"
+      ],
+      "wall_seconds": 47.73321288699981,
+      "cpu_seconds": 671.17,
+      "peak_rss_bytes": 3374571520,
+      "solver_runtime": {
+        "implementation": "optimised-v4",
+        "numba_threads": 16,
+        "fastmath": false,
+        "dtype": "float64",
+        "tile": 12,
+        "depth": 8,
+        "tuning_profile": "ryzen-9-9950x-ubuntu",
+        "error_reduction": "per-tile-per-update-uint64-max",
+        "unused_speculative_updates": 7,
+        "replayed_updates": 1,
+        "threading_layer": "omp",
+        "final_iteration": 16975,
+        "final_max_change": 0.0009999202787085437,
+        "logical_updates": 16976,
+        "stop_reason": "tolerance"
+      },
+      "output_comparisons": [
+        {
+          "name": "PFSSmagneticfield/Bfield_full/Bx_full.npy",
+          "sha256": "584b34053a998bec1ba202a09858594776bed3fae7a9c4e8e4c76fb0f7d5c5a1",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "PFSSmagneticfield/Bfield_full/By_full.npy",
+          "sha256": "233e1171b7156c70803dcbd83f7363335b1d05d6554429675bc514a37134aaea",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "PFSSmagneticfield/Bfield_full/Bz_full.npy",
+          "sha256": "69f613bcbc49adba79ad0fe552b2fea1dada5eeea23bc0cfe051d8228acb7ca9",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "PFSSmagneticfield_for_uniform_grid/Bfield_full/Bx_full.npy",
+          "sha256": "cba4d1f78adbea98117f6f69bed5b790756f58a97f680d2943292573cfa8166e",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "PFSSmagneticfield_for_uniform_grid/Bfield_full/By_full.npy",
+          "sha256": "bebe3e86ff40d0445560ee0e2157c79636fddaf169eb332d8104471278684caa",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "PFSSmagneticfield_for_uniform_grid/Bfield_full/Bz_full.npy",
+          "sha256": "777602832b1d17564ee9bca0b3178e1ba66f5f9f7f2998a9d9d707180578aeee",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "Preprocessedmagneticfield_interpolated/Bx.npy",
+          "sha256": "486d674e75c77cb323260a7364948f635e5b58bdc6ffe78797893ec17e415bdb",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "Preprocessedmagneticfield_interpolated/By.npy",
+          "sha256": "c46649dd16689757fd7a280c94244b6987e41d454ed5c1c815c84fdd5c5a483b",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "Preprocessedmagneticfield_interpolated/Bz.npy",
+          "sha256": "fa5ae10f9ceef6a28d9642d3c2f83bb780a383889467d3d64a59282db79b93bf",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        }
+      ],
+      "logged_convergence_samples": 340,
+      "convergence_exact": true
+    },
+    {
+      "implementation": "optimised-v3",
+      "trial": 2,
+      "workers": 4,
+      "run_id": "20261119_102000_922475",
+      "command": [
+        "/home/user/Projects/fluXcape/.venv/bin/python",
+        "/home/user/Projects/fluXcape/anjan's performance enhancement work/step_6_potential/measure_potential.py",
+        "--input-dir",
+        "/home/user/Projects/fluXcape/anjan's performance enhancement work/step_4_package/runs/20261113_160555_320989",
+        "--implementation",
+        "optimised-v3",
+        "--max-seconds",
+        "0",
+        "--label",
+        "ubuntu_optimised-v3_paired_trial_2"
+      ],
+      "wall_seconds": 67.75075221199995,
+      "cpu_seconds": 255.46,
+      "peak_rss_bytes": 3350884352,
+      "solver_runtime": {
+        "implementation": "optimised-v3",
+        "numba_threads": 4,
+        "fastmath": false,
+        "dtype": "float64",
+        "tile": 16,
+        "depth": 4,
+        "error_reduction": "per-tile-per-update-uint64-max",
+        "unused_speculative_updates": 3,
+        "replayed_updates": 1,
+        "threading_layer": "omp",
+        "final_iteration": 16975,
+        "final_max_change": 0.0009999202787085437,
+        "logical_updates": 16976,
+        "stop_reason": "tolerance"
+      },
+      "output_comparisons": [
+        {
+          "name": "PFSSmagneticfield/Bfield_full/Bx_full.npy",
+          "sha256": "584b34053a998bec1ba202a09858594776bed3fae7a9c4e8e4c76fb0f7d5c5a1",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "PFSSmagneticfield/Bfield_full/By_full.npy",
+          "sha256": "233e1171b7156c70803dcbd83f7363335b1d05d6554429675bc514a37134aaea",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "PFSSmagneticfield/Bfield_full/Bz_full.npy",
+          "sha256": "69f613bcbc49adba79ad0fe552b2fea1dada5eeea23bc0cfe051d8228acb7ca9",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "PFSSmagneticfield_for_uniform_grid/Bfield_full/Bx_full.npy",
+          "sha256": "cba4d1f78adbea98117f6f69bed5b790756f58a97f680d2943292573cfa8166e",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "PFSSmagneticfield_for_uniform_grid/Bfield_full/By_full.npy",
+          "sha256": "bebe3e86ff40d0445560ee0e2157c79636fddaf169eb332d8104471278684caa",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "PFSSmagneticfield_for_uniform_grid/Bfield_full/Bz_full.npy",
+          "sha256": "777602832b1d17564ee9bca0b3178e1ba66f5f9f7f2998a9d9d707180578aeee",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "Preprocessedmagneticfield_interpolated/Bx.npy",
+          "sha256": "486d674e75c77cb323260a7364948f635e5b58bdc6ffe78797893ec17e415bdb",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "Preprocessedmagneticfield_interpolated/By.npy",
+          "sha256": "c46649dd16689757fd7a280c94244b6987e41d454ed5c1c815c84fdd5c5a483b",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "Preprocessedmagneticfield_interpolated/Bz.npy",
+          "sha256": "fa5ae10f9ceef6a28d9642d3c2f83bb780a383889467d3d64a59282db79b93bf",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        }
+      ],
+      "logged_convergence_samples": 340,
+      "convergence_exact": true
+    },
+    {
+      "implementation": "optimised-v3",
+      "trial": 3,
+      "workers": 4,
+      "run_id": "20261119_102109_660304",
+      "command": [
+        "/home/user/Projects/fluXcape/.venv/bin/python",
+        "/home/user/Projects/fluXcape/anjan's performance enhancement work/step_6_potential/measure_potential.py",
+        "--input-dir",
+        "/home/user/Projects/fluXcape/anjan's performance enhancement work/step_4_package/runs/20261113_160555_320989",
+        "--implementation",
+        "optimised-v3",
+        "--max-seconds",
+        "0",
+        "--label",
+        "ubuntu_optimised-v3_paired_trial_3"
+      ],
+      "wall_seconds": 68.47420086700004,
+      "cpu_seconds": 258.43,
+      "peak_rss_bytes": 3350736896,
+      "solver_runtime": {
+        "implementation": "optimised-v3",
+        "numba_threads": 4,
+        "fastmath": false,
+        "dtype": "float64",
+        "tile": 16,
+        "depth": 4,
+        "error_reduction": "per-tile-per-update-uint64-max",
+        "unused_speculative_updates": 3,
+        "replayed_updates": 1,
+        "threading_layer": "omp",
+        "final_iteration": 16975,
+        "final_max_change": 0.0009999202787085437,
+        "logical_updates": 16976,
+        "stop_reason": "tolerance"
+      },
+      "output_comparisons": [
+        {
+          "name": "PFSSmagneticfield/Bfield_full/Bx_full.npy",
+          "sha256": "584b34053a998bec1ba202a09858594776bed3fae7a9c4e8e4c76fb0f7d5c5a1",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "PFSSmagneticfield/Bfield_full/By_full.npy",
+          "sha256": "233e1171b7156c70803dcbd83f7363335b1d05d6554429675bc514a37134aaea",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "PFSSmagneticfield/Bfield_full/Bz_full.npy",
+          "sha256": "69f613bcbc49adba79ad0fe552b2fea1dada5eeea23bc0cfe051d8228acb7ca9",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "PFSSmagneticfield_for_uniform_grid/Bfield_full/Bx_full.npy",
+          "sha256": "cba4d1f78adbea98117f6f69bed5b790756f58a97f680d2943292573cfa8166e",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "PFSSmagneticfield_for_uniform_grid/Bfield_full/By_full.npy",
+          "sha256": "bebe3e86ff40d0445560ee0e2157c79636fddaf169eb332d8104471278684caa",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "PFSSmagneticfield_for_uniform_grid/Bfield_full/Bz_full.npy",
+          "sha256": "777602832b1d17564ee9bca0b3178e1ba66f5f9f7f2998a9d9d707180578aeee",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "Preprocessedmagneticfield_interpolated/Bx.npy",
+          "sha256": "486d674e75c77cb323260a7364948f635e5b58bdc6ffe78797893ec17e415bdb",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "Preprocessedmagneticfield_interpolated/By.npy",
+          "sha256": "c46649dd16689757fd7a280c94244b6987e41d454ed5c1c815c84fdd5c5a483b",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "Preprocessedmagneticfield_interpolated/Bz.npy",
+          "sha256": "fa5ae10f9ceef6a28d9642d3c2f83bb780a383889467d3d64a59282db79b93bf",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        }
+      ],
+      "logged_convergence_samples": 340,
+      "convergence_exact": true
+    },
+    {
+      "implementation": "optimised-v4",
+      "trial": 3,
+      "workers": 16,
+      "run_id": "20261119_102219_123132",
+      "command": [
+        "/home/user/Projects/fluXcape/.venv/bin/python",
+        "/home/user/Projects/fluXcape/anjan's performance enhancement work/step_6_potential/measure_potential.py",
+        "--input-dir",
+        "/home/user/Projects/fluXcape/anjan's performance enhancement work/step_4_package/runs/20261113_160555_320989",
+        "--implementation",
+        "optimised-v4",
+        "--max-seconds",
+        "0",
+        "--label",
+        "ubuntu_optimised-v4_paired_trial_3"
+      ],
+      "wall_seconds": 45.579456520999884,
+      "cpu_seconds": 636.48,
+      "peak_rss_bytes": 3374325760,
+      "solver_runtime": {
+        "implementation": "optimised-v4",
+        "numba_threads": 16,
+        "fastmath": false,
+        "dtype": "float64",
+        "tile": 12,
+        "depth": 8,
+        "tuning_profile": "ryzen-9-9950x-ubuntu",
+        "error_reduction": "per-tile-per-update-uint64-max",
+        "unused_speculative_updates": 7,
+        "replayed_updates": 1,
+        "threading_layer": "omp",
+        "final_iteration": 16975,
+        "final_max_change": 0.0009999202787085437,
+        "logical_updates": 16976,
+        "stop_reason": "tolerance"
+      },
+      "output_comparisons": [
+        {
+          "name": "PFSSmagneticfield/Bfield_full/Bx_full.npy",
+          "sha256": "584b34053a998bec1ba202a09858594776bed3fae7a9c4e8e4c76fb0f7d5c5a1",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "PFSSmagneticfield/Bfield_full/By_full.npy",
+          "sha256": "233e1171b7156c70803dcbd83f7363335b1d05d6554429675bc514a37134aaea",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "PFSSmagneticfield/Bfield_full/Bz_full.npy",
+          "sha256": "69f613bcbc49adba79ad0fe552b2fea1dada5eeea23bc0cfe051d8228acb7ca9",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "PFSSmagneticfield_for_uniform_grid/Bfield_full/Bx_full.npy",
+          "sha256": "cba4d1f78adbea98117f6f69bed5b790756f58a97f680d2943292573cfa8166e",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "PFSSmagneticfield_for_uniform_grid/Bfield_full/By_full.npy",
+          "sha256": "bebe3e86ff40d0445560ee0e2157c79636fddaf169eb332d8104471278684caa",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "PFSSmagneticfield_for_uniform_grid/Bfield_full/Bz_full.npy",
+          "sha256": "777602832b1d17564ee9bca0b3178e1ba66f5f9f7f2998a9d9d707180578aeee",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "Preprocessedmagneticfield_interpolated/Bx.npy",
+          "sha256": "486d674e75c77cb323260a7364948f635e5b58bdc6ffe78797893ec17e415bdb",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "Preprocessedmagneticfield_interpolated/By.npy",
+          "sha256": "c46649dd16689757fd7a280c94244b6987e41d454ed5c1c815c84fdd5c5a483b",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "name": "Preprocessedmagneticfield_interpolated/Bz.npy",
+          "sha256": "fa5ae10f9ceef6a28d9642d3c2f83bb780a383889467d3d64a59282db79b93bf",
+          "bit_exact": true,
+          "maximum_absolute_difference": 0.0
+        }
+      ],
+      "logged_convergence_samples": 340,
+      "convergence_exact": true
+    }
+  ],
+  "summary": {
+    "optimised-v3": {
+      "median_wall_seconds": 68.24257135700009,
+      "median_cpu_seconds": 257.53999999999996,
+      "median_peak_rss_bytes": 3350736896
+    },
+    "optimised-v4": {
+      "median_wall_seconds": 45.579456520999884,
+      "median_cpu_seconds": 636.48,
+      "median_peak_rss_bytes": 3374325760
+    }
+  }
+}

@@ -1,6 +1,6 @@
 # Step 6: initial potential field and grid preparation
 
-For current optimisation work, read [OPTIMISATION_SCOPE.md](OPTIMISATION_SCOPE.md) first: the user has narrowed the task to the initial solve, gradients and scaling that produce the first three field files, with execution time as the priority.
+For current optimisation work, read [OPTIMISATION_SCOPE.md](OPTIMISATION_SCOPE.md) first. The Windows work covers the initial solve through the first three field saves. The newly authorised Ubuntu desktop comparison covers **all of step 6 and all nine outputs**, using the original Ubuntu inputs. Execution time remains the priority; numerical behaviour is preserved.
 
 ## Tracked folder layout
 
@@ -10,7 +10,7 @@ step_6_potential/
   README.md                     # Commands, versions and measured results
   OPTIMISATION_SCOPE.md          # User requirements and implementation history
   requirements-optimised.txt
-  solvers/                      # V1, V2 and V3 implementations
+  solvers/                      # V1–V3 plus desktop-tuned V4
   support/                      # CSV logging/instrumentation
   tests/                        # Numerical equivalence and runner checks
   benchmarks/                   # Timing experiments
@@ -21,6 +21,21 @@ step_6_potential/
 ```
 
 Ignored `runs/` data and caches are local artifacts. The reorganisation moves only tracked source/documentation; historical run contents and embedded provenance paths remain as recorded. New run reports are written to `reports/runs/`. The commands below still start from this step 6 folder.
+
+## Ubuntu desktop V4 — complete step 6
+
+The Ryzen 9 9950X desktop was audited and benchmarked separately. V4 retains V3's exact Jacobi arithmetic, error checks and prefix replay, tuning its profile to **16 workers, 12×12 tiles and eight updates per batch**. Earlier implementations and the original default are unchanged. See the [desktop audit, tuning evidence and full comparisons](reports/v4_ubuntu_20261119.md).
+
+From this folder with the existing venv active:
+
+```bash
+python -m pip install -r requirements-optimised.txt
+NUMBA_NUM_THREADS=16 python measure_potential.py --input-dir "../step_4_package/runs/20261113_160555_320989" --implementation optimised-v4 --max-seconds 0 --label ubuntu_v4_full_step
+```
+
+This uses the same saved inputs and generates the same nine arrays as the original Ubuntu run. No `--first-field-only` flag is used. V4 defaults to up to sixteen workers when `NUMBA_NUM_THREADS` is unset; an explicit environment value takes precedence. It is a measured desktop profile, not a universal optimum or an automatic hardware tuner.
+
+Three alternating full-step pairs measured **45.58 s median for V4 versus 68.24 s for V3**: **33.21% less elapsed time**. All nine arrays and all 340 logged convergence values match the original Ubuntu run exactly. V4 uses more cumulative CPU time (636.48 s versus 257.54 s median) and slightly more peak RAM (3.143 versus 3.121 GiB). The historical original full step took 2273.69 s; it was not rerun for this audit.
 
 ## Complete commands from the step 6 folder (PowerShell)
 
@@ -59,6 +74,7 @@ Run the desired version's command, not necessarily the entire block. `--max-seco
 | V1 | [optimised_laplace.py](solvers/optimised_laplace.py) | Compiled parallel CPU update, two reusable buffers, fused update/error scan; avoids per-iteration full potential copies and arithmetic temporaries. |
 | V2 | [optimised_laplace_v2.py](solvers/optimised_laplace_v2.py) | Adds an exactly ordered unsigned reduction over nonnegative float64 error bits, allowing SIMD without fast-math; worker tuning selected four on this laptop. |
 | V3 | [optimised_laplace_v3.py](solvers/optimised_laplace_v3.py) | Adds private 16 by 16 x/y temporal tiles spanning z, four updates per batch and shrinking halos to reuse cached data. Checks each update's error; replays a prefix to return the exact first converged state. |
+| V4 | [optimised_laplace_v4.py](solvers/optimised_laplace_v4.py) | Retains V3 arithmetic and replay, with the Ubuntu desktop's measured 16-worker, 12 by 12 tile, eight-update profile. Its full-step comparisons are separate from the scoped Windows timings below. |
 
 All versions preserve the original float64 field arithmetic/order, grid, boundary values, tolerance, stopping rule, gradients, scaling and saves. Only generated isolated runner scripts override the solver import; Anjan's source and earlier solver modules are unchanged. The strict requirement is zero or near-zero accuracy tradeoff; the recorded runs below achieved byte-identical outputs, not just approximate agreement.
 
