@@ -45,7 +45,7 @@ class ProgressLog:
         self.previous = now
 
 
-def instrument_wsr(source, resume=False):
+def instrument_wsr(source, resume=False, max_attempts=None):
     tree = ast.parse(source)
     original = ast.dump(tree)
     added = []
@@ -71,6 +71,14 @@ def instrument_wsr(source, resume=False):
              and ast.dump(n.test) == ast.dump(ast.parse('step < num_steps', mode='eval').body)]
     if len(loops) != 1:
         raise ValueError('Expected the original WSR loop')
+    original_test = loops[0].test
+    if max_attempts is not None:
+        if max_attempts < 1:
+            raise ValueError('max_attempts must be positive')
+        loop_index = tree.body.index(loops[0])
+        insert(tree.body, loop_index, '_step7_initial_attempts = _wsr_progress.attempts')
+        limit = ast.parse(f'_wsr_progress.attempts - _step7_initial_attempts < {max_attempts}', mode='eval').body
+        loops[0].test = ast.BoolOp(op=ast.And(), values=[original_test, limit])
     decisions = [n for n in loops[0].body if isinstance(n, ast.If)
                  and ast.dump(n.test) == ast.dump(ast.parse('Lnew <= L_values[-1]', mode='eval').body)]
     if len(decisions) != 1:
@@ -91,6 +99,7 @@ def instrument_wsr(source, resume=False):
     if not resume:
         insert(tree.body, first, 'from _wsr_progress import ProgressLog\n_wsr_progress = ProgressLog()')
     result = ast.unparse(ast.fix_missing_locations(tree)) + '\n'
+    loops[0].test = original_test
     for body, node in reversed(added):
         body.remove(node)
     if ast.dump(tree) != original:

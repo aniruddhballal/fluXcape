@@ -53,12 +53,16 @@ def main():
     parser.add_argument('--weights-dir', type=Path, help='Step 5 run directory containing weight_function/W.npy')
     parser.add_argument('--resume', type=Path, help='Preserved restart package directory or state.json')
     parser.add_argument('--label', default='original')
+    parser.add_argument('--max-attempts', type=int,
+                        help='Bound this session to N accepted/rejected attempts; default unlimited')
     parser.add_argument('--max-seconds', type=float, default=600,
                         help='Measured execution limit; 0 means unlimited (default: 600)')
     parser.add_argument('--check-only', action='store_true')
     args = parser.parse_args()
     if args.max_seconds < 0:
         parser.error('time limit must be nonnegative')
+    if args.max_attempts is not None and args.max_attempts < 1:
+        parser.error('attempt limit must be positive')
     if args.resume and (args.input_dir or args.weights_dir):
         parser.error('--resume uses its package; omit --input-dir and --weights-dir')
     if not args.resume and (not args.input_dir or not args.weights_dir):
@@ -100,21 +104,21 @@ def main():
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(item, target)
         copied.append({'name': str(relative), 'bytes': target.stat().st_size, 'sha256': digest(target)})
-    script, first_line = extract_wsr((run / 'Main.py').read_text())
+    script, first_line = extract_wsr((run / 'Main.py').read_text(encoding='utf-8'))
     stage_script = run / '_step7.py'
-    (run / '_step7_original.py').write_text(script)
+    (run / '_step7_original.py').write_text(script, encoding='utf-8')
     if restart:
         read_checkpoint(run / '_restart')  # Verify the isolated copy before launching.
         script = resume_script(script)
         shutil.copy2(ROOT / 'restart_state.py', run / '_restart_state.py')
-    stage_script.write_text(instrument_wsr(script, resume=bool(restart)), encoding='utf-8')
+    stage_script.write_text(instrument_wsr(script, resume=bool(restart), max_attempts=args.max_attempts), encoding='utf-8')
     shutil.copy2(ROOT / 'progress_log.py', run / '_wsr_progress.py')
     command = [sys.executable, '-u', '-B', str(stage_script)]
     state = {'label': args.label, 'status': 'running', 'started': datetime.now().astimezone().isoformat(),
              'platform': platform.platform(), 'processor': platform.processor(), 'logical_cpus': os.cpu_count(),
              'python': sys.version, 'versions': {p: importlib.metadata.version(p) for p in packages},
              'command': command, 'copied_files': copied, 'run_directory': str(run),
-             'max_seconds': args.max_seconds, 'main_start_line': first_line,
+             'max_seconds': args.max_seconds, 'max_attempts': args.max_attempts, 'main_start_line': first_line,
              'resumed_from': str(restart) if restart else None,
              'start_accepted_step': restart_info['step'] if restart_info else 0,
              'progress_elapsed_offset_seconds': restart_info['source_elapsed_seconds'] if restart_info else 0,
@@ -139,7 +143,8 @@ def main():
         with (run / 'nlfff.log').open('wb') as log:
             proc = subprocess.Popen(launch, cwd=run, stdout=log, stderr=subprocess.STDOUT,
                                     start_new_session=os.name != 'nt',
-                                    env=dict(os.environ, MPLBACKEND='Agg', PYTHONDONTWRITEBYTECODE='1'))
+                                    env=dict(os.environ, MPLBACKEND='Agg', PYTHONDONTWRITEBYTECODE='1',
+                                             PYTHONIOENCODING='utf-8'))
             preservation_log = (run / 'restart_preservation.log').open('wb')
             watcher = subprocess.Popen(
                 [sys.executable, '-u', str(ROOT / 'preserve_restart.py'),
@@ -222,13 +227,15 @@ def main():
         final_step_dirs = [p for p in (run / 'Optimizedmagneticfield').glob('step_*') if p.is_dir() and p.name[5:].isdigit()]
         state['highest_saved_step'] = max((int(p.name[5:]) for p in final_step_dirs), default=None)
         state['checkpoint_count'] = len(final_step_dirs)
-        state['last_log_lines'] = (run / 'nlfff.log').read_text(errors='replace').splitlines()[-8:] if (run / 'nlfff.log').exists() else []
+        state['last_log_lines'] = (run / 'nlfff.log').read_text(encoding='utf-8', errors='replace').splitlines()[-8:] if (run / 'nlfff.log').exists() else []
         state['outputs'] = [{'name': str(p.relative_to(run)), 'bytes': p.stat().st_size, 'sha256': digest(p)} for p in outputs]
         state['generated_data_bytes'] = sum(p.stat().st_size for p in outputs)
         state['saved_checkpoint_files_present'] = bool(outputs)
         state['final_save_message_seen'] = any('Final step complete.' in line for line in state['last_log_lines'])
         (run / 'measurements.json').write_text(json.dumps(state, indent=2), encoding='utf-8')
         report.write_text('# Step 7: WSR / NLFFF reconstruction baseline\n\n'
+            f'Session attempt limit: {args.max_attempts if args.max_attempts is not None else "none"}. '
+            'An attempt-limited trial measures a bounded workload, not full reconstruction or convergence.\n\n'
             'Only the original Main.py reconstruction suffix and its imports execute. '
             'Uses saved step 6 fields/boundary and step 5 weights; no earlier stage runs. '
             'Original equations, grid, 2,000,001 accepted-step budget, timestep rules and '

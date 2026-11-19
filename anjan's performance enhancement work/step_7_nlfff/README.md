@@ -28,6 +28,8 @@ python measure_nlfff.py --input-dir "../step_6_potential/runs/20261116_103848_75
 
 Options: `--source-dir PATH` selects the current original/candidate Main.py and helpers; `--label original` labels the report. `--max-seconds 0` disables the limit. No automatic search for a different input run occurs.
 
+For a short fixed-workload trial, add `--max-attempts 10` (or another positive count). This caps accepted plus rejected attempts in the current session, including when resuming; it does not change the update arithmetic, acceptance test, timestep rules or original small-dt stop. The generated loop gains a session-relative attempt guard; original source files remain unchanged. Normal final saves still run. A successful attempt-limited trial is not full reconstruction or scientific convergence. Use `convergence.csv` events `accepted`/`rejected` to calculate per-attempt intervals; accepted-step averages also include rejected work. The first interval can include initial checkpoint I/O, while startup and final saves are outside the attempt intervals but inside total measured wall time.
+
 Each execution copies/hashes the seven inputs and Main.py/laplace.py/vectormath.py into an ignored `runs/<timestamp>/`. The runner extracts the original reconstruction suffix starting at its grid setup and prepends its original imports. An AST comparison verifies that the retained statements are unchanged. The original source files stay untouched. The initial potential solve is not executed; importing its helper functions does not run it.
 
 ## Logs and measurements
