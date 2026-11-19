@@ -53,6 +53,9 @@ def main():
     parser.add_argument('--weights-dir', type=Path, help='Step 5 run directory containing weight_function/W.npy')
     parser.add_argument('--resume', type=Path, help='Preserved restart package directory or state.json')
     parser.add_argument('--label', default='original')
+    parser.add_argument('--implementation', choices=('original', 'memory-v1'), default='original')
+    parser.add_argument('--no-preserve-restart', action='store_true',
+                        help='Disable the background restart companion for bounded timing trials')
     parser.add_argument('--max-attempts', type=int,
                         help='Bound this session to N accepted/rejected attempts; default unlimited')
     parser.add_argument('--max-seconds', type=float, default=600,
@@ -65,6 +68,8 @@ def main():
         parser.error('attempt limit must be positive')
     if args.resume and (args.input_dir or args.weights_dir):
         parser.error('--resume uses its package; omit --input-dir and --weights-dir')
+    if args.resume and args.implementation != 'original':
+        parser.error('memory-v1 currently supports fresh runs only')
     if not args.resume and (not args.input_dir or not args.weights_dir):
         parser.error('Fresh runs need --input-dir and --weights-dir; otherwise use --resume')
     packages = ['numpy', 'scipy', 'matplotlib', 'psutil']
@@ -111,10 +116,20 @@ def main():
         read_checkpoint(run / '_restart')  # Verify the isolated copy before launching.
         script = resume_script(script)
         shutil.copy2(ROOT / 'restart_state.py', run / '_restart_state.py')
-    stage_script.write_text(instrument_wsr(script, resume=bool(restart), max_attempts=args.max_attempts), encoding='utf-8')
+    script = instrument_wsr(script, resume=bool(restart), max_attempts=args.max_attempts)
+    if args.implementation == 'memory-v1':
+        from memory_optimisation import optimise_wsr, optimise_vector_math
+        script = optimise_wsr(script)
+        shutil.copy2(run / 'vectormath.py', run / 'vectormath_original.py')
+        (run / 'vectormath.py').write_text(optimise_vector_math((run / 'vectormath.py').read_text(encoding='utf-8')), encoding='utf-8')
+        shutil.copy2(ROOT / 'memory_optimisation.py', run / '_memory_optimisation.py')
+    stage_script.write_text(script, encoding='utf-8')
     shutil.copy2(ROOT / 'progress_log.py', run / '_wsr_progress.py')
     command = [sys.executable, '-u', '-B', str(stage_script)]
     state = {'label': args.label, 'status': 'running', 'started': datetime.now().astimezone().isoformat(),
+             'implementation': args.implementation,
+             'optimisation_sha256': digest(run / '_memory_optimisation.py') if args.implementation != 'original' else None,
+             'executed_vector_math_sha256': digest(run / 'vectormath.py'),
              'platform': platform.platform(), 'processor': platform.processor(), 'logical_cpus': os.cpu_count(),
              'python': sys.version, 'versions': {p: importlib.metadata.version(p) for p in packages},
              'command': command, 'copied_files': copied, 'run_directory': str(run),
@@ -134,6 +149,7 @@ def main():
     watcher = None
     preservation_log = None
     peak = 0
+    peak_private = 0
     seen = {}
     start = time.perf_counter()
     if restart_info:
@@ -145,20 +161,21 @@ def main():
                                     start_new_session=os.name != 'nt',
                                     env=dict(os.environ, MPLBACKEND='Agg', PYTHONDONTWRITEBYTECODE='1',
                                              PYTHONIOENCODING='utf-8'))
-            preservation_log = (run / 'restart_preservation.log').open('wb')
-            watcher = subprocess.Popen(
-                [sys.executable, '-u', str(ROOT / 'preserve_restart.py'),
-                 '--run-dir', str(run), '--watch', '--worker-pid', str(proc.pid)],
-                stdout=preservation_log, stderr=subprocess.STDOUT,
-                start_new_session=os.name != 'nt')
-            state['restart_preservation'] = 'automatic'
-            print('Automatic restart preservation enabled: every 200 accepted steps. Ctrl+C stops the run; resume from the latest complete package.', flush=True)
+            state['restart_preservation'] = 'disabled' if args.no_preserve_restart else 'automatic'
+            if not args.no_preserve_restart:
+                preservation_log = (run / 'restart_preservation.log').open('wb')
+                watcher = subprocess.Popen(
+                    [sys.executable, '-u', str(ROOT / 'preserve_restart.py'),
+                     '--run-dir', str(run), '--watch', '--worker-pid', str(proc.pid)],
+                    stdout=preservation_log, stderr=subprocess.STDOUT,
+                    start_new_session=os.name != 'nt')
+                print('Automatic restart preservation enabled: every 200 accepted steps. Ctrl+C stops the run; resume from the latest complete package.', flush=True)
             peak = 0
             seen = {}
             import psutil
             root_process = psutil.Process(proc.pid)
             while proc.poll() is None:
-                if watcher.poll() is not None:
+                if watcher is not None and watcher.poll() is not None:
                     raise RuntimeError('Restart preservation stopped unexpectedly; see restart_preservation.log')
                 if args.max_seconds and time.perf_counter()-start >= args.max_seconds:
                     raise TimeoutError('Step 7 time limit reached')
@@ -167,14 +184,18 @@ def main():
                 except psutil.Error:
                     members = []
                 rss = 0
+                private = 0
                 for member in members:
                     try:
-                        rss += member.memory_info().rss
+                        memory = member.memory_info()
+                        rss += memory.rss
+                        private += getattr(memory, 'private', 0)
                         cpu = member.cpu_times()
                         seen[(member.pid, member.create_time())] = cpu.user + cpu.system
                     except psutil.Error:
                         pass
                 peak = max(peak, rss)
+                peak_private = max(peak_private, private)
                 time.sleep(0.1)
             state['return_code'] = proc.returncode
             state['status'] = 'completed' if proc.returncode == 0 else 'failed'
@@ -221,6 +242,7 @@ def main():
         if preservation_log is not None:
             preservation_log.close()
         state['peak_sampled_tree_rss_bytes'] = peak if proc is not None else 0
+        state['peak_sampled_private_bytes'] = peak_private if os.name == 'nt' else None
         state['sampled_cpu_seconds'] = sum(seen.values()) if proc is not None else 0
         state['wall_seconds'] = time.perf_counter()-start
         outputs = sorted(p for p in (run / 'Optimizedmagneticfield').rglob('*') if p.is_file())
@@ -234,9 +256,10 @@ def main():
         state['final_save_message_seen'] = any('Final step complete.' in line for line in state['last_log_lines'])
         (run / 'measurements.json').write_text(json.dumps(state, indent=2), encoding='utf-8')
         report.write_text('# Step 7: WSR / NLFFF reconstruction baseline\n\n'
+            f'Implementation: {args.implementation}. Restart companion: {state.get("restart_preservation", "not started")}. '
             f'Session attempt limit: {args.max_attempts if args.max_attempts is not None else "none"}. '
             'An attempt-limited trial measures a bounded workload, not full reconstruction or convergence.\n\n'
-            'Only the original Main.py reconstruction suffix and its imports execute. '
+            'Only the Main.py reconstruction suffix and its imports execute, with the selected implementation. '
             'Uses saved step 6 fields/boundary and step 5 weights; no earlier stage runs. '
             'Original equations, grid, 2,000,001 accepted-step budget, timestep rules and '
             '200-step checkpoint interval are unchanged. The original small-dt stop remains in place. '
@@ -250,6 +273,7 @@ def main():
             'completed runtime. Output size counts generated checkpoints/plots only. '
             'Restart preservation runs automatically in a companion process, including a final capture on stopping; '
             'only complete periodic checkpoints are published atomically under restart_checkpoints. '
+            'When explicitly disabled, no restart-preservation companion is launched. '
             'Its resources are separate from solver CPU/RAM counters. Wall time includes final preservation cleanup. '
             'On timeout a last checkpoint may be incomplete; use the latest complete restart package. '
             'Resume runs restore preserved state and retain the original loop and total accepted-step budget. '
