@@ -2,6 +2,8 @@
 
 This step measures the reconstruction part of Main.py only. It minimises the original weighted L objective using the existing accepted/rejected-step and timestep rules. No earlier stage is rerun and no scientific or performance changes are made.
 
+Track Windows laptop experiments in [WINDOWS_OPTIMISATION_LOG.md](WINDOWS_OPTIMISATION_LOG.md). It records individual timings, full statistics, hardware/memory constraints, input provenance, failures, comparison limits and a template for future optimisation results.
+
 ## Inputs
 
 Seven generated input arrays:
